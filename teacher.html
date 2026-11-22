@@ -145,8 +145,8 @@ table.resp td:nth-child(5){min-width:220px}
   </div>
 
   <section class="box" style="margin-top:14px">
-    <h2>AI 기능 안내</h2>
-    <div class="info">일반 웹브라우저에서는 제출 기록을 바탕으로 피드백과 세특 초안을 만듭니다. Claude 연동 환경에서는 사용 허용 후 AI 초안을 요청할 수 있습니다. 세특은 교사가 직접 관찰한 내용과 대조해 수정하세요.</div>
+    <h2>학생 피드백 안내</h2>
+    <div class="info">학생 보고서에서 ‘피드백 만들기’를 누르면 제출한 근거와 의견을 바탕으로 학생에게 건넬 질문을 확인할 수 있습니다.</div>
   </section>
   <p class="foot">제작: 인천광역시교육청 오희찬</p>
 </div>
@@ -297,95 +297,21 @@ function report(s) {
       ${s.myConst ? `<p class="serif" style="margin-top:10px">나에게 헌법이란 <b>${esc(s.myConst)}</b>이다.${s.myConstWhy ? " " + esc(s.myConstWhy) : ""}</p>` : (s.reflect ? `<p class="serif">${esc(s.reflect)}</p>` : `<p class="empty">기록 없음</p>`)}</div>
     <div class="sec"><h4>학생 피드백 (학생에게 전달해 의견을 다시 쓰게 할 때)</h4>
       <div class="row" style="margin-top:0"><select id="lvl" style="width:auto"><option>기초</option><option selected>보통</option><option>심화</option></select>
-      <button class="btn sm" id="fbBtn">피드백 만들기</button></div><div id="fbOut" style="margin-top:10px">${ai.fb ? `<div class="ai">${esc(ai.fb)}</div>` : ""}</div></div>
-    <div class="sec"><h4>세특 예시</h4>
-      <div class="warn">세특은 교사가 관찰한 내용을 바탕으로 직접 써야 하는 기록입니다. 아래 예시는 초안이니 관찰 내용에 맞게 반드시 고쳐 쓰세요.</div>
-      <div class="row"><button class="btn sm" id="stBtn">세특 예시 만들기</button></div><div id="stOut" style="margin-top:10px">${ai.st ? `<div class="ai">${esc(ai.st)}</div>` : ""}</div></div>`;
-  document.getElementById("fbBtn").onclick = () => runAI(s, "fb", document.getElementById("lvl").value);
-  document.getElementById("stBtn").onclick = () => runAI(s, "st");
+      <button class="btn sm" id="fbBtn">피드백 만들기</button></div><div id="fbOut" style="margin-top:10px">${ai.fb ? `<div class="ai">${esc(ai.fb)}</div>` : ""}</div></div>`;
+  document.getElementById("fbBtn").onclick = () => {
+    const feedback = feedbackDraft(s, document.getElementById("lvl").value);
+    document.getElementById("fbOut").innerHTML = `<div class="ai">${esc(feedback)}</div>`;
+    if (T.subs[uid(s)] === s) {
+      T.ai[uid(s)] = {fb: feedback};
+      save();
+    }
+  };
 }
 
-// ---------- AI 프롬프트 ----------
-function summary(s) {
-  const cls = (s.cls || []).map(c => `- ${c.value}: 실제 ${c.written ? "쓰여 있음" : "담겨 있음"}, 학생 판단 ${c.answer === "written" ? "쓰여 있다" : c.answer === "contained" ? "담겨 있다" : "응답 없음"}${c.answer ? (c.correct ? "(정답)" : "(오답)") : ""}`).join("\n");
-  const deep = (s.deep || []).map(d => `- 가치 ‘${d.value}’: 근거 조문 ${d.label || "없음"}, 근거 구절 “${d.phrase || ""}”, 담긴 방식 ${d.method || "선택 안 함"}, 학생 해석: ${d.expl || "없음"}`).join("\n");
-  return `[탐구 영역] ${s.area}. ${s.areaName}
-[핵심 아이디어] ${AREA_IDEAS[s.area] || ""}
-[단어 구름에서 찾은 가치어] ${(s.found || []).join(", ") || "없음"}
-[쓰여 있는 가치/담겨 있는 가치 분류]
-${cls}
-[깊이 읽기: 근거 구절과 해석]
-${deep || "없음"}
-[필사한 조문] ${s.copy ? `${s.copy.label} (정확도 ${esc(s.copy.pct)}%)` : "없음"}
-[필사 조문 원문] ${s.copy && unitOf(s.copy.code) ? unitOf(s.copy.code).t : ""}
-[조문을 고른 이유] ${s.copy?.why || "없음"}
-[토론 방식] ${s.q?.mode === "deep" ? "심화 탐구(" + (s.q.title || "") + " 기준으로 실제 헌재 사건 판단)" : "기본 질문"}
-[고른 토론 질문] ${s.q?.text || "없음"}
-${s.q?.mode === "deep" ? "[기준별 판단]\n" + (s.q.crit || []).map(c => "- " + c.name + ": " + (c.judge || "응답 없음") + (c.why ? " / 근거: " + c.why : "")).join("\n") + "\n[나의 결론] " + (s.q.concl || "없음") + "\n[반론과 재반박] " + (s.q.counter || "없음") : ""}
-[의견: ① 주장] ${s.q?.op?.claim || s.q?.opinion || "없음"}
-[의견: ② 헌법 근거] ${s.q?.op?.law || "없음"}
-[의견: ③ 사례 근거] ${s.q?.op?.case || "없음"}
-[의견: ④ 예상 반론] ${s.q?.op?.counter || "없음"}
-[의견: ⑤ 나의 재반박] ${s.q?.op?.rebut || "없음"}
-[근거로 표시한 사례] ${(s.q?.cases || []).join(" / ") || "없음"}
-[더 찾아 추가한 조문] ${(s.q?.arts || []).map(n => +n === 0 ? "전문" : "제" + esc(n) + "조").join(", ") || "없음"}
-[스스로 점검(5점 척도)]
-${(s.self || []).map(x => "- " + x.t + ": " + (x.score ? x.score + "점(5점 척도)" : (x.level || "응답 없음"))).join("\n") || "없음"}
-[나에게 헌법이란] ${s.myConst ? s.myConst + "이다. " + (s.myConstWhy || "") : (s.reflect || "없음")}`;
-}
-const PROMPT_FB = (s, lvl) => `너는 고등학교 사회 교사를 돕는 조수다. 아래는 학생이 ‘헌법 가치 탐구’ 활동에서 제출한 내용이다.
-학생이 자기 의견을 스스로 다시 고쳐 쓸 수 있도록 학생에게 직접 말하는 피드백을 써라.
-
-규칙
-- 학생 수준: ${lvl}. 기초면 쉬운 말과 짧은 문장, 보통이면 교과서 수준, 심화면 헌법 원리와 기본권 충돌까지 다룬다.
-- 학생의 입장(찬성·반대 등) 자체를 옳다 그르다 평가하지 않는다. 근거, 논리, 헌법 조문과의 연결만 평가한다.
-- 깊이 읽기의 해석(근거 구절 → 담긴 방식 → 가치)이 논리적으로 이어지는지도 함께 살펴 준다.
-- 특정 정당이나 정치인에 대한 평가를 하지 않는다.
-- 제출 내용에 없는 사실을 지어내지 않는다.
-- 학생 이름을 쓰지 않는다. 존댓말로 쓴다.
-
-- 의견 틀(① 주장 ② 헌법 근거 ③ 사례 근거 ④ 예상 반론 ⑤ 재반박) 가운데 약한 부분을 짚어 준다.
-
-형식 (제목은 그대로)
-잘한 점: 1~2문장
-더 좋아지려면: 2가지, 각 1문장
-다시 생각해 볼 질문: 수준에 맞는 질문 2개
-연결해 볼 조문: 헌법 조문 1개와 이유 1문장
-
-전체 350~500자. 위 형식 외의 말은 쓰지 않는다.
-
-${summary(s)}`;
-const PROMPT_ST = s => `너는 고등학교 교사가 학교생활기록부 ‘세부능력 및 특기사항’을 쓸 때 참고할 초안을 만드는 조수다.
-아래 학생 활동 기록만을 근거로 한 문단의 세특 예시를 써라.
-
-규칙
-- 첫 문장은 “헌법가치 탐구 활동에서 관심 있는 분야로 ‘${s.areaName}’을(를) 선정하고”로 시작한다.
-- 학생부 문체로 쓴다: 문장은 ‘~함’, ‘~임’, ‘~을 보임’처럼 명사형으로 끝낸다.
-- 관찰 가능한 활동만 쓴다: 영역 선택, 단어 구름으로 쓰여 있는 가치와 담겨 있는 가치 구분, 조문에서 근거 구절을 찾아 가치가 담긴 방식을 해석한 내용, 조문 필사와 고른 이유, 사례를 다시 검토해 주장·헌법 근거·사례 근거·반론으로 의견을 세운 과정, 관련 조문을 더 찾은 활동, 자기 평가와 ‘나에게 헌법이란’ 문장.
-- 자기 평가는 학생의 판단이므로 ‘스스로 ~라고 평가함’처럼 쓰고 사실처럼 단정하지 않는다.
-- 활동 수준에 맞게 쓴다. 분류 정답률, 필사 정확도, 의견의 길이와 근거가 부족하면 과장하지 말고 담담하게 쓴다.
-- 제출 내용에 없는 활동, 독서, 성취, 태도를 지어내지 않는다.
-- 학생 이름, 특정 정당·정치인, 학생의 정치적 입장에 대한 평가를 쓰지 않는다.
-- 400~500자, 한 문단. 설명이나 제목 없이 세특 문단만 출력한다.
-
-${summary(s)}`;
-
-function recordDraft(s, kind, level) {
+function feedbackDraft(s, level) {
   const deep = (s.deep || []).find(d => d.label && d.expl);
   const q = s.q || {};
   const evidence = deep?.label || s.copy?.label;
-  if (kind === "st") {
-    const found = (s.found || []).length;
-    const clauses = [`헌법가치 탐구 활동에서 관심 있는 분야로 ‘${s.areaName || s.area}’을(를) 선정하고 관련 헌법 가치를 탐구함.`];
-    if (found) clauses.push(`단어 구름에서 가치어 ${found}개를 찾아 기록함.`);
-    if (deep) clauses.push(`${deep.label}에서 근거 구절을 찾아 ‘${deep.value}’의 의미를 자신의 말로 설명함.`);
-    if (s.copy?.label) clauses.push(`${s.copy.label}을(를) 필사하고${s.copy.why ? " 그 조문을 고른 이유를 설명함." : " 조문의 문장을 확인함."}`);
-    if (q.concl || q.op?.claim || q.opinion) clauses.push(q.mode === "deep"
-      ? "사례를 판단 기준에 따라 검토하고 자신의 결론을 기록함."
-      : "토론 질문에 대한 자신의 주장을 서술함.");
-    if (s.myConst) clauses.push(`활동을 정리하며 헌법을 ‘${s.myConst}’(으)로 표현함.`);
-    return clauses.join(" ");
-  }
   const hasLaw = q.mode === "deep" ? (q.crit || []).some(c => c.why) : !!q.op?.law;
   const first = level === "기초" ? "고른 조문에서 내 생각을 뒷받침하는 말은 무엇인가요?"
     : level === "심화" ? "다른 기본권이나 공익과 충돌한다면 어떤 기준으로 조정할 수 있나요?"
@@ -403,50 +329,17 @@ function recordDraft(s, kind, level) {
       : "제10조. 인간의 존엄과 기본적 인권 보장이 사례 속 당사자에게 어떤 의미인지 검토해 보세요.")
   ].join("\n");
 }
-async function runAI(s, kind, level) {
-  const out = document.getElementById(kind === "fb" ? "fbOut" : "stOut");
-  const btn = document.getElementById(kind === "fb" ? "fbBtn" : "stBtn");
-  btn.disabled = true;
-  out.innerHTML = '<div class="ai" role="status">초안 작성 중…</div>';
-  const box = out.firstChild;
-  let result, source = "제출 기록 기반 자동 초안";
-  try {
-    if (window.claude && window.claude.use) {
-      const sample = await window.claude.use("sample");
-      if (sample) {
-        const response = await sample(kind === "fb" ? PROMPT_FB(s, level) : PROMPT_ST(s), {modelTier: "default", cache: false});
-        result = response.text;
-        if (result) source = "AI 생성 초안";
-      }
-    }
-  } catch (e) {
-    source = "AI 연결 실패 · 제출 기록 기반 자동 초안";
-  } finally {
-    result ||= recordDraft(s, kind, level);
-    box.textContent = result;
-    const note = document.createElement("p");
-    note.className = "note";
-    note.textContent = source;
-    out.prepend(note);
-    if (T.subs[uid(s)] === s) {
-      T.ai[uid(s)] = {...T.ai[uid(s)], [kind]: result};
-      save();
-    }
-    btn.disabled = false;
-  }
-}
-
 // ---------- CSV 저장 · 지우기 ----------
 const csvCell = value => {
   const text = String(value ?? "");
   return (/^[\t\r\n]|^\s*[=+@-]/.test(text) ? "'" + text : text).replace(/"/g, '""');
 };
 document.getElementById("csv").onclick = async () => {
-  const rows = [["학급 코드", "반 이름", "학번", "이름", "이메일", "영역", "찾은 가치어", "분류 정답", "필사 조문", "필사 정확도", "고른 이유", "질문", "의견", "더 찾은 조문", "나에게 헌법이란", "피드백", "세특 예시"]];
+  const rows = [["학급 코드", "반 이름", "학번", "이름", "이메일", "영역", "찾은 가치어", "분류 정답", "필사 조문", "필사 정확도", "고른 이유", "질문", "의견", "더 찾은 조문", "나에게 헌법이란", "피드백"]];
   subs().forEach(s => {
     const c = (s.cls || []).filter(x => x.answer);
     rows.push([s.klass || "", (T.classes || []).find(c => c.code === s.klass)?.label || "", s.sid, s.name, s.email || "", s.areaName, (s.found || []).join(" "), `${c.filter(x => x.correct).length}/${(s.cls || []).length}`, s.copy?.label || "", s.copy?.pct ?? "", s.copy?.why || "",
-      s.q?.text || "", s.q?.opinion || s.q?.concl || "", (s.q?.arts || []).map(n => +n === 0 ? "전문" : "제" + n + "조").join(" "), s.myConst ? s.myConst + "이다. " + (s.myConstWhy || "") : (s.reflect || ""), T.ai[uid(s)]?.fb || "", T.ai[uid(s)]?.st || ""]);
+      s.q?.text || "", s.q?.opinion || s.q?.concl || "", (s.q?.arts || []).map(n => +n === 0 ? "전문" : "제" + n + "조").join(" "), s.myConst ? s.myConst + "이다. " + (s.myConstWhy || "") : (s.reflect || ""), T.ai[uid(s)]?.fb || ""]);
   });
   const csv = "\ufeff" + rows.map(r => r.map(v => `"${csvCell(v)}"`).join(",")).join("\r\n");
   const url = URL.createObjectURL(new Blob([csv], {type: "text/csv;charset=utf-8"}));

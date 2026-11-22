@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>헌법 가치 탐구</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F3F4F7; --surface:#FFFFFF; --ink:#151A2C; --ink-2:#4A5068; --muted:#868CA0; --faint:#C4C8D4;
+  --line:#E0E3EA; --value:#2747B5; --value-soft:#E8EDFB; --green:#0B7A5E; --green-soft:#E2F3EC; --red:#C2362B; --red-soft:#FBE9E7;
+  --sheet:#FFFDF7; --rule:#EFE6CF; --focus:#2747B5;
+  --serif:"Gowun Batang","Noto Serif KR","Batang",serif;
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  color-scheme:light; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F121B; --surface:#181C29; --ink:#E9EBF2; --ink-2:#B4B9C9; --muted:#80869A; --faint:#4A5064;
+    --line:#2A3042; --value:#93A9FF; --value-soft:#1F2847; --green:#4CC9A1; --green-soft:#12302A; --red:#FF8A80; --red-soft:#3A1E1C;
+    --sheet:#1D1F27; --rule:#2C2E38; --focus:#93A9FF; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F121B; --surface:#181C29; --ink:#E9EBF2; --ink-2:#B4B9C9; --muted:#80869A; --faint:#4A5064;
+  --line:#2A3042; --value:#93A9FF; --value-soft:#1F2847; --green:#4CC9A1; --green-soft:#12302A; --red:#FF8A80; --red-soft:#3A1E1C;
+  --sheet:#1D1F27; --rule:#2C2E38; --focus:#93A9FF; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word;letter-spacing:-.01em}
+p,h1,h2,h3,dd,li,.idea,.quote,.lead,.hint,.small{text-wrap:pretty}
+button,input,textarea,select{font:inherit;color:inherit}
+a{color:var(--value)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}
+
+.app{min-height:100%;display:flex;flex-direction:column;max-width:760px;margin:0 auto;padding:16px 18px 20px}
+.top{display:flex;align-items:center;gap:12px;height:40px}
+.back{border:0;background:none;cursor:pointer;color:var(--ink-2);padding:6px 8px;border-radius:8px;font-size:.95rem}
+.back[hidden]{visibility:hidden;display:block!important}
+.bar{flex:1;height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ink);transition:width .4s ease}
+.stepno{font-size:.82rem;color:var(--muted);min-width:44px;text-align:right}
+
+main{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding:14px 0 20px}
+.screen{animation:in .35s ease both}
+@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.screen{animation:none}.bar i{transition:none}}
+.kicker{font-size:.88rem;color:var(--muted);margin:0 0 6px}
+h1{font-family:var(--serif);font-size:clamp(1.8rem,5vw,2.4rem);line-height:1.3;margin:0 0 8px}
+h2{font-family:var(--serif);font-size:clamp(1.35rem,3.6vw,1.7rem);line-height:1.4;margin:0 0 6px}
+.lead{color:var(--ink-2);margin:0 0 14px}
+.foot{margin-top:auto;padding-top:14px;font-size:.78rem;color:var(--muted);text-align:center}
+
+.btn{border:0;background:var(--ink);color:var(--surface);border-radius:14px;padding:15px 22px;cursor:pointer;font-weight:600;font-size:1.02rem;width:100%}
+.btn.ghost{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.row{display:flex;gap:10px;margin-top:18px}
+.row .btn{flex:1}
+
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.tile{border:0;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);border-radius:16px;padding:16px 14px;text-align:left;cursor:pointer;min-height:86px;display:flex;flex-direction:column;justify-content:space-between;gap:6px}
+.tile:hover{box-shadow:inset 0 0 0 2px var(--ink)}
+.tile .n{font-size:.8rem;color:var(--muted)}
+.tile .t{font-family:var(--serif);font-size:1.15rem;line-height:1.35;font-weight:700}
+
+.idea{font-family:var(--serif);font-size:clamp(1.2rem,3.2vw,1.45rem);line-height:1.65;margin:6px 0 14px;padding:18px 20px;background:var(--surface);border-radius:18px;box-shadow:inset 0 0 0 1px var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border-radius:999px;padding:6px 14px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);font-size:.95rem}
+.chip.on{background:var(--value);color:var(--surface);box-shadow:none}
+
+#cloud{width:100%;height:300px;display:block;margin:4px 0}
+#cloud text{cursor:pointer;transition:fill .25s}
+#cloud text:hover,#cloud text:focus{text-decoration:underline;outline:none}
+.dots{display:flex;gap:6px;justify-content:center;margin:6px 0 2px}
+.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--value)}
+
+.vcard{background:var(--surface);border-radius:22px;box-shadow:inset 0 0 0 1px var(--line);padding:28px 22px;text-align:center}
+.vcard .word{font-family:var(--serif);font-size:clamp(2.2rem,8vw,3rem);font-weight:700;margin:4px 0 10px}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.pick button{border:0;border-radius:16px;padding:18px 10px;cursor:pointer;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);text-align:center}
+.pick button b{display:block;font-size:1.1rem}
+.pick button span{font-size:.82rem;color:var(--muted)}
+.feedback{margin-top:16px;text-align:left;border-radius:14px;padding:14px 16px;font-size:.98rem}
+.feedback.ok{background:var(--green-soft)}
+.feedback.no{background:var(--red-soft)}
+.feedback b{display:block;margin-bottom:4px}
+.opts{display:grid;gap:8px;margin-top:12px;text-align:left}
+.opt{border:0;border-radius:12px;padding:12px 14px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;text-align:left;font-size:.95rem}
+.opt b{margin-right:6px}
+.opt[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--value);background:var(--value-soft)}
+.quote{font-family:var(--serif);font-size:1rem;line-height:1.85;margin:8px 0 0;white-space:pre-line}
+mark{background:#FFE7A0;color:#151A2C;border-radius:2px;padding:0 1px}
+input[type=text],textarea{width:100%;border:0;box-shadow:inset 0 0 0 1px var(--line);border-radius:12px;padding:12px 14px;background:var(--surface)}
+textarea{resize:vertical;line-height:1.7}
+.hint{font-size:.85rem;color:var(--muted);margin:6px 0 0}
+
+.list{display:grid;gap:8px;max-height:52vh;overflow:auto;padding:2px}
+.li{border:0;border-radius:14px;padding:12px 14px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;text-align:left}
+.li .r{font-size:.8rem;color:var(--muted)}
+.li .p{font-family:var(--serif);font-size:.98rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* 필사지 */
+.sheet{position:relative;background:var(--sheet);border-radius:18px;padding:22px 24px 26px;box-shadow:0 1px 0 var(--line),inset 0 0 0 1px var(--rule)}
+.sheet .ref{font-size:.8rem;color:var(--muted);margin-bottom:6px}
+.trace{position:relative;font-family:var(--serif);font-size:clamp(1.2rem,3.6vw,1.45rem);line-height:2.3em;word-break:break-all;white-space:pre-wrap;letter-spacing:.02em;
+  background-image:linear-gradient(to bottom,transparent calc(100% - 1px),var(--rule) 0);background-size:100% 2.3em}
+.trace .layer{margin:0;padding:0;min-height:2.3em}
+.trace .layer .g{color:var(--faint)}
+.trace .layer .k{color:var(--ink)}
+.trace .layer .x{color:var(--red);background:var(--red-soft);border-radius:3px}
+.trace .layer .c{color:var(--ink-2)}
+.trace .layer .a{color:var(--ink-2)}
+.trace .layer .caret{display:inline-block;width:2px;height:1.15em;margin:0 -1px;vertical-align:-.2em;background:var(--value);animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.trace .layer .caret{animation:none}}
+.trace textarea::selection{background:transparent}
+.trace textarea{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;border:0;box-shadow:none;background:transparent;resize:none;overflow:hidden;
+  color:transparent;caret-color:transparent;font:inherit;line-height:inherit;letter-spacing:inherit;word-break:break-all;white-space:pre-wrap;outline:none}
+.meter{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:.9rem;color:var(--ink-2)}
+.meter .bar i{background:var(--green)}
+.done{color:var(--green);font-weight:600}
+
+.seg{display:inline-flex;background:var(--surface);border-radius:12px;padding:4px;box-shadow:inset 0 0 0 1px var(--line);margin-bottom:12px}
+.seg button{border:0;background:none;border-radius:9px;padding:8px 16px;cursor:pointer;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.card{background:var(--surface);border-radius:18px;box-shadow:inset 0 0 0 1px var(--line);padding:20px 20px}
+.card + .card{margin-top:12px}
+.meta{font-size:.82rem;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.res{font-weight:600;border-radius:6px;padding:1px 8px;font-size:.8rem;background:var(--value-soft);color:var(--value)}
+.card h3{font-size:1.12rem;line-height:1.45;margin:6px 0 10px}
+.card h3 a{color:inherit;text-underline-offset:3px;text-decoration-color:var(--line)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:0}
+.kv dt{font-size:.8rem;color:var(--muted);padding-top:3px;white-space:nowrap}
+.kv dd{margin:0;font-size:.98rem}
+.conflict{border-radius:12px;padding:10px 14px;background:var(--green-soft);font-size:.95rem;margin:0 0 10px}
+.conflict b{color:var(--green);margin-right:6px}
+details{margin-top:10px}
+summary{cursor:pointer;color:var(--ink-2);font-size:.92rem}
+.small{font-size:.9rem;color:var(--ink-2)}
+
+.q{border:0;border-radius:16px;padding:16px 18px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;text-align:left;font-family:var(--serif);font-size:1.08rem;line-height:1.6;width:100%}
+.q + .q{margin-top:10px}
+.q[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--value);background:var(--value-soft)}
+.stance{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.stance button{border:0;border-radius:12px;padding:12px 6px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;font-weight:600}
+.stance button[aria-pressed="true"]{background:var(--ink);color:var(--surface);box-shadow:none}
+.count{font-size:.82rem;color:var(--muted);text-align:right}
+label.l{display:block;font-weight:600;font-size:.95rem;margin:16px 0 6px}
+.code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.78rem;word-break:break-all;height:120px}
+
+dialog{border:0;border-radius:20px;padding:0;max-width:620px;width:calc(100% - 28px);max-height:min(78vh,720px);background:var(--surface);color:var(--ink);box-shadow:0 10px 40px rgba(0,0,0,.25)}
+dialog::backdrop{background:rgba(10,12,20,.45)}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:16px 18px 8px;position:sticky;top:0;background:var(--surface)}
+.dh h3{margin:0;font-family:var(--serif)}
+.db{padding:0 18px 18px}
+.unit{padding:10px 0;border-top:1px solid var(--line)}
+.unit .r{font-size:.8rem;color:var(--muted)}
+.tips{background:var(--surface);border-radius:14px;box-shadow:inset 0 0 0 1px var(--line);padding:10px 14px;margin:12px 0}
+.tips ol{margin:8px 0 2px;padding-left:1.2em;font-size:.93rem;color:var(--ink-2)}
+.tips li{margin:6px 0}
+.stepbox{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border-radius:16px;box-shadow:inset 0 0 0 1px var(--line);padding:14px 14px;margin-top:10px}
+.stepbox .sn{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--surface);font-size:.85rem;font-weight:600}
+.artlist{display:grid;gap:8px;max-height:46vh;overflow:auto;padding:2px}
+.art{border-radius:12px;padding:10px 12px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}
+.art.sel{box-shadow:inset 0 0 0 2px var(--value);background:var(--value-soft)}
+.art.clue{box-shadow:inset 0 0 0 2px var(--green)}
+.art .r{font-size:.8rem;color:var(--muted)}
+.art .cl{color:var(--green);font-weight:600}
+.art .quote{white-space:pre-line}
+.tk{cursor:pointer;border-radius:4px;padding:1px 0}
+.tk:hover{background:var(--line)}
+.tk.on{background:#FFE7A0;color:#151A2C}
+.methods{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.methods button{border:0;border-radius:12px;padding:11px 8px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;font-size:.93rem}
+.methods button[aria-pressed="true"]{background:var(--ink);color:var(--surface);box-shadow:none}
+.checks{list-style:none;margin:10px 0 0;padding:0;font-size:.88rem;color:var(--muted);display:grid;gap:2px}
+.checks li.ok{color:var(--green)}
+.mynote{border-radius:12px;padding:12px 14px;background:var(--value-soft);font-size:.93rem;margin:12px 0}
+.mynote b{display:block;font-size:.8rem;color:var(--value);margin-bottom:2px}
+.badge{font-size:.75rem;font-weight:600;color:var(--value);margin-left:6px}
+.selflist{display:grid;gap:10px;margin-top:6px}
+.selfrow{background:var(--surface);border-radius:14px;box-shadow:inset 0 0 0 1px var(--line);padding:12px 14px}
+.selfrow p{margin:0 0 8px;font-size:.98rem}
+.lv{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.lv button{border:0;border-radius:10px;padding:9px 4px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;font-weight:600}
+.lv button[aria-pressed="true"]{background:var(--ink);color:var(--surface);box-shadow:none}
+.mycon{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:var(--serif);font-size:1.15rem}
+.mycon input{flex:1;min-width:160px;font-family:var(--serif);font-size:1.15rem}
+.lk{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.lk button{border:0;border-radius:10px;padding:8px 2px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.lk button b{font-size:1.05rem}
+.lk button span{font-size:.68rem;color:var(--muted);line-height:1.2;text-align:center}
+.lk button[aria-checked="true"]{background:var(--ink);color:var(--surface);box-shadow:none}
+.lk button[aria-checked="true"] span{color:var(--surface)}
+.ex{border-top:1px solid var(--line);padding:10px 0 4px}
+.ex .tag{display:inline-block;font-size:.72rem;font-weight:600;border-radius:5px;padding:0 6px;background:var(--value-soft);color:var(--value);margin-right:4px}
+.idcard{background:var(--surface);border-radius:16px;box-shadow:inset 0 0 0 1px var(--line);padding:16px 16px 12px;margin-top:6px}
+.idcard .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.code6{font-size:1.6rem;letter-spacing:.35em;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0}
+.kv dt{font-size:.85rem;color:var(--muted)}
+.kv dd{margin:0}
+.guide{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 6px;font-size:.95rem;color:var(--ink-2)}
+.gstep{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--surface);font-size:.78rem;font-weight:600}
+.guide .left{margin-left:auto;font-size:.88rem}
+.vchips{gap:8px}
+.vchip{border:0;border-radius:999px;padding:8px 14px;cursor:pointer;font-size:.95rem;background:var(--surface)}
+.vchip.todo{box-shadow:inset 0 0 0 1.5px var(--value);color:var(--value);animation:nudge 2.4s ease-in-out infinite}
+.vchip.done{box-shadow:inset 0 0 0 1px var(--line);color:var(--ink-2)}
+.vchip.on{background:var(--value);color:var(--surface);box-shadow:none;animation:none}
+@keyframes nudge{0%,100%{transform:none}50%{transform:translateY(-2px)}}
+@media (prefers-reduced-motion:reduce){.vchip.todo{animation:none}}
+.term{border:0;background:none;padding:0;font:inherit;color:inherit;text-decoration:underline dotted var(--value);text-decoration-thickness:2px;text-underline-offset:3px;cursor:help}
+.gloss{border:0;background:none;color:var(--ink-2);cursor:pointer;font-size:.85rem;padding:6px 8px;border-radius:8px;white-space:nowrap}
+.gloss:hover{background:var(--line)}
+.crit{border-radius:12px;padding:10px 12px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);margin-top:8px}
+.crit .cn{font-weight:600}
+.crit .ca{font-size:.85rem;color:var(--muted);margin:2px 0 6px}
+.judge{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:6px}
+.judge button{border:0;border-radius:9px;padding:8px 4px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;font-size:.88rem}
+.judge button[aria-pressed="true"]{background:var(--ink);color:var(--surface);box-shadow:none}
+.mode{display:inline-flex;background:var(--surface);border-radius:12px;padding:4px;box-shadow:inset 0 0 0 1px var(--line);margin-bottom:12px}
+.mode button{border:0;background:none;border-radius:9px;padding:8px 16px;cursor:pointer;color:var(--ink-2)}
+.mode button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.orig{font-size:.85rem;margin-left:8px;white-space:nowrap}
+[hidden]{display:none!important}
+@media (min-width:640px){ .tiles{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:420px){ .app{padding:12px 14px 16px} .stance{grid-template-columns:1fr} .kv{grid-template-columns:1fr} }
+</style>
+<style>
+.portal-nav{position:relative;z-index:20;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.7rem;background:#17354a;padding:.7rem max(1rem,calc((100% - 1120px)/2));font:600 .95rem system-ui,sans-serif}
+.portal-nav div{display:flex;gap:1rem}.portal-nav a{color:white;text-decoration:underline;text-underline-offset:.2em}
+[hidden]{display:none!important}
+.storage-alert{position:sticky;bottom:0;z-index:100;background:#ffe3a0;color:#332300;padding:.75rem;text-align:center}
+@media(max-width:650px){.portal-nav{padding:.65rem 1rem}}
+</style></head>
+<body><nav class="portal-nav" aria-label="웹앱 메뉴"><a href="index.html">헌법 가치 탐구</a><div><a href="student.html">학생용</a><a href="teacher.html">교사용</a></div></nav><div class="storage-alert" role="alert" id="storageAlert" hidden></div>
+<div class="app">
+  <div class="top"><button class="back" id="back" aria-label="이전 단계">← 이전</button><div class="bar"><i id="prog"></i></div><span class="stepno" id="stepno"></span><button class="gloss" id="glossBtn" aria-label="용어 사전">📖 용어</button></div>
+  <main id="main" aria-live="polite"></main>
+  <div class="foot">제작: 인천광역시교육청 오희찬</div>
+</div>
+<dialog id="dlg"><div class="dh"><h3 id="dT"></h3><button class="back" id="dX">닫기</button></div><div class="db" id="dB"></div></dialog>
+
+<script>
+const DATA = {"chapters":["전문","제1장 총강","제2장 국민의 권리와 의무","제3장 국회","제4장 정부","제5장 법원","제6장 헌법재판소","제7장 선거관리","제8장 지방자치","제9장 경제","제10장 헌법개정"],"units":[{"c":0,"a":0,"p":"","t":"유구한 역사와 전통에 빛나는 우리 대한국민은 3·1운동으로 건립된 대한민국임시정부의 법통과 불의에 항거한 4·19민주이념을 계승하고, 조국의 민주개혁과 평화적 통일의 사명에 입각하여 정의·인도와 동포애로써 민족의 단결을 공고히 하고, 모든 사회적 폐습과 불의를 타파하며, 자율과 조화를 바탕으로 자유민주적 기본질서를 더욱 확고히 하여 정치·경제·사회·문화의 모든 영역에 있어서 각인의 기회를 균등히 하고, 능력을 최고도로 발휘하게 하며, 자유와 권리에 따르는 책임과 의무를 완수하게 하여, 안으로는 국민생활의 균등한 향상을 기하고 밖으로는 항구적인 세계평화와 인류공영에 이바지함으로써 우리들과 우리들의 자손의 안전과 자유와 행복을 영원히 확보할 것을 다짐하면서 1948년 7월 12일에 제정되고 8차에 걸쳐 개정된 헌법을 이제 국회의 의결을 거쳐 국민투표에 의하여 개정한다.","n":["역사","전통","대한","국민","운동","건립","대한민국","임시","정부","법통","불의","항거","민주","이념","계승","조국","민주","개혁","평화","통일","사명","입각","정의","인도","동포애","민족","단결","사회","폐습","불의","타파","자율","조화","바탕","자유","민주","기본질서","정치","경제","사회","문화","영역","기회","균등","능력","고도","발휘","자유","권리","책임","의무","완수","국민","생활","균등","향상","세계평화","인류","공영","이바지","자손","안전","자유","행복","확보","다짐","제정","개정","헌법","국회","의결","국민투표","개정"]},{"c":1,"a":1,"p":"①","t":"대한민국은 민주공화국이다.","n":["대한민국","민주공화국"]},{"c":1,"a":1,"p":"②","t":"대한민국의 주권은 국민에게 있고, 모든 권력은 국민으로부터 나온다.","n":["대한민국","주권","국민","권력","국민"]},{"c":1,"a":2,"p":"①","t":"대한민국의 국민이 되는 요건은 법률로 정한다.","n":["대한민국","국민","요건","법률"]},{"c":1,"a":2,"p":"②","t":"국가는 법률이 정하는 바에 의하여 재외국민을 보호할 의무를 진다.","n":["국가","법률","재외국민","보호","의무"]},{"c":1,"a":3,"p":"","t":"대한민국의 영토는 한반도와 그 부속도서로 한다.","n":["대한민국","영토","한반도","부속","도서"]},{"c":1,"a":4,"p":"","t":"대한민국은 통일을 지향하며, 자유민주적 기본질서에 입각한 평화적 통일정책을 수립하고 이를 추진한다.","n":["대한민국","통일","지향","자유","민주","기본질서","입각","평화","통일","정책","수립","추진"]},{"c":1,"a":5,"p":"①","t":"대한민국은 국제평화의 유지에 노력하고 침략적 전쟁을 부인한다.","n":["대한민국","국제평화","유지","노력","침략","전쟁","부인"]},{"c":1,"a":5,"p":"②","t":"국군은 국가의 안전보장과 국토방위의 신성한 의무를 수행함을 사명으로 하며, 그 정치적 중립성은 준수된다.","n":["국군","국가","안전","보장","국토","방위","신성","의무","수행","사명","정치","중립","준수"]},{"c":1,"a":6,"p":"①","t":"헌법에 의하여 체결·공포된 조약과 일반적으로 승인된 국제법규는 국내법과 같은 효력을 가진다.","n":["헌법","체결","공포","조약","일반","승인","국제법규","국내법","효력"]},{"c":1,"a":6,"p":"②","t":"외국인은 국제법과 조약이 정하는 바에 의하여 그 지위가 보장된다.","n":["외국인","국제법","조약","지위","보장"]},{"c":1,"a":7,"p":"①","t":"공무원은 국민전체에 대한 봉사자이며, 국민에 대하여 책임을 진다.","n":["공무원","국민","전체","봉사자","국민","책임"]},{"c":1,"a":7,"p":"②","t":"공무원의 신분과 정치적 중립성은 법률이 정하는 바에 의하여 보장된다.","n":["공무원","신분","정치","중립","법률","보장"]},{"c":1,"a":8,"p":"①","t":"정당의 설립은 자유이며, 복수정당제는 보장된다.","n":["정당","설립","자유","복수정당제","보장"]},{"c":1,"a":8,"p":"②","t":"정당은 그 목적·조직과 활동이 민주적이어야 하며, 국민의 정치적 의사형성에 참여하는데 필요한 조직을 가져야한다.","n":["정당","조직","활동","민주","국민","정치","의사","형성","참여","조직"]},{"c":1,"a":8,"p":"③","t":"정당은 법률이 정하는 바에 의하여 국가의 보호를 받으며, 국가는 법률이 정하는 바에 의하여 정당운영에 필요한 자금을 보조할 수 있다.","n":["정당","법률","국가","보호","국가","법률","정당","운영","자금","보조"]},{"c":1,"a":8,"p":"④","t":"정당의 목적이나 활동이 민주적 기본질서에 위배될 때에는 정부는 헌법재판소에 그 해산을 제소할 수 있고, 정당은 헌법재판소의 심판에 의하여 해산된다.","n":["정당","활동","민주","기본질서","위배","정부","헌법재판소","해산","제소","정당","헌법재판소","심판","해산"]},{"c":1,"a":9,"p":"","t":"국가는 전통문화의 계승·발전과 민족문화의 창달에 노력하여야 한다.","n":["국가","전통문화","계승","발전","민족","문화","창달","노력"]},{"c":2,"a":10,"p":"","t":"모든 국민은 인간으로서의 존엄과 가치를 가지며, 행복을 추구할 권리를 가진다. 국가는 개인이 가지는 불가침의 기본적 인권을 확인하고 이를 보장할 의무를 진다.","n":["국민","인간","존엄","가치","행복","추구","권리","국가","개인","불가침","기본","인권","확인","보장","의무"]},{"c":2,"a":11,"p":"①","t":"모든 국민은 법 앞에 평등하다. 누구든지 성별·종교 또는 사회적 신분에 의하여 정치적·경제적·사회적·문화적 생활의 모든 영역에 있어서 차별을 받지 아니한다.","n":["국민","평등","성별","종교","사회","신분","정치","경제","사회","문화","생활","영역","차별"]},{"c":2,"a":11,"p":"②","t":"사회적 특수계급의 제도는 인정되지 아니하며, 어떠한 형태로도 이를 창설할 수 없다.","n":["사회","특수","계급","제도","인정","형태","창설"]},{"c":2,"a":11,"p":"③","t":"훈장등의 영전은 이를 받은 자에게만 효력이 있고, 어떠한 특권도 이에 따르지 아니한다.","n":["훈장","영전","효력","특권"]},{"c":2,"a":12,"p":"①","t":"모든 국민은 신체의 자유를 가진다. 누구든지 법률에 의하지 아니하고는 체포·구속·압수·수색 또는 심문을 받지 아니하며, 법률과 적법한 절차에 의하지 아니하고는 처벌·보안처분 또는 강제노역을 받지 아니한다.","n":["국민","신체","자유","법률","체포","구속","압수","수색","심문","법률","적법","절차","처벌","보안처분","강제","노역"]},{"c":2,"a":12,"p":"②","t":"모든 국민은 고문을 받지 아니하며, 형사상 자기에게 불리한 진술을 강요당하지 아니한다.","n":["국민","고문","형사","불리","진술","강요"]},{"c":2,"a":12,"p":"③","t":"체포·구속·압수 또는 수색을 할 때에는 적법한 절차에 따라 검사의 신청에 의하여 법관이 발부한 영장을 제시하여야 한다. 다만, 현행범인인 경우와 장기 3년 이상의 형에 해당하는 죄를 범하고 도피 또는 증거인멸의 염려가 있을 때에는 사후에 영장을 청구할 수 있다.","n":["체포","구속","압수","수색","적법","절차","검사","신청","법관","발부","영장","제시","현행범인","장기","도피","증거","인멸","염려","사후","영장","청구"]},{"c":2,"a":12,"p":"④","t":"누구든지 체포 또는 구속을 당한 때에는 즉시 변호인의 조력을 받을 권리를 가진다. 다만, 형사피고인이 스스로 변호인을 구할 수 없을 때에는 법률이 정하는 바에 의하여 국가가 변호인을 붙인다.","n":["체포","구속","즉시","변호인","조력","권리","형사피고인","변호인","법률","국가","변호인"]},{"c":2,"a":12,"p":"⑤","t":"누구든지 체포 또는 구속의 이유와 변호인의 조력을 받을 권리가 있음을 고지받지 아니하고는 체포 또는 구속을 당하지 아니한다. 체포 또는 구속을 당한 자의 가족등 법률이 정하는 자에게는 그 이유와 일시·장소가 지체없이 통지되어야 한다.","n":["체포","구속","변호인","조력","권리","고지","체포","구속","체포","구속","가족","법률","일시","장소","지체","통지"]},{"c":2,"a":12,"p":"⑥","t":"누구든지 체포 또는 구속을 당한 때에는 적부의 심사를 법원에 청구할 권리를 가진다.","n":["체포","구속","심사","법원","청구","권리"]},{"c":2,"a":12,"p":"⑦","t":"피고인의 자백이 고문·폭행·협박·구속의 부당한 장기화 또는 기망 기타의 방법에 의하여 자의로 진술된 것이 아니라고 인정될 때 또는 정식재판에 있어서 피고인의 자백이 그에게 불리한 유일한 증거일 때에는 이를 유죄의 증거로 삼거나 이를 이유로 처벌할 수 없다.","n":["피고인","자백","고문","폭행","협박","구속","부당","장기","자의","진술","인정","정식","재판","피고인","자백","불리","유일","증거","유죄","증거","처벌"]},{"c":2,"a":13,"p":"①","t":"모든 국민은 행위시의 법률에 의하여 범죄를 구성하지 아니하는 행위로 소추되지 아니하며, 동일한 범죄에 대하여 거듭 처벌받지 아니한다.","n":["국민","행위","법률","범죄","구성","행위","소추","동일","범죄","처벌"]},{"c":2,"a":13,"p":"②","t":"모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을 박탈당하지 아니한다.","n":["국민","소급","입법","참정","제한","재산권","박탈"]},{"c":2,"a":13,"p":"③","t":"모든 국민은 자기의 행위가 아닌 친족의 행위로 인하여 불이익한 처우를 받지 아니한다.","n":["국민","행위","친족","행위","이익","처우"]},{"c":2,"a":14,"p":"","t":"모든 국민은 거주·이전의 자유를 가진다.","n":["국민","거주","자유"]},{"c":2,"a":15,"p":"","t":"모든 국민은 직업선택의 자유를 가진다.","n":["국민","직업","선택","자유"]},{"c":2,"a":16,"p":"","t":"모든 국민은 주거의 자유를 침해받지 아니한다. 주거에 대한 압수나 수색을 할 때에는 검사의 신청에 의하여 법관이 발부한 영장을 제시하여야 한다.","n":["국민","주거","자유","침해","주거","압수","수색","검사","신청","법관","발부","영장","제시"]},{"c":2,"a":17,"p":"","t":"모든 국민은 사생활의 비밀과 자유를 침해받지 아니한다.","n":["국민","사생활","비밀","자유","침해"]},{"c":2,"a":18,"p":"","t":"모든 국민은 통신의 비밀을 침해받지 아니한다.","n":["국민","통신","비밀","침해"]},{"c":2,"a":19,"p":"","t":"모든 국민은 양심의 자유를 가진다.","n":["국민","양심","자유"]},{"c":2,"a":20,"p":"①","t":"모든 국민은 종교의 자유를 가진다.","n":["국민","종교","자유"]},{"c":2,"a":20,"p":"②","t":"국교는 인정되지 아니하며, 종교와 정치는 분리된다.","n":["국교","인정","종교","정치","분리"]},{"c":2,"a":21,"p":"①","t":"모든 국민은 언론·출판의 자유와 집회·결사의 자유를 가진다.","n":["국민","언론","출판","자유","집회","결사","자유"]},{"c":2,"a":21,"p":"②","t":"언론·출판에 대한 허가나 검열과 집회·결사에 대한 허가는 인정되지 아니한다.","n":["언론","출판","허가","검열","집회","결사","허가","인정"]},{"c":2,"a":21,"p":"③","t":"통신·방송의 시설기준과 신문의 기능을 보장하기 위하여 필요한 사항은 법률로 정한다.","n":["통신","방송","시설","기준","신문","기능","보장","법률"]},{"c":2,"a":21,"p":"④","t":"언론·출판은 타인의 명예나 권리 또는 공중도덕이나 사회윤리를 침해하여서는 아니된다. 언론·출판이 타인의 명예나 권리를 침해한 때에는 피해자는 이에 대한 피해의 배상을 청구할 수 있다.","n":["언론","출판","타인","명예","권리","공중도덕","사회","윤리","침해","언론","출판","타인","명예","권리","침해","피해자","피해","배상","청구"]},{"c":2,"a":22,"p":"①","t":"모든 국민은 학문과 예술의 자유를 가진다.","n":["국민","학문","예술","자유"]},{"c":2,"a":22,"p":"②","t":"저작자·발명가·과학기술자와 예술가의 권리는 법률로써 보호한다.","n":["저작","발명가","과학","기술자","예술가","권리","법률","보호"]},{"c":2,"a":23,"p":"①","t":"모든 국민의 재산권은 보장된다. 그 내용과 한계는 법률로 정한다.","n":["국민","재산권","보장","한계","법률"]},{"c":2,"a":23,"p":"②","t":"재산권의 행사는 공공복리에 적합하도록 하여야 한다.","n":["재산권","행사","공공복리","적합"]},{"c":2,"a":23,"p":"③","t":"공공필요에 의한 재산권의 수용·사용 또는 제한 및 그에 대한 보상은 법률로써 하되, 정당한 보상을 지급하여야한다.","n":["공공필요","재산권","수용","사용","제한","보상","법률","보상","지급"]},{"c":2,"a":24,"p":"","t":"모든 국민은 법률이 정하는 바에 의하여 선거권을 가진다.","n":["국민","법률","선거권"]},{"c":2,"a":25,"p":"","t":"모든 국민은 법률이 정하는 바에 의하여 공무담임권을 가진다.","n":["국민","법률","공무담임권"]},{"c":2,"a":26,"p":"①","t":"모든 국민은 법률이 정하는 바에 의하여 국가기관에 문서로 청원할 권리를 가진다.","n":["국민","법률","국가","기관","문서","청원","권리"]},{"c":2,"a":26,"p":"②","t":"국가는 청원에 대하여 심사할 의무를 진다.","n":["국가","청원","심사","의무"]},{"c":2,"a":27,"p":"①","t":"모든 국민은 헌법과 법률이 정한 법관에 의하여 법률에 의한 재판을 받을 권리를 가진다.","n":["국민","헌법","법률","법관","법률","재판","권리"]},{"c":2,"a":27,"p":"②","t":"군인 또는 군무원이 아닌 국민은 대한민국의 영역 안에서는 중대한 군사상 기밀·초병·초소·유독음식물공급 ·포로·군용물에 관한 죄중 법률이 정한 경우와 비상계엄이 선포된 경우를 제외하고는 군사법원의 재판을 받지 아니한다.","n":["군인","군무원","국민","대한민국","영역","중대","군사","기밀","초병","초소","유독","음식물","공급","포로","군용","법률","비상계엄","선포","군사법원","재판"]},{"c":2,"a":27,"p":"③","t":"모든 국민은 신속한 재판을 받을 권리를 가진다. 형사피고인은 상당한 이유가 없는 한 지체없이 공개재판을 받을 권리를 가진다.","n":["국민","신속","재판","권리","형사피고인","상당","지체","공개","재판","권리"]},{"c":2,"a":27,"p":"④","t":"형사피고인은 유죄의 판결이 확정될 때까지는 무죄로 추정된다.","n":["형사피고인","유죄","판결","확정","무죄","추정"]},{"c":2,"a":27,"p":"⑤","t":"형사피해자는 법률이 정하는 바에 의하여 당해 사건의 재판절차에서 진술할 수 있다.","n":["형사피해자","법률","당해","사건","재판","절차","진술"]},{"c":2,"a":28,"p":"","t":"형사피의자 또는 형사피고인으로서 구금되었던 자가 법률이 정하는 불기소처분을 받거나 무죄판결을 받은 때에는 법률이 정하는 바에 의하여 국가에 정당한 보상을 청구할 수 있다.","n":["형사피의자","형사피고인","구금","법률","기소","처분","무죄","판결","법률","국가","보상","청구"]},{"c":2,"a":29,"p":"①","t":"공무원의 직무상 불법행위로 손해를 받은 국민은 법률이 정하는 바에 의하여 국가 또는 공공단체에 정당한 배상을 청구할 수 있다. 이 경우 공무원 자신의 책임은 면제되지 아니한다.","n":["공무원","직무","불법","행위","손해","국민","법률","국가","공공","단체","배상","청구","공무원","자신","책임","면제"]},{"c":2,"a":29,"p":"②","t":"군인·군무원·경찰공무원 기타 법률이 정하는 자가 전투·훈련등 직무집행과 관련하여 받은 손해에 대하여는 법률이 정하는 보상 외에 국가 또는 공공단체에 공무원의 직무상 불법행위로 인한 배상은 청구할 수 없다.","n":["군인","군무원","경찰","공무원","법률","전투","훈련","직무","집행","손해","법률","보상","국가","공공","단체","공무원","직무","불법","행위","배상","청구"]},{"c":2,"a":30,"p":"","t":"타인의 범죄행위로 인하여 생명·신체에 대한 피해를 받은 국민은 법률이 정하는 바에 의하여 국가로부터 구조를 받을 수 있다.","n":["타인","범죄","행위","생명","신체","피해","국민","법률","국가","구조"]},{"c":2,"a":31,"p":"①","t":"모든 국민은 능력에 따라 균등하게 교육을 받을 권리를 가진다.","n":["국민","능력","균등","교육","권리"]},{"c":2,"a":31,"p":"②","t":"모든 국민은 그 보호하는 자녀에게 적어도 초등교육과 법률이 정하는 교육을 받게 할 의무를 진다.","n":["국민","보호","자녀","초등","교육","법률","교육","의무"]},{"c":2,"a":31,"p":"③","t":"의무교육은 무상으로 한다.","n":["의무교육","무상"]},{"c":2,"a":31,"p":"④","t":"교육의 자주성·전문성·정치적 중립성 및 대학의 자율성은 법률이 정하는 바에 의하여 보장된다.","n":["교육","자주","전문","정치","중립","대학","자율","법률","보장"]},{"c":2,"a":31,"p":"⑤","t":"국가는 평생교육을 진흥하여야 한다.","n":["국가","평생교육","진흥"]},{"c":2,"a":31,"p":"⑥","t":"학교교육 및 평생교육을 포함한 교육제도와 그 운영, 교육재정 및 교원의 지위에 관한 기본적인 사항은 법률로 정한다.","n":["학교","교육","평생교육","포함","교육","제도","운영","교육","재정","교원","지위","기본","법률"]},{"c":2,"a":32,"p":"①","t":"모든 국민은 근로의 권리를 가진다. 국가는 사회적·경제적 방법으로 근로자의 고용의 증진과 적정임금의 보장에 노력하여야 하며, 법률이 정하는 바에 의하여 최저임금제를 시행하여야 한다.","n":["국민","근로","권리","국가","사회","경제","근로자","고용","증진","적정","임금","보장","노력","법률","최저임금제","시행"]},{"c":2,"a":32,"p":"②","t":"모든 국민은 근로의 의무를 진다. 국가는 근로의 의무의 내용과 조건을 민주주의원칙에 따라 법률로 정한다.","n":["국민","근로","의무","국가","근로","의무","조건","민주주의","원칙","법률"]},{"c":2,"a":32,"p":"③","t":"근로조건의 기준은 인간의 존엄성을 보장하도록 법률로 정한다.","n":["근로","조건","기준","인간","존엄","보장","법률"]},{"c":2,"a":32,"p":"④","t":"여자의 근로는 특별한 보호를 받으며, 고용·임금 및 근로조건에 있어서 부당한 차별을 받지 아니한다.","n":["여자","근로","특별","보호","고용","임금","근로","조건","부당","차별"]},{"c":2,"a":32,"p":"⑤","t":"연소자의 근로는 특별한 보호를 받는다.","n":["연소자","근로","특별","보호"]},{"c":2,"a":32,"p":"⑥","t":"국가유공자·상이군경 및 전몰군경의 유가족은 법률이 정하는 바에 의하여 우선적으로 근로의 기회를 부여받는다.","n":["국가유공자","상이군경","전몰","군경","유가족","법률","우선","근로","기회","부여"]},{"c":2,"a":33,"p":"①","t":"근로자는 근로조건의 향상을 위하여 자주적인 단결권·단체교섭권 및 단체행동권을 가진다.","n":["근로자","근로","조건","향상","자주","단결권","단체교섭권","단체행동권"]},{"c":2,"a":33,"p":"②","t":"공무원인 근로자는 법률이 정하는 자에 한하여 단결권·단체교섭권 및 단체행동권을 가진다.","n":["공무원","근로자","법률","단결권","단체교섭권","단체행동권"]},{"c":2,"a":33,"p":"③","t":"법률이 정하는 주요방위산업체에 종사하는 근로자의 단체행동권은 법률이 정하는 바에 의하여 이를 제한하거나 인정하지 아니할 수 있다.","n":["법률","주요","방위","산업체","종사","근로자","단체행동권","법률","제한","인정"]},{"c":2,"a":34,"p":"①","t":"모든 국민은 인간다운 생활을 할 권리를 가진다.","n":["국민","인간","생활","권리"]},{"c":2,"a":34,"p":"②","t":"국가는 사회보장·사회복지의 증진에 노력할 의무를 진다.","n":["국가","사회보장","사회복지","증진","노력","의무"]},{"c":2,"a":34,"p":"③","t":"국가는 여자의 복지와 권익의 향상을 위하여 노력하여야 한다.","n":["국가","여자","복지","권익","향상","노력"]},{"c":2,"a":34,"p":"④","t":"국가는 노인과 청소년의 복지향상을 위한 정책을 실시할 의무를 진다.","n":["국가","노인","청소년","복지","향상","정책","실시","의무"]},{"c":2,"a":34,"p":"⑤","t":"신체장애자 및 질병·노령 기타의 사유로 생활능력이 없는 국민은 법률이 정하는 바에 의하여 국가의 보호를 받는다.","n":["신체","장애자","질병","노령","생활","능력","국민","법률","국가","보호"]},{"c":2,"a":34,"p":"⑥","t":"국가는 재해를 예방하고 그 위험으로부터 국민을 보호하기 위하여 노력하여야 한다.","n":["국가","재해","예방","위험","국민","보호","노력"]},{"c":2,"a":35,"p":"①","t":"모든 국민은 건강하고 쾌적한 환경에서 생활할 권리를 가지며, 국가와 국민은 환경보전을 위하여 노력하여야한다.","n":["국민","건강","환경","생활","권리","국가","국민","환경","보전","노력"]},{"c":2,"a":35,"p":"②","t":"환경권의 내용과 행사에 관하여는 법률로 정한다.","n":["환경권","행사","법률"]},{"c":2,"a":35,"p":"③","t":"국가는 주택개발정책등을 통하여 모든 국민이 쾌적한 주거생활을 할 수 있도록 노력하여야 한다.","n":["국가","주택","개발","정책","국민","주거","생활","노력"]},{"c":2,"a":36,"p":"①","t":"혼인과 가족생활은 개인의 존엄과 양성의 평등을 기초로 성립되고 유지되어야 하며, 국가는 이를 보장한다.","n":["혼인","가족","생활","개인","존엄","양성","평등","기초","성립","유지","국가","보장"]},{"c":2,"a":36,"p":"②","t":"국가는 모성의 보호를 위하여 노력하여야 한다.","n":["국가","모성","보호","노력"]},{"c":2,"a":36,"p":"③","t":"모든 국민은 보건에 관하여 국가의 보호를 받는다.","n":["국민","보건","국가","보호"]},{"c":2,"a":37,"p":"①","t":"국민의 자유와 권리는 헌법에 열거되지 아니한 이유로 경시되지 아니한다.","n":["국민","자유","권리","헌법","열거","경시"]},{"c":2,"a":37,"p":"②","t":"국민의 모든 자유와 권리는 국가안전보장·질서유지 또는 공공복리를 위하여 필요한 경우에 한하여 법률로써 제한할 수 있으며, 제한하는 경우에도 자유와 권리의 본질적인 내용을 침해할 수 없다.","n":["국민","자유","권리","국가안전보장","질서","유지","공공복리","법률","제한","제한","자유","권리","본질","침해"]},{"c":2,"a":38,"p":"","t":"모든 국민은 법률이 정하는 바에 의하여 납세의 의무를 진다.","n":["국민","법률","납세","의무"]},{"c":2,"a":39,"p":"①","t":"모든 국민은 법률이 정하는 바에 의하여 국방의 의무를 진다.","n":["국민","법률","국방","의무"]},{"c":2,"a":39,"p":"②","t":"누구든지 병역의무의 이행으로 인하여 불이익한 처우를 받지 아니한다.","n":["병역","의무","이행","이익","처우"]},{"c":3,"a":40,"p":"","t":"입법권은 국회에 속한다.","n":["입법","국회"]},{"c":3,"a":41,"p":"①","t":"국회는 국민의 보통·평등·직접·비밀선거에 의하여 선출된 국회의원으로 구성한다.","n":["국회","국민","보통","평등","직접","비밀","선거","선출","국회의원","구성"]},{"c":3,"a":41,"p":"②","t":"국회의원의 수는 법률로 정하되, 200인 이상으로 한다.","n":["국회의원","법률"]},{"c":3,"a":41,"p":"③","t":"국회의원의 선거구와 비례대표제 기타 선거에 관한 사항은 법률로 정한다.","n":["국회의원","선거구","비례대표제","선거","법률"]},{"c":3,"a":42,"p":"","t":"국회의원의 임기는 4년으로 한다.","n":["국회의원","임기"]},{"c":3,"a":43,"p":"","t":"국회의원은 법률이 정하는 직을 겸할 수 없다.","n":["국회의원","법률"]},{"c":3,"a":44,"p":"①","t":"국회의원은 현행범인인 경우를 제외하고는 회기 중 국회의 동의없이 체포 또는 구금되지 아니한다.","n":["국회의원","현행범인","회기","국회","동의","체포","구금"]},{"c":3,"a":44,"p":"②","t":"국회의원이 회기 전에 체포 또는 구금된 때에는 현행범인이 아닌 한 국회의 요구가 있으면 회기 중 석방된다.","n":["국회의원","회기","체포","구금","현행범인","국회","요구","회기","석방"]},{"c":3,"a":45,"p":"","t":"국회의원은 국회에서 직무상 행한 발언과 표결에 관하여 국회 외에서 책임을 지지 아니한다.","n":["국회의원","국회","직무","발언","표결","국회","책임"]},{"c":3,"a":46,"p":"①","t":"국회의원은 청렴의 의무가 있다.","n":["국회의원","청렴","의무"]},{"c":3,"a":46,"p":"②","t":"국회의원은 국가이익을 우선하여 양심에 따라 직무를 행한다.","n":["국회의원","국가","이익","우선","양심","직무"]},{"c":3,"a":46,"p":"③","t":"국회의원은 그 지위를 남용하여 국가·공공단체 또는 기업체와의 계약이나 그 처분에 의하여 재산상의 권리·이익 또는 직위를 취득하거나 타인을 위하여 그 취득을 알선할 수 없다.","n":["국회의원","지위","남용","국가","공공","단체","기업체","계약","처분","재산","권리","이익","직위","취득","타인","취득","알선"]},{"c":3,"a":47,"p":"①","t":"국회의 정기회는 법률이 정하는 바에 의하여 매년 1회 집회되며, 국회의 임시회는 대통령 또는 국회재적의원 4분의 1 이상의 요구에 의하여 집회된다.","n":["국회","정기","법률","집회","국회","임시회","대통령","국회","재적의원","요구","집회"]},{"c":3,"a":47,"p":"②","t":"정기회의 회기는 100일을, 임시회의 회기는 30일을 초과할 수 없다.","n":["정기","회의","회기","임시회","회기","초과"]},{"c":3,"a":47,"p":"③","t":"대통령이 임시회의 집회를 요구할 때에는 기간과 집회요구의 이유를 명시하여야 한다.","n":["대통령","임시","회의","집회","요구","집회","요구","명시"]},{"c":3,"a":48,"p":"","t":"국회는 의장 1인과 부의장 2인을 선출한다.","n":["국회","의장","부의장","선출"]},{"c":3,"a":49,"p":"","t":"국회는 헌법 또는 법률에 특별한 규정이 없는 한 재적의원 과반수의 출석과 출석의원 과반수의 찬성으로 의결한다. 가부동수인 때에는 부결된 것으로 본다.","n":["국회","헌법","법률","특별","재적의원","과반수","출석","출석의원","과반수","찬성","의결","가부","동수","부결"]},{"c":3,"a":50,"p":"①","t":"국회의 회의는 공개한다. 다만, 출석의원 과반수의 찬성이 있거나 의장이 국가의 안전보장을 위하여 필요하다고 인정할 때에는 공개하지 아니할 수 있다.","n":["국회","회의","공개","출석의원","과반수","찬성","의장","국가","안전","보장","인정","공개"]},{"c":3,"a":50,"p":"②","t":"공개하지 아니한 회의내용의 공표에 관하여는 법률이 정하는 바에 의한다.","n":["공개","회의","공표","법률"]},{"c":3,"a":51,"p":"","t":"국회에 제출된 법률안 기타의 의안은 회기 중에 의결되지 못한 이유로 폐기되지 아니한다. 다만, 국회의원의 임기가 만료된 때에는 그러하지 아니하다.","n":["국회","제출","법률안","의안","회기","의결","폐기","국회의원","임기","만료"]},{"c":3,"a":52,"p":"","t":"국회의원과 정부는 법률안을 제출할 수 있다.","n":["국회의원","정부","법률안","제출"]},{"c":3,"a":53,"p":"①","t":"국회에서 의결된 법률안은 정부에 이송되어 15일 이내에 대통령이 공포한다.","n":["국회","의결","법률안","정부","이송","이내","대통령","공포"]},{"c":3,"a":53,"p":"②","t":"법률안에 이의가 있을 때에는 대통령은 제1항의 기간내에 이의서를 붙여 국회로 환부하고, 그 재의를 요구할 수 있다. 국회의 폐회 중에도 또한 같다.","n":["법률안","이의","대통령","이의","국회","환부","재의","요구","국회","폐회"]},{"c":3,"a":53,"p":"③","t":"대통령은 법률안의 일부에 대하여 또는 법률안을 수정하여 재의를 요구할 수 없다.","n":["대통령","법률안","일부","법률안","수정","재의","요구"]},{"c":3,"a":53,"p":"④","t":"재의의 요구가 있을 때에는 국회는 재의에 붙이고, 재적의원 과반수의 출석과 출석의원 3분의 2 이상의 찬성으로 전과 같은 의결을 하면 그 법률안은 법률로서 확정된다.","n":["재의","요구","국회","재의","재적의원","과반수","출석","출석의원","찬성","의결","법률안","법률","확정"]},{"c":3,"a":53,"p":"⑤","t":"대통령이 제1항의 기간 내에 공포나 재의의 요구를 하지 아니한 때에도 그 법률안은 법률로서 확정된다.","n":["대통령","공포","재의","요구","법률안","법률","확정"]},{"c":3,"a":53,"p":"⑥","t":"대통령은 제4항과 제5항의 규정에 의하여 확정된 법률을 지체없이 공포하여야 한다. 제5항에 의하여 법률이 확정된 후 또는 제4항에 의한 확정법률이 정부에 이송된 후 5일 이내에 대통령이 공포하지 아니할 때에는 국회의장이 이를 공포한다.","n":["대통령","확정","법률","지체","공포","법률","확정","확정","법률","정부","이송","이내","대통령","공포","국회의장","공포"]},{"c":3,"a":53,"p":"⑦","t":"법률은 특별한 규정이 없는 한 공포한 날로부터 20일을 경과함으로써 효력을 발생한다.","n":["법률","특별","공포","경과","효력","발생"]},{"c":3,"a":54,"p":"①","t":"국회는 국가의 예산안을 심의·확정한다.","n":["국회","국가","예산안","심의","확정"]},{"c":3,"a":54,"p":"②","t":"정부는 회계연도마다 예산안을 편성하여 회계연도 개시 90일 전까지 국회에 제출하고, 국회는 회계연도 개시 30일 전까지 이를 의결하여야 한다.","n":["정부","회계","연도","예산안","편성","회계","연도","개시","국회","제출","국회","회계","연도","개시","의결"]},{"c":3,"a":54,"p":"③","t":"새로운 회계연도가 개시될 때까지 예산안이 의결되지 못한 때에는 정부는 국회에서 예산안이 의결될 때까지 다음의 목적을 위한 경비는 전년도 예산에 준하여 집행할 수 있다.\n1. 헌법이나 법률에 의하여 설치된 기관 또는 시설의 유지·운영\n2. 법률상 지출의무의 이행\n3. 이미 예산으로 승인된 사업의 계속","n":["회계","연도","개시","예산안","의결","정부","국회","예산안","의결","경비","전년도","예산","집행","헌법","법률","설치","기관","시설","유지","운영","법률","지출","의무","이행","예산","승인","사업"]},{"c":3,"a":55,"p":"①","t":"한 회계연도를 넘어 계속하여 지출할 필요가 있을 때에는 정부는 연한을 정하여 계속비로서 국회의 의결을 얻어야 한다.","n":["회계","연도","계속","지출","정부","연한","계속비","국회","의결"]},{"c":3,"a":55,"p":"②","t":"예비비는 총액으로 국회의 의결을 얻어야 한다. 예비비의 지출은 차기국회의 승인을 얻어야 한다.","n":["예비비","총액","국회","의결","예비비","지출","차기","국회","승인"]},{"c":3,"a":56,"p":"","t":"정부는 예산에 변경을 가할 필요가 있을 때에는 추가경정예산안을 편성하여 국회에 제출할 수 있다.","n":["정부","예산","변경","추가경정예산안","편성","국회","제출"]},{"c":3,"a":57,"p":"","t":"국회는 정부의 동의 없이 정부가 제출한 지출예산 각항의 금액을 증가하거나 새 비목을 설치할 수 없다.","n":["국회","정부","동의","정부","제출","지출","예산","금액","증가","비목","설치"]},{"c":3,"a":58,"p":"","t":"국채를 모집하거나 예산 외에 국가의 부담이 될 계약을 체결하려 할 때에는 정부는 미리 국회의 의결을 얻어야한다.","n":["국채","모집","예산","국가","부담","계약","체결","정부","국회","의결"]},{"c":3,"a":59,"p":"","t":"조세의 종목과 세율은 법률로 정한다.","n":["조세","종목","세율","법률"]},{"c":3,"a":60,"p":"①","t":"국회는 상호원조 또는 안전보장에 관한 조약, 중요한 국제조직에 관한 조약, 우호통상항해조약, 주권의 제약에 관한 조약, 강화조약, 국가나 국민에게 중대한 재정적 부담을 지우는 조약 또는 입법사항에 관한 조약의 체결·비준에 대한 동의권을 가진다.","n":["국회","원조","안전","보장","조약","중요","국제","조직","조약","우호","통상","항해","조약","주권","제약","조약","강화","조약","국가","국민","중대","재정","부담","조약","입법","조약","체결","비준","동의"]},{"c":3,"a":60,"p":"②","t":"국회는 선전포고, 국군의 외국에의 파견 또는 외국군대의 대한민국 영역 안에서의 주류에 대한 동의권을 가진다.","n":["국회","선전","포고","국군","외국","파견","외국","군대","대한민국","영역","주류","동의"]},{"c":3,"a":61,"p":"①","t":"국회는 국정을 감사하거나 특정한 국정사안에 대하여 조사할 수 있으며, 이에 필요한 서류의 제출 또는 증인의 출석과 증언이나 의견의 진술을 요구할 수 있다.","n":["국회","국정","감사","특정","국정","사안","조사","서류","제출","증인","출석","증언","의견","진술","요구"]},{"c":3,"a":61,"p":"②","t":"국정감사 및 조사에 관한 절차 기타 필요한 사항은 법률로 정한다.","n":["국정감사","조사","절차","법률"]},{"c":3,"a":62,"p":"①","t":"국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여 국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다.","n":["국무총리","국무위원","정부위원","국회","위원회","출석","국정","처리","상황","보고","의견","진술","질문","응답"]},{"c":3,"a":62,"p":"②","t":"국회나 그 위원회의 요구가 있을 때에는 국무총리·국무위원 또는 정부위원은 출석·답변하여야 하며, 국무총리 또는 국무위원이 출석요구를 받은 때에는 국무위원 또는 정부위원으로 하여금 출석·답변하게 할 수 있다.","n":["국회","위원회","요구","국무총리","국무위원","정부위원","출석","답변","국무총리","국무위원","출석","요구","국무위원","정부위원","출석","답변"]},{"c":3,"a":63,"p":"①","t":"국회는 국무총리 또는 국무위원의 해임을 대통령에게 건의할 수 있다.","n":["국회","국무총리","국무위원","해임","대통령","건의"]},{"c":3,"a":63,"p":"②","t":"제1항의 해임건의는 국회재적의원 3분의 1 이상의 발의에 의하여 국회재적의원 과반수의 찬성이 있어야 한다.","n":["해임","건의","국회","재적의원","발의","국회","재적의원","과반수","찬성"]},{"c":3,"a":64,"p":"①","t":"국회는 법률에 저촉되지 아니하는 범위 안에서 의사와 내부규율에 관한 규칙을 제정할 수 있다.","n":["국회","법률","저촉","의사","내부","규율","규칙","제정"]},{"c":3,"a":64,"p":"②","t":"국회는 의원의 자격을 심사하며, 의원을 징계할 수 있다.","n":["국회","의원","자격","심사","의원","징계"]},{"c":3,"a":64,"p":"③","t":"의원을 제명하려면 국회재적의원 3분의 2 이상의 찬성이 있어야 한다.","n":["의원","제명","국회","재적의원","찬성"]},{"c":3,"a":64,"p":"④","t":"제2항과 제3항의 처분에 대하여는 법원에 제소할 수 없다.","n":["처분","법원","제소"]},{"c":3,"a":65,"p":"①","t":"대통령·국무총리·국무위원·행정각부의 장·헌법재판소 재판관·법관·중앙선거관리위원회 위원·감사원장·감사위원 기타 법률이 정한 공무원이 그 직무집행에 있어서 헌법이나 법률을 위배한 때에는 국회는 탄핵의 소추를 의결할 수 있다.","n":["대통령","국무총리","국무위원","행정각부","헌법재판소","재판관","법관","중앙선거관리위원회","위원","감사원장","감사위원","법률","공무원","직무","집행","헌법","법률","위배","국회","탄핵","소추","의결"]},{"c":3,"a":65,"p":"②","t":"제1항의 탄핵소추는 국회재적의원 3분의 1 이상의 발의가 있어야 하며, 그 의결은 국회재적의원 과반수의 찬성이 있어야 한다. 다만, 대통령에 대한 탄핵소추는 국회재적의원 과반수의 발의와 국회재적의원 3분의 2 이상의 찬성이 있어야 한다.","n":["탄핵소추","국회","재적의원","발의","의결","국회","재적의원","과반수","찬성","대통령","탄핵소추","국회","재적의원","과반수","발의","국회","재적의원","찬성"]},{"c":3,"a":65,"p":"③","t":"탄핵소추의 의결을 받은 자는 탄핵심판이 있을 때까지 그 권한행사가 정지된다.","n":["탄핵소추","의결","탄핵심판","권한","행사","정지"]},{"c":3,"a":65,"p":"④","t":"탄핵결정은 공직으로부터 파면함에 그친다. 그러나, 이에 의하여 민사상이나 형사상의 책임이 면제되지는 아니한다.","n":["탄핵","결정","공직","파면","민사","형사","책임","면제"]},{"c":4,"a":66,"p":"①","t":"대통령은 국가의 원수이며, 외국에 대하여 국가를 대표한다.","n":["대통령","국가","원수","외국","국가","대표"]},{"c":4,"a":66,"p":"②","t":"대통령은 국가의 독립·영토의 보전·국가의 계속성과 헌법을 수호할 책무를 진다.","n":["대통령","국가","독립","영토","보전","국가","계속","헌법","수호","책무"]},{"c":4,"a":66,"p":"③","t":"대통령은 조국의 평화적 통일을 위한 성실한 의무를 진다.","n":["대통령","조국","평화","통일","성실","의무"]},{"c":4,"a":66,"p":"④","t":"행정권은 대통령을 수반으로 하는 정부에 속한다.","n":["행정","대통령","수반","정부"]},{"c":4,"a":67,"p":"①","t":"대통령은 국민의 보통·평등·직접·비밀선거에 의하여 선출한다.","n":["대통령","국민","보통","평등","직접","비밀","선거","선출"]},{"c":4,"a":67,"p":"②","t":"제1항의 선거에 있어서 최고득표자가 2인 이상인 때에는 국회의 재적의원 과반수가 출석한 공개회의에서 다수표를 얻은 자를 당선자로 한다.","n":["선거","최고","득표자","국회","재적의원","과반수","출석","공개","회의","다수","당선자"]},{"c":4,"a":67,"p":"③","t":"대통령후보자가 1인일 때에는 그 득표수가 선거권자 총수의 3분의 1 이상이 아니면 대통령으로 당선될 수 없다.","n":["대통령","후보자","득표","선거권","총수","대통령","당선"]},{"c":4,"a":67,"p":"④","t":"대통령으로 선거될 수 있는 자는 국회의원의 피선거권이 있고 선거일 현재 40세에 달하여야 한다.","n":["대통령","선거","국회의원","피선거권","선거"]},{"c":4,"a":67,"p":"⑤","t":"대통령의 선거에 관한 사항은 법률로 정한다.","n":["대통령","선거","법률"]},{"c":4,"a":68,"p":"①","t":"대통령의 임기가 만료되는 때에는 임기만료 70일 내지 40일 전에 후임자를 선거한다.","n":["대통령","임기","만료","임기","만료","후임자","선거"]},{"c":4,"a":68,"p":"②","t":"대통령이 궐위된 때 또는 대통령 당선자가 사망하거나 판결 기타의 사유로 그 자격을 상실한 때에는 60일 이내에 후임자를 선거한다.","n":["대통령","궐위","대통령","당선자","사망","판결","자격","상실","이내","후임자","선거"]},{"c":4,"a":69,"p":"","t":"대통령은 취임에 즈음하여 다음의 선서를 한다.“나는 헌법을 준수하고 국가를 보위하며 조국의 평화적 통일과 국민의 자유와 복리의 증진 및 민족문화의 창달에 노력하여 대통령으로서의 직책을 성실히 수행할 것을 국민 앞에 엄숙히 선서합니다.”","n":["대통령","취임","선서","헌법","준수","국가","보위","조국","평화","통일","국민","자유","복리","증진","민족","문화","창달","노력","대통령","직책","수행","국민","선서"]},{"c":4,"a":70,"p":"","t":"대통령의 임기는 5년으로 하며, 중임할 수 없다.","n":["대통령","임기","중임"]},{"c":4,"a":71,"p":"","t":"대통령이 궐위되거나 사고로 인하여 직무를 수행할 수 없을 때에는 국무총리, 법률이 정한 국무위원의 순서로 그 권한을 대행한다.","n":["대통령","궐위","사고","직무","수행","국무총리","법률","국무위원","순서","권한","대행"]},{"c":4,"a":72,"p":"","t":"대통령은 필요하다고 인정할 때에는 외교·국방·통일 기타 국가안위에 관한 중요정책을 국민투표에 붙일 수 있다.","n":["대통령","인정","외교","국방","통일","국가","안위","중요","정책","국민투표"]},{"c":4,"a":73,"p":"","t":"대통령은 조약을 체결·비준하고, 외교사절을 신임·접수 또는 파견하며, 선전포고와 강화를 한다.","n":["대통령","조약","체결","비준","외교","사절","신임","접수","파견","선전","포고","강화"]},{"c":4,"a":74,"p":"①","t":"대통령은 헌법과 법률이 정하는 바에 의하여 국군을 통수한다.","n":["대통령","헌법","법률","통수"]},{"c":4,"a":74,"p":"②","t":"국군의 조직과 편성은 법률로 정한다.","n":["국군","조직","편성","법률"]},{"c":4,"a":75,"p":"","t":"대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한 사항에 관하여 대통령령을 발할 수 있다.","n":["대통령","법률","구체","위임","법률","집행","대통령령"]},{"c":4,"a":76,"p":"①","t":"대통령은 내우·외환·천재·지변 또는 중대한 재정·경제상의 위기에 있어서 국가의 안전보장 또는 공공의 안녕질서를 유지하기 위하여 긴급한 조치가 필요하고 국회의 집회를 기다릴 여유가 없을 때에 한하여 최소한으로 필요한 재정·경제상의 처분을 하거나 이에 관하여 법률의 효력을 가지는 명령을 발할 수 있다.","n":["대통령","내우","외환","천재","지변","중대","재정","경제","위기","국가","안전","보장","공공","안녕","질서","유지","긴급","조치","국회","집회","여유","최소한","재정","경제","처분","법률","효력","명령"]},{"c":4,"a":76,"p":"②","t":"대통령은 국가의 안위에 관계되는 중대한 교전상태에 있어서 국가를 보위하기 위하여 긴급한 조치가 필요하고 국회의 집회가 불가능한 때에 한하여 법률의 효력을 가지는 명령을 발할 수 있다.","n":["대통령","국가","안위","관계","중대","교전","상태","국가","보위","긴급","조치","국회","집회","가능","법률","효력","명령"]},{"c":4,"a":76,"p":"③","t":"대통령은 제1항과 제2항의 처분 또는 명령을 한 때에는 지체없이 국회에 보고하여 그 승인을 얻어야 한다.","n":["대통령","처분","명령","지체","국회","보고","승인"]},{"c":4,"a":76,"p":"④","t":"제3항의 승인을 얻지 못한 때에는 그 처분 또는 명령은 그때부터 효력을 상실한다. 이 경우 그 명령에 의하여 개정 또는 폐지되었던 법률은 그 명령이 승인을 얻지 못한 때부터 당연히 효력을 회복한다.","n":["승인","처분","명령","그때","효력","상실","명령","개정","폐지","법률","명령","승인","효력","회복"]},{"c":4,"a":76,"p":"⑤","t":"대통령은 제3항과 제4항의 사유를 지체없이 공포하여야 한다.","n":["대통령","지체","공포"]},{"c":4,"a":77,"p":"①","t":"대통령은 전시·사변 또는 이에 준하는 국가비상사태에 있어서 병력으로써 군사상의 필요에 응하거나 공공의 안녕질서를 유지할 필요가 있을 때에는 법률이 정하는 바에 의하여 계엄을 선포할 수 있다.","n":["대통령","전시","사변","국가","비상사태","병력","군사","공공","안녕","질서","유지","법률","계엄","선포"]},{"c":4,"a":77,"p":"②","t":"계엄은 비상계엄과 경비계엄으로 한다.","n":["계엄","비상계엄","경비계엄"]},{"c":4,"a":77,"p":"③","t":"비상계엄이 선포된 때에는 법률이 정하는 바에 의하여 영장제도, 언론·출판·집회·결사의 자유, 정부나 법원의 권한에 관하여 특별한 조치를 할 수 있다.","n":["비상계엄","선포","법률","영장","제도","언론","출판","집회","결사","자유","정부","법원","권한","특별","조치"]},{"c":4,"a":77,"p":"④","t":"계엄을 선포한 때에는 대통령은 지체없이 국회에 통고하여야 한다.","n":["계엄","선포","대통령","지체","국회","통고"]},{"c":4,"a":77,"p":"⑤","t":"국회가 재적의원 과반수의 찬성으로 계엄의 해제를 요구한 때에는 대통령은 이를 해제하여야 한다.","n":["국회","재적의원","과반수","찬성","계엄","해제","요구","대통령","해제"]},{"c":4,"a":78,"p":"","t":"대통령은 헌법과 법률이 정하는 바에 의하여 공무원을 임면한다.","n":["대통령","헌법","법률","공무원","임면"]},{"c":4,"a":79,"p":"①","t":"대통령은 법률이 정하는 바에 의하여 사면·감형 또는 복권을 명할 수 있다.","n":["대통령","법률","사면","감형","복권"]},{"c":4,"a":79,"p":"②","t":"일반사면을 명하려면 국회의 동의를 얻어야 한다.","n":["일반사면","국회","동의"]},{"c":4,"a":79,"p":"③","t":"사면·감형 및 복권에 관한 사항은 법률로 정한다.","n":["사면","감형","복권","법률"]},{"c":4,"a":80,"p":"","t":"대통령은 법률이 정하는 바에 의하여 훈장 기타의 영전을 수여한다.","n":["대통령","법률","훈장","영전","수여"]},{"c":4,"a":81,"p":"","t":"대통령은 국회에 출석하여 발언하거나 서한으로 의견을 표시할 수 있다.","n":["대통령","국회","출석","발언","서한","의견","표시"]},{"c":4,"a":82,"p":"","t":"대통령의 국법상 행위는 문서로써 하며, 이 문서에는 국무총리와 관계 국무위원이 부서한다. 군사에 관한 것도 또한 같다.","n":["대통령","행위","문서","문서","국무총리","관계","국무위원","부서","군사"]},{"c":4,"a":83,"p":"","t":"대통령은 국무총리·국무위원·행정각부의 장 기타 법률이 정하는 공사의 직을 겸할 수 없다.","n":["대통령","국무총리","국무위원","행정각부","법률","공사"]},{"c":4,"a":84,"p":"","t":"대통령은 내란 또는 외환의 죄를 범한 경우를 제외하고는 재직 중 형사상의 소추를 받지 아니한다.","n":["대통령","내란","외환","재직","형사","소추"]},{"c":4,"a":85,"p":"","t":"전직대통령의 신분과 예우에 관하여는 법률로 정한다.","n":["전직","대통령","신분","예우","법률"]},{"c":4,"a":86,"p":"①","t":"국무총리는 국회의 동의를 얻어 대통령이 임명한다.","n":["국무총리","국회","동의","대통령","임명"]},{"c":4,"a":86,"p":"②","t":"국무총리는 대통령을 보좌하며, 행정에 관하여 대통령의 명을 받아 행정각부를 통할한다.","n":["국무총리","대통령","보좌","행정","대통령","행정각부","통할"]},{"c":4,"a":86,"p":"③","t":"군인은 현역을 면한 후가 아니면 국무총리로 임명될 수 없다.","n":["군인","현역","국무총리","임명"]},{"c":4,"a":87,"p":"①","t":"국무위원은 국무총리의 제청으로 대통령이 임명한다.","n":["국무위원","국무총리","제청","대통령","임명"]},{"c":4,"a":87,"p":"②","t":"국무위원은 국정에 관하여 대통령을 보좌하며, 국무회의의 구성원으로서 국정을 심의한다.","n":["국무위원","국정","대통령","보좌","국무회의","구성원","국정","심의"]},{"c":4,"a":87,"p":"③","t":"국무총리는 국무위원의 해임을 대통령에게 건의할 수 있다.","n":["국무총리","국무위원","해임","대통령","건의"]},{"c":4,"a":87,"p":"④","t":"군인은 현역을 면한 후가 아니면 국무위원으로 임명될 수 없다.","n":["군인","현역","국무위원","임명"]},{"c":4,"a":88,"p":"①","t":"국무회의는 정부의 권한에 속하는 중요한 정책을 심의한다.","n":["국무회의","정부","권한","정책","심의"]},{"c":4,"a":88,"p":"②","t":"국무회의는 대통령·국무총리와 15인 이상 30인 이하의 국무위원으로 구성한다.","n":["국무회의","대통령","국무총리","국무위원","구성"]},{"c":4,"a":88,"p":"③","t":"대통령은 국무회의의 의장이 되고, 국무총리는 부의장이 된다.","n":["대통령","국무회의","의장","국무총리","부의장"]},{"c":4,"a":89,"p":"","t":"다음 사항은 국무회의의 심의를 거쳐야 한다.\n1. 국정의 기본계획과 정부의 일반정책\n2. 선전·강화 기타 중요한 대외정책\n3. 헌법개정안·국민투표안·조약안·법률안 및 대통령령안\n4. 예산안·결산·국유재산처분의 기본계획·국가의 부담이 될 계약 기타 재정에 관한 중요사항\n5. 대통령의 긴급명령·긴급재정경제처분 및 명령 또는 계엄과 그 해제\n6. 군사에 관한 중요사항\n7. 국회의 임시회 집회의 요구\n8. 영전수여\n9. 사면·감형과 복권\n10. 행정각부간의 권한의 획정\n11. 정부 안의 권한의 위임 또는 배정에 관한 기본계획\n12. 국정처리상황의 평가·분석\n13. 행정각부의 중요한 정책의 수립과 조정\n14. 정당해산의 제소\n15. 정부에 제출 또는 회부된 정부의 정책에 관계되는 청원의 심사\n16. 검찰총장·합동참모의장·각군참모총장·국립대학교총장·대사 기타 법률이 정한 공무원과 국영기업체관리자의 임명\n17. 기타 대통령·국무총리 또는 국무위원이 제출한 사항","n":["국무회의","심의","국정","기본","계획","정부","일반","정책","선전","강화","중요","대외","정책","헌법개정안","국민투표","조약안","법률안","대통령령","예산안","결산","국유","재산","처분","기본","계획","국가","부담","계약","재정","중요","대통령","긴급명령","긴급","재정","경제","처분","명령","계엄","해제","군사","중요","국회","임시회","집회","요구","영전","수여","사면","감형","복권","행정각부","권한","획정","정부","권한","위임","배정","기본","계획","국정","처리","상황","평가","분석","행정각부","중요","정책","수립","조정","정당","해산","제소","정부","제출","회부","정부","정책","관계","청원","심사","검찰","총장","합동","참모","의장","참모","총장","국립","대학교","총장","대사","법률","공무원","국영","기업체","관리자","임명","대통령","국무총리","국무위원","제출"]},{"c":4,"a":90,"p":"①","t":"국정의 중요한 사항에 관한 대통령의 자문에 응하기 위하여 국가원로로 구성되는 국가원로자문회의를 둘 수 있다.","n":["국정","중요","대통령","자문","국가","원로","구성","국가원로자문회의"]},{"c":4,"a":90,"p":"②","t":"국가원로자문회의의 의장은 직전대통령이 된다. 다만, 직전대통령이 없을 때에는 대통령이 지명한다.","n":["국가원로자문회의","의장","직전","대통령","직전","대통령","대통령","지명"]},{"c":4,"a":90,"p":"③","t":"국가원로자문회의의 조직·직무범위 기타 필요한 사항은 법률로 정한다.","n":["국가원로자문회의","조직","직무","법률"]},{"c":4,"a":91,"p":"①","t":"국가안전보장에 관련되는 대외정책·군사정책과 국내정책의 수립에 관하여 국무회의의 심의에 앞서 대통령의 자문에 응하기 위하여 국가안전보장회의를 둔다.","n":["국가안전보장","대외","정책","군사","정책","국내","정책","수립","국무회의","심의","대통령","자문","국가안전보장회의"]},{"c":4,"a":91,"p":"②","t":"국가안전보장회의는 대통령이 주재한다.","n":["국가안전보장회의","대통령","주재"]},{"c":4,"a":91,"p":"③","t":"국가안전보장회의의 조직·직무범위 기타 필요한 사항은 법률로 정한다.","n":["국가안전보장회의","조직","직무","법률"]},{"c":4,"a":92,"p":"①","t":"평화통일정책의 수립에 관한 대통령의 자문에 응하기 위하여 민주평화통일자문회의를 둘 수 있다.","n":["평화","통일","정책","수립","대통령","자문","민주평화통일자문회의"]},{"c":4,"a":92,"p":"②","t":"민주평화통일자문회의의 조직·직무범위 기타 필요한 사항은 법률로 정한다.","n":["민주평화통일자문회의","조직","직무","법률"]},{"c":4,"a":93,"p":"①","t":"국민경제의 발전을 위한 중요정책의 수립에 관하여 대통령의 자문에 응하기 위하여 국민경제자문회의를 둘 수 있다.","n":["국민경제","발전","중요","정책","수립","대통령","자문","국민경제자문회의"]},{"c":4,"a":93,"p":"②","t":"국민경제자문회의의 조직·직무범위 기타 필요한 사항은 법률로 정한다.","n":["국민경제자문회의","조직","직무","법률"]},{"c":4,"a":94,"p":"","t":"행정각부의 장은 국무위원 중에서 국무총리의 제청으로 대통령이 임명한다.","n":["행정각부","국무위원","국무총리","제청","대통령","임명"]},{"c":4,"a":95,"p":"","t":"국무총리 또는 행정각부의 장은 소관사무에 관하여 법률이나 대통령령의 위임 또는 직권으로 총리령 또는 부령을 발할 수 있다.","n":["국무총리","행정각부","소관","사무","법률","대통령령","위임","직권","총리령"]},{"c":4,"a":96,"p":"","t":"행정각부의 설치·조직과 직무범위는 법률로 정한다.","n":["행정각부","설치","조직","직무","법률"]},{"c":4,"a":97,"p":"","t":"국가의 세입·세출의 결산, 국가 및 법률이 정한 단체의 회계검사와 행정기관 및 공무원의 직무에 관한 감찰을 하기 위하여 대통령 소속하에 감사원을 둔다.","n":["국가","세입","세출","결산","국가","법률","단체","회계","검사","행정","기관","공무원","직무","감찰","대통령","소속","감사원"]},{"c":4,"a":98,"p":"①","t":"감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다.","n":["감사원","원장","포함","감사위원","구성"]},{"c":4,"a":98,"p":"②","t":"원장은 국회의 동의를 얻어 대통령이 임명하고, 그 임기는 4년으로 하며, 1차에 한하여 중임할 수 있다.","n":["원장","국회","동의","대통령","임명","임기","중임"]},{"c":4,"a":98,"p":"③","t":"감사위원은 원장의 제청으로 대통령이 임명하고, 그 임기는 4년으로 하며, 1차에 한하여 중임할 수 있다.","n":["감사위원","원장","제청","대통령","임명","임기","중임"]},{"c":4,"a":99,"p":"","t":"감사원은 세입·세출의 결산을 매년 검사하여 대통령과 차년도국회에 그 결과를 보고하여야 한다.","n":["감사원","세입","세출","결산","검사","대통령","국회","결과","보고"]},{"c":4,"a":100,"p":"","t":"감사원의 조직·직무범위·감사위원의 자격·감사대상공무원의 범위 기타 필요한 사항은 법률로 정한다.","n":["감사원","조직","직무","감사위원","자격","감사","대상","공무원","법률"]},{"c":5,"a":101,"p":"①","t":"사법권은 법관으로 구성된 법원에 속한다.","n":["사법","법관","구성","법원"]},{"c":5,"a":101,"p":"②","t":"법원은 최고법원인 대법원과 각급법원으로 조직된다.","n":["법원","최고","법원","대법원","법원","조직"]},{"c":5,"a":101,"p":"③","t":"법관의 자격은 법률로 정한다.","n":["법관","자격","법률"]},{"c":5,"a":102,"p":"①","t":"대법원에 부를 둘 수 있다.","n":["대법원"]},{"c":5,"a":102,"p":"②","t":"대법원에 대법관을 둔다. 다만, 법률이 정하는 바에 의하여 대법관이 아닌 법관을 둘 수 있다.","n":["대법원","대법관","법률","대법관","법관"]},{"c":5,"a":102,"p":"③","t":"대법원과 각급법원의 조직은 법률로 정한다.","n":["대법원","법원","조직","법률"]},{"c":5,"a":103,"p":"","t":"법관은 헌법과 법률에 의하여 그 양심에 따라 독립하여 심판한다.","n":["법관","헌법","법률","양심","독립","심판"]},{"c":5,"a":104,"p":"①","t":"대법원장은 국회의 동의를 얻어 대통령이 임명한다.","n":["대법원장","국회","동의","대통령","임명"]},{"c":5,"a":104,"p":"②","t":"대법관은 대법원장의 제청으로 국회의 동의를 얻어 대통령이 임명한다.","n":["대법관","대법원장","제청","국회","동의","대통령","임명"]},{"c":5,"a":104,"p":"③","t":"대법원장과 대법관이 아닌 법관은 대법관회의의 동의를 얻어 대법원장이 임명한다.","n":["대법원장","대법관","법관","대법관회의","동의","대법원장","임명"]},{"c":5,"a":105,"p":"①","t":"대법원장의 임기는 6년으로 하며, 중임할 수 없다.","n":["대법원장","임기","중임"]},{"c":5,"a":105,"p":"②","t":"대법관의 임기는 6년으로 하며, 법률이 정하는 바에 의하여 연임할 수 있다.","n":["대법관","임기","법률","연임"]},{"c":5,"a":105,"p":"③","t":"대법원장과 대법관이 아닌 법관의 임기는 10년으로 하며, 법률이 정하는 바에 의하여 연임할 수 있다.","n":["대법원장","대법관","법관","임기","법률","연임"]},{"c":5,"a":105,"p":"④","t":"법관의 정년은 법률로 정한다.","n":["법관","정년","법률"]},{"c":5,"a":106,"p":"①","t":"법관은 탄핵 또는 금고 이상의 형의 선고에 의하지 아니하고는 파면되지 아니하며, 징계처분에 의하지 아니하고는 정직·감봉 기타 불리한 처분을 받지 아니한다.","n":["법관","탄핵","금고","선고","파면","징계","처분","정직","감봉","처분"]},{"c":5,"a":106,"p":"②","t":"법관이 중대한 심신상의 장해로 직무를 수행할 수 없을 때에는 법률이 정하는 바에 의하여 퇴직하게 할 수 있다.","n":["법관","중대","심신","장해","직무","수행","법률","퇴직"]},{"c":5,"a":107,"p":"①","t":"법률이 헌법에 위반되는 여부가 재판의 전제가 된 경우에는 법원은 헌법재판소에 제청하여 그 심판에 의하여 재판한다.","n":["법률","헌법","위반","재판","전제","법원","헌법재판소","제청","심판","재판"]},{"c":5,"a":107,"p":"②","t":"명령·규칙 또는 처분이 헌법이나 법률에 위반되는 여부가 재판의 전제가 된 경우에는 대법원은 이를 최종적으로 심사할 권한을 가진다.","n":["명령","규칙","처분","헌법","법률","위반","재판","전제","대법원","최종","심사","권한"]},{"c":5,"a":107,"p":"③","t":"재판의 전심절차로서 행정심판을 할 수 있다. 행정심판의 절차는 법률로 정하되, 사법절차가 준용되어야 한다.","n":["재판","전심","절차","행정","심판","행정심판","절차","법률","사법","절차","준용"]},{"c":5,"a":108,"p":"","t":"대법원은 법률에 저촉되지 아니하는 범위 안에서 소송에 관한 절차, 법원의 내부규율과 사무처리에 관한 규칙을 제정할 수 있다.","n":["대법원","법률","저촉","소송","절차","법원","내부","규율","사무","처리","규칙","제정"]},{"c":5,"a":109,"p":"","t":"재판의 심리와 판결은 공개한다. 다만, 심리는 국가의 안전보장 또는 안녕질서를 방해하거나 선량한 풍속을 해할 염려가 있을 때에는 법원의 결정으로 공개하지 아니할 수 있다.","n":["재판","심리","판결","공개","심리","국가","안전","보장","안녕","질서","방해","선량","풍속","염려","법원","결정","공개"]},{"c":5,"a":110,"p":"①","t":"군사재판을 관할하기 위하여 특별법원으로서 군사법원을 둘 수 있다.","n":["군사","재판","관할","특별","법원","군사법원"]},{"c":5,"a":110,"p":"②","t":"군사법원의 상고심은 대법원에서 관할한다.","n":["군사법원","상고심","대법원","관할"]},{"c":5,"a":110,"p":"③","t":"군사법원의 조직·권한 및 재판관의 자격은 법률로 정한다.","n":["군사법원","조직","권한","재판관","자격","법률"]},{"c":5,"a":110,"p":"④","t":"비상계엄하의 군사재판은 군인·군무원의 범죄나 군사에 관한 간첩죄의 경우와 초병·초소·유독음식물공급·포로에 관한 죄 중 법률이 정한 경우에 한하여 단심으로 할 수 있다. 다만, 사형을 선고한 경우에는 그러하지 아니하다.","n":["비상계엄","군사","재판","군인","군무원","범죄","군사","간첩","음식물","공급","포로","법률","사형","선고"]},{"c":6,"a":111,"p":"①","t":"헌법재판소는 다음 사항을 관장한다.\n1. 법원의 제청에 의한 법률의 위헌여부 심판\n2. 탄핵의 심판\n3. 정당의 해산 심판\n4. 국가기관 상호간, 국가기관과 지방자치단체간 및 지방자치단체 상호간의 권한쟁의에 관한 심판\n5. 법률이 정하는 헌법소원에 관한 심판","n":["헌법재판소","관장","법원","제청","법률","위헌","심판","탄핵","심판","정당","해산","심판","국가","기관","국가","기관","지방자치단체","지방자치단체","권한쟁의","심판","법률","헌법소원","심판"]},{"c":6,"a":111,"p":"②","t":"헌법재판소는 법관의 자격을 가진 9인의 재판관으로 구성하며, 재판관은 대통령이 임명한다.","n":["헌법재판소","법관","자격","재판관","구성","재판관","대통령","임명"]},{"c":6,"a":111,"p":"③","t":"제2항의 재판관중 3인은 국회에서 선출하는 자를, 3인은 대법원장이 지명하는 자를 임명한다.","n":["재판관","국회","선출","대법원장","지명","임명"]},{"c":6,"a":111,"p":"④","t":"헌법재판소의 장은 국회의 동의를 얻어 재판관 중에서 대통령이 임명한다.","n":["헌법재판소","국회","동의","재판관","대통령","임명"]},{"c":6,"a":112,"p":"①","t":"헌법재판소 재판관의 임기는 6년으로 하며, 법률이 정하는 바에 의하여 연임할 수 있다.","n":["헌법재판소","재판관","임기","법률","연임"]},{"c":6,"a":112,"p":"②","t":"헌법재판소 재판관은 정당에 가입하거나 정치에 관여할 수 없다.","n":["헌법재판소","재판관","정당","가입","정치","관여"]},{"c":6,"a":112,"p":"③","t":"헌법재판소 재판관은 탄핵 또는 금고 이상의 형의 선고에 의하지 아니하고는 파면되지 아니한다.","n":["헌법재판소","재판관","탄핵","금고","선고","파면"]},{"c":6,"a":113,"p":"①","t":"헌법재판소에서 법률의 위헌결정, 탄핵의 결정, 정당해산의 결정 또는 헌법소원에 관한 인용결정을 할 때에는 재판관 6인 이상의 찬성이 있어야 한다.","n":["헌법재판소","법률","위헌결정","탄핵","결정","정당","해산","결정","헌법소원","인용","결정","재판관","찬성"]},{"c":6,"a":113,"p":"②","t":"헌법재판소는 법률에 저촉되지 아니하는 범위 안에서 심판에 관한 절차, 내부규율과 사무처리에 관한 규칙을 제정할 수 있다.","n":["헌법재판소","법률","저촉","심판","절차","내부","규율","사무","처리","규칙","제정"]},{"c":6,"a":113,"p":"③","t":"헌법재판소의 조직과 운영 기타 필요한 사항은 법률로 정한다.","n":["헌법재판소","조직","운영","법률"]},{"c":7,"a":114,"p":"①","t":"선거와 국민투표의 공정한 관리 및 정당에 관한 사무를 처리하기 위하여 선거관리위원회를 둔다.","n":["선거","국민투표","공정","관리","정당","사무","처리","선거관리위원회"]},{"c":7,"a":114,"p":"②","t":"중앙선거관리위원회는 대통령이 임명하는 3인, 국회에서 선출하는 3인과 대법원장이 지명하는 3인의 위원으로 구성한다. 위원장은 위원 중에서 호선한다.","n":["중앙선거관리위원회","대통령","임명","국회","선출","대법원장","지명","위원","구성","위원장","위원","호선"]},{"c":7,"a":114,"p":"③","t":"위원의 임기는 6년으로 한다.","n":["위원","임기"]},{"c":7,"a":114,"p":"④","t":"위원은 정당에 가입하거나 정치에 관여할 수 없다.","n":["위원","정당","가입","정치","관여"]},{"c":7,"a":114,"p":"⑤","t":"위원은 탄핵 또는 금고 이상의 형의 선고에 의하지 아니하고는 파면되지 아니한다.","n":["위원","탄핵","금고","선고","파면"]},{"c":7,"a":114,"p":"⑥","t":"중앙선거관리위원회는 법령의 범위 안에서 선거관리·국민투표관리 또는 정당사무에 관한 규칙을 제정할 수 있으며, 법률에 저촉되지 아니하는 범위 안에서 내부규율에 관한 규칙을 제정할 수 있다.","n":["중앙선거관리위원회","법령","선거","관리","국민투표","관리","정당","사무","규칙","제정","법률","저촉","내부","규율","규칙","제정"]},{"c":7,"a":114,"p":"⑦","t":"각급 선거관리위원회의 조직·직무범위 기타 필요한 사항은 법률로 정한다.","n":["선거관리위원회","조직","직무","법률"]},{"c":7,"a":115,"p":"①","t":"각급 선거관리위원회는 선거인명부의 작성 등 선거사무와 국민투표사무에 관하여 관계 행정기관에 필요한 지시를 할 수 있다.","n":["선거관리위원회","선거","인명부","작성","선거","사무","국민투표","사무","관계","행정","기관","지시"]},{"c":7,"a":115,"p":"②","t":"제1항의 지시를 받은 당해 행정기관은 이에 응하여야 한다.","n":["지시","당해","행정","기관"]},{"c":7,"a":116,"p":"①","t":"선거운동은 각급 선거관리위원회의 관리하에 법률이 정하는 범위 안에서 하되, 균등한 기회가 보장되어야한다.","n":["선거운동","선거관리위원회","관리","법률","균등","기회","보장"]},{"c":7,"a":116,"p":"②","t":"선거에 관한 경비는 법률이 정하는 경우를 제외하고는 정당 또는 후보자에게 부담시킬 수 없다.","n":["선거","경비","법률","정당","후보자","부담"]},{"c":8,"a":117,"p":"①","t":"지방자치단체는 주민의 복리에 관한 사무를 처리하고 재산을 관리하며, 법령의 범위 안에서 자치에 관한 규정을 제정할 수 있다.","n":["지방자치단체","주민","복리","사무","처리","재산","관리","법령","자치","제정"]},{"c":8,"a":117,"p":"②","t":"지방자치단체의 종류는 법률로 정한다.","n":["지방자치단체","종류","법률"]},{"c":8,"a":118,"p":"①","t":"지방자치단체에 의회를 둔다.","n":["지방자치단체","의회"]},{"c":8,"a":118,"p":"②","t":"지방의회의 조직·권한·의원선거와 지방자치단체의 장의 선임방법 기타 지방자치단체의 조직과 운영에 관한 사항은 법률로 정한다.","n":["지방의회","조직","권한","의원","선거","지방자치단체","선임","지방자치단체","조직","운영","법률"]},{"c":9,"a":119,"p":"①","t":"대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다.","n":["대한민국","경제","질서","개인","기업","경제상","자유","창의","존중","기본"]},{"c":9,"a":119,"p":"②","t":"국가는 균형있는 국민경제의 성장 및 안정과 적정한 소득의 분배를 유지하고, 시장의 지배와 경제력의 남용을 방지하며, 경제주체간의 조화를 통한 경제의 민주화를 위하여 경제에 관한 규제와 조정을 할 수 있다.","n":["국가","균형","국민경제","성장","안정","적정","소득","분배","유지","시장","지배","경제력","남용","방지","경제","주체","조화","경제","민주","경제","규제","조정"]},{"c":9,"a":120,"p":"①","t":"광물 기타 중요한 지하자원·수산자원·수력과 경제상 이용할 수 있는 자연력은 법률이 정하는 바에 의하여 일정한 기간 그 채취·개발 또는 이용을 특허할 수 있다.","n":["광물","중요","지하","자원","수산","자원","수력","경제","이용","자연","법률","채취","개발","이용","특허"]},{"c":9,"a":120,"p":"②","t":"국토와 자원은 국가의 보호를 받으며, 국가는 그 균형있는 개발과 이용을 위하여 필요한 계획을 수립한다.","n":["국토","자원","국가","보호","국가","균형","개발","이용","계획","수립"]},{"c":9,"a":121,"p":"①","t":"국가는 농지에 관하여 경자유전의 원칙이 달성될 수 있도록 노력하여야 하며, 농지의 소작제도는 금지된다.","n":["국가","농지","경자유전","원칙","달성","노력","농지","소작","제도","금지"]},{"c":9,"a":121,"p":"②","t":"농업생산성의 제고와 농지의 합리적인 이용을 위하거나 불가피한 사정으로 발생하는 농지의 임대차와 위탁경영은 법률이 정하는 바에 의하여 인정된다.","n":["농업","생산","제고","농지","합리","이용","사정","발생","농지","임대차","위탁","경영","법률","인정"]},{"c":9,"a":122,"p":"","t":"국가는 국민 모두의 생산 및 생활의 기반이 되는 국토의 효율적이고 균형있는 이용·개발과 보전을 위하여 법률이 정하는 바에 의하여 그에 관한 필요한 제한과 의무를 과할 수 있다.","n":["국가","국민","모두","생산","생활","기반","국토","효율","균형","이용","개발","보전","법률","제한","의무"]},{"c":9,"a":123,"p":"①","t":"국가는 농업 및 어업을 보호·육성하기 위하여 농·어촌종합개발과 그 지원등 필요한 계획을 수립·시행하여야 한다.","n":["국가","농업","어업","보호","육성","어촌","종합","개발","지원","계획","수립","시행"]},{"c":9,"a":123,"p":"②","t":"국가는 지역간의 균형있는 발전을 위하여 지역경제를 육성할 의무를 진다.","n":["국가","지역","균형","발전","지역","경제","육성","의무"]},{"c":9,"a":123,"p":"③","t":"국가는 중소기업을 보호·육성하여야 한다.","n":["국가","중소기업","보호","육성"]},{"c":9,"a":123,"p":"④","t":"국가는 농수산물의 수급균형과 유통구조의 개선에 노력하여 가격안정을 도모함으로써 농·어민의 이익을 보호한다.","n":["국가","농수산물","수급","균형","유통","구조","개선","노력","가격","안정","도모","어민","이익","보호"]},{"c":9,"a":123,"p":"⑤","t":"국가는 농·어민과 중소기업의 자조조직을 육성하여야 하며, 그 자율적 활동과 발전을 보장한다.","n":["국가","어민","중소기업","자조","조직","육성","자율","활동","발전","보장"]},{"c":9,"a":124,"p":"","t":"국가는 건전한 소비행위를 계도하고 생산품의 품질향상을 촉구하기 위한 소비자보호운동을 법률이 정하는 바에 의하여 보장한다.","n":["국가","건전","소비","행위","계도","생산품","품질","향상","촉구","소비자보호운동","법률","보장"]},{"c":9,"a":125,"p":"","t":"국가는 대외무역을 육성하며, 이를 규제·조정할 수 있다.","n":["국가","대외","무역","육성","규제","조정"]},{"c":9,"a":126,"p":"","t":"국방상 또는 국민경제상 긴절한 필요로 인하여 법률이 정하는 경우를 제외하고는, 사영기업을 국유 또는 공유로 이전하거나 그 경영을 통제 또는 관리할 수 없다.","n":["국방","국민경제","법률","사영","기업","국유","공유","경영","통제","관리"]},{"c":9,"a":127,"p":"①","t":"국가는 과학기술의 혁신과 정보 및 인력의 개발을 통하여 국민경제의 발전에 노력하여야 한다.","n":["국가","과학","기술","혁신","정보","인력","개발","국민경제","발전","노력"]},{"c":9,"a":127,"p":"②","t":"국가는 국가표준제도를 확립한다.","n":["국가","국가표준제도","확립"]},{"c":9,"a":127,"p":"③","t":"대통령은 제1항의 목적을 달성하기 위하여 필요한 자문기구를 둘 수 있다.","n":["대통령","달성","자문","기구"]},{"c":10,"a":128,"p":"①","t":"헌법개정은 국회재적의원 과반수 또는 대통령의 발의로 제안된다.","n":["헌법개정","국회","재적의원","과반수","대통령","발의","제안"]},{"c":10,"a":128,"p":"②","t":"대통령의 임기연장 또는 중임변경을 위한 헌법개정은 그 헌법개정 제안 당시의 대통령에 대하여는 효력이 없다.","n":["대통령","임기","연장","중임","변경","헌법개정","헌법개정","제안","대통령","효력"]},{"c":10,"a":129,"p":"","t":"제안된 헌법개정안은 대통령이 20일 이상의 기간 이를 공고하여야 한다.","n":["제안","헌법개정안","대통령","공고"]},{"c":10,"a":130,"p":"①","t":"국회는 헌법개정안이 공고된 날로부터 60일 이내에 의결하여야 하며, 국회의 의결은 재적의원 3분의 2 이상의 찬성을 얻어야 한다.","n":["국회","헌법개정안","공고","이내","의결","국회","의결","재적의원","찬성"]},{"c":10,"a":130,"p":"②","t":"헌법개정안은 국회가 의결한 후 30일 이내에 국민투표에 붙여 국회의원선거권자 과반수의 투표와 투표자 과반수의 찬성을 얻어야 한다.","n":["헌법개정안","국회","의결","이내","국민투표","국회의원","선거권","과반수","투표","투표자","과반수","찬성"]},{"c":10,"a":130,"p":"③","t":"헌법개정안이 제2항의 찬성을 얻은 때에는 헌법개정은 확정되며, 대통령은 즉시 이를 공포하여야 한다.","n":["헌법개정안","찬성","헌법개정","확정","대통령","공포"]}]};
+const CONTENT = {
+ "updated": "2026-10-24",
+ "cases": [
+  {
+   "areas": [
+    1
+   ],
+   "no": "2004헌마554 등",
+   "name": "신행정수도의 건설을 위한 특별조치법 위헌확인",
+   "date": "2004-10-21",
+   "result": "위헌",
+   "rights": [
+    "국민투표권"
+   ],
+   "issue": "‘서울이 수도’라는 것이 헌법에 쓰여 있지 않아도 관습헌법으로 인정되는지, 그리고 법률만으로 수도를 옮기는 것이 헌법 개정 절차(국민투표)를 거치지 않은 것인지가 쟁점이었다.",
+   "decision": "헌법재판소는 서울이 수도라는 것이 관습헌법에 해당하므로 이를 바꾸려면 헌법 개정 절차가 필요하다고 보았다. 그 절차 없이 법률로 수도 이전을 정한 것은 국민투표권을 침해한다며 위헌으로 결정했다.",
+   "articles": [
+    130,
+    72
+   ]
+  },
+  {
+   "areas": [
+    2
+   ],
+   "no": "2004헌마644 등",
+   "name": "공직선거법 제37조 제1항 등 위헌확인(재외국민 선거권)",
+   "date": "2007-06-28",
+   "result": "헌법불합치",
+   "rights": [
+    "선거권",
+    "평등권"
+   ],
+   "issue": "국내에 주민등록이 없다는 이유로 외국에 사는 우리 국민의 선거권을 모두 막은 것이 정당한지가 쟁점이었다.",
+   "decision": "헌법재판소는 주민등록 여부만으로 국민의 선거권을 전면 제한하는 것은 선거권과 평등권을 침해한다며 헌법불합치로 결정했다. 이후 법이 바뀌어 재외국민도 선거에 참여할 수 있게 되었다.",
+   "articles": [
+    2,
+    24
+   ]
+  },
+  {
+   "areas": [
+    3
+   ],
+   "no": "98헌마363",
+   "name": "제대군인지원에관한법률 제8조 제1항 등 위헌확인(군 가산점)",
+   "date": "1999-12-23",
+   "result": "위헌",
+   "rights": [
+    "평등권",
+    "공무담임권"
+   ],
+   "issue": "군 복무를 마친 사람에게 공무원 채용시험에서 가산점을 주는 제도가 여성과 장애인 등 군 복무를 할 수 없는 사람을 차별하는지가 쟁점이었다.",
+   "decision": "헌법재판소는 가산점 제도가 지나치게 큰 불이익을 주어 평등권과 공무담임권을 침해한다며 위헌으로 결정했다.",
+   "articles": [
+    11,
+    25,
+    39
+   ]
+  },
+  {
+   "areas": [
+    4
+   ],
+   "no": "2011헌바379 등",
+   "name": "병역법 제88조 제1항 등 위헌소원(양심적 병역거부)",
+   "date": "2018-06-28",
+   "result": "헌법불합치",
+   "rights": [
+    "양심의 자유"
+   ],
+   "issue": "종교나 양심을 이유로 군 복무를 거부하는 사람에게 대체복무의 길을 마련하지 않은 병역법이 양심의 자유를 침해하는지가 쟁점이었다.",
+   "decision": "헌법재판소는 처벌 조항은 합헌으로 보았지만, 대체복무를 정하지 않은 병역 종류 조항은 양심의 자유를 침해한다며 헌법불합치로 결정했다. 이후 대체역 제도가 만들어졌다.",
+   "articles": [
+    19,
+    39
+   ]
+  },
+  {
+   "areas": [
+    5,
+    9
+   ],
+   "no": "2020헌마389 등",
+   "name": "탄소중립기본법 제8조 제1항 위헌확인(기후소송)",
+   "date": "2024-08-29",
+   "result": "헌법불합치",
+   "rights": [
+    "환경권"
+   ],
+   "issue": "2030년까지의 온실가스 감축목표만 정하고 2031년부터 2049년까지의 목표를 법률에 전혀 정하지 않은 것이 미래세대의 환경권을 지키지 못한 것인지가 쟁점이었다.",
+   "decision": "헌법재판소는 국가가 기본권 보호 의무를 다하지 못해 환경권을 침해했다며 헌법불합치로 결정하고, 2026년 2월 28일까지 법을 고치도록 했다.",
+   "articles": [
+    35,
+    10
+   ]
+  },
+  {
+   "areas": [
+    6
+   ],
+   "no": "2013헌다1",
+   "name": "통합진보당 해산",
+   "date": "2014-12-19",
+   "result": "인용(해산)",
+   "rights": [
+    "정당 활동의 자유"
+   ],
+   "issue": "정부가 청구한 대로, 이 정당의 목적과 활동이 민주적 기본질서에 위배되어 해산해야 하는지가 쟁점이었다.",
+   "decision": "헌법재판소는 정당의 목적과 활동이 민주적 기본질서에 위배된다고 보고 해산을 결정했다. 헌법재판소가 정당 해산을 결정한 첫 사례다.",
+   "articles": [
+    8,
+    111
+   ]
+  },
+  {
+   "areas": [
+    7
+   ],
+   "no": "2024헌나8",
+   "name": "대통령(윤석열) 탄핵",
+   "date": "2025-04-04",
+   "result": "인용(파면)",
+   "rights": [
+    "국민주권",
+    "권력분립"
+   ],
+   "issue": "2024년 12월 3일 비상계엄 선포와 국회에 군경을 투입한 행위 등이 헌법과 법률을 중대하게 위반해 파면할 사유가 되는지가 쟁점이었다.",
+   "decision": "헌법재판소는 재판관 전원일치로 탄핵 청구를 받아들여 대통령을 파면했다.",
+   "articles": [
+    65,
+    77,
+    66
+   ]
+  },
+  {
+   "areas": [
+    8
+   ],
+   "no": "2006헌라6",
+   "name": "서울특별시와 정부 간의 권한쟁의",
+   "date": "2009-05-28",
+   "result": "인용(권한 침해)",
+   "rights": [
+    "지방자치권"
+   ],
+   "issue": "정부가 구체적인 법령 위반을 밝히지 않은 채 서울특별시의 자치사무 거의 전부를 대상으로 합동감사를 한 것이 지방자치권을 침해하는지가 쟁점이었다.",
+   "decision": "헌법재판소는 자치사무에 대한 감사는 법령 위반이 있을 때로 한정되어야 한다고 보고, 이 합동감사가 서울특별시의 지방자치권을 침해했다고 결정했다.",
+   "articles": [
+    117,
+    111
+   ]
+  },
+  {
+   "areas": [
+    9
+   ],
+   "no": "2017헌바127",
+   "name": "형법 제269조 제1항 등 위헌소원(낙태죄)",
+   "date": "2019-04-11",
+   "result": "헌법불합치",
+   "rights": [
+    "자기결정권",
+    "생명권"
+   ],
+   "issue": "임신한 여성의 낙태를 전면 처벌하는 형법 조항이 여성의 자기결정권을 침해하는지, 태아의 생명 보호와 어떻게 조화시켜야 하는지가 쟁점이었다.",
+   "decision": "헌법재판소는 처벌 조항이 임신한 여성의 자기결정권을 침해한다며 헌법불합치로 결정하고 2020년 12월 31일까지 법을 고치도록 했다. 국회가 기한 안에 개정하지 않아 해당 조항은 효력을 잃었다.",
+   "articles": [
+    10,
+    111
+   ]
+  },
+  {
+   "areas": [
+    10
+   ],
+   "no": "2010헌마47 등",
+   "name": "정보통신망법 제44조의5 제1항 제2호 등 위헌확인(인터넷 실명제)",
+   "date": "2012-08-23",
+   "result": "위헌",
+   "rights": [
+    "표현의 자유",
+    "개인정보자기결정권"
+   ],
+   "issue": "인터넷 게시판에 글을 쓸 때 본인 확인을 거치게 한 제도가 익명으로 표현할 자유와 개인정보 보호를 침해하는지가 쟁점이었다.",
+   "decision": "헌법재판소는 본인확인제가 표현의 자유와 개인정보자기결정권 등을 침해한다며 재판관 전원일치로 위헌 결정했다.",
+   "articles": [
+    21,
+    17
+   ]
+  }
+ ],
+ "questions": {
+  "1": [
+   "수도처럼 헌법에 쓰여 있지 않은 내용도 ‘관습헌법’으로 인정해야 할까?",
+   "헌법 개정에 국회 3분의 2 찬성과 국민투표를 모두 요구하는 것은 꼭 필요한 안전장치일까, 지나친 문턱일까?",
+   "헌법을 고친다면 전문에 새로 담고 싶은 가치는 무엇이고, 그 이유는 무엇일까?"
+  ],
+  "2": [
+   "외국에 사는 국민에게도 국내에 사는 국민과 같은 선거권을 보장해야 할까?",
+   "‘사실상의 두 국가’라는 현실 인식은 헌법 제3조·제4조와 조화될 수 있을까?",
+   "국가가 시장에 개입할 수 있는 범위(제119조 제2항)는 어디까지가 적절할까?"
+  ],
+  "3": [
+   "특정 집단에게 주는 혜택(가산점 등)은 언제 공정하고, 언제 차별이 될까?",
+   "차별을 금지하는 법이 다른 사람의 표현이나 종교의 자유와 부딪칠 때 어떻게 조정해야 할까?",
+   "헌법 제10조의 행복추구권은 국가에 무엇을 요구할 수 있는 권리일까?"
+  ],
+  "4": [
+   "양심의 자유와 국방의 의무가 부딪칠 때 대체복무는 공정한 해법일까?",
+   "허위정보를 막기 위한 규제는 표현의 자유를 어디까지 제한할 수 있을까?",
+   "버스처럼 공공성이 큰 사업에서 노동자의 파업권은 제한될 수 있을까?"
+  ],
+  "5": [
+   "미래세대의 환경권을 지키기 위해 지금 세대는 어느 정도의 부담을 져야 할까?",
+   "공공복리를 이유로 개인의 재산권을 제한할 때 반드시 지켜야 할 기준은 무엇일까?",
+   "기후 위기처럼 공동체 전체의 문제는 국가와 개인 중 누가 더 큰 책임을 져야 할까?"
+  ],
+  "6": [
+   "민주적 기본질서를 지키기 위해 정당을 해산하는 것은 민주주의를 지키는 일일까, 해치는 일일까?",
+   "교사에게도 학교 밖에서의 정치 참여를 허용해야 할까?",
+   "학생 자치에서 다수결로 정하면 안 되는 일이 있다면 무엇일까?"
+  ],
+  "7": [
+   "비상계엄 선포처럼 고도로 정치적인 결정도 헌법재판의 대상이 되어야 할까?",
+   "수사와 기소를 서로 다른 기관에 맡기는 것은 권력 남용을 막는 데 효과적일까?",
+   "국가기관이 서로 견제하면 일이 느려질 수 있는데도 권력분립이 필요한 이유는 무엇일까?"
+  ],
+  "8": [
+   "중앙정부는 지방자치단체의 일을 어디까지 감독할 수 있어야 할까?",
+   "지방자치단체를 크게 통합하는 것은 주민 참여에 도움이 될까, 방해가 될까?",
+   "우리 지역의 문제를 해결하는 데 학생이 참여할 수 있는 방법은 무엇일까?"
+  ],
+  "9": [
+   "생명권과 자기결정권처럼 두 기본권이 부딪칠 때 헌법재판소는 어떤 기준으로 판단해야 할까?",
+   "헌법재판소가 법 개정을 요구했는데 국회가 기한 안에 고치지 않는다면 어떻게 해야 할까?",
+   "사회적 갈등이 큰 문제는 헌법재판으로 결정하는 것과 국회에서 정하는 것 중 어느 쪽이 바람직할까?"
+  ],
+  "10": [
+   "인터넷에서 익명으로 말할 자유는 보장되어야 할까, 책임 있는 표현을 위해 제한되어야 할까?",
+   "AI가 만든 글이나 영상이 허위정보를 퍼뜨린다면 누구에게 책임을 물어야 할까?",
+   "지속가능한 사회를 위해 헌법에 새로 담아야 할 권리가 있다면 무엇일까?"
+  ]
+ },
+ "items": [
+  {
+   "title": "경기도 버스 노사 교섭 최종 결렬…지노위 조정신청 접수",
+   "outlet": "SBS Biz",
+   "date": "2026-10-14",
+   "url": "https://biz.sbs.co.kr/amp/article/20000339956",
+   "more": [
+    {
+     "outlet": "위키트리",
+     "url": "https://www.wikitree.co.kr/articles/1166241"
+    }
+   ],
+   "summary": [
+    "경기지역자동차노동조합이 10월 14일 사측과의 다섯 번째 교섭이 결렬됐다고 밝히고, 29개 버스업체를 상대로 경기지방노동위원회에 노동쟁의 조정을 신청했다.",
+    "노조는 2026년 1월부터 서울 버스 기사와 임금을 맞추기로 한 노사정 합의를 지키라고 요구하지만, 사측은 경기도의 재정 상황을 들어 민영제 노선 임금 동결을 주장한다.",
+    "29일 최종 조정회의에서도 합의하지 못하면 노조는 30일 첫차부터 총파업에 들어갈 계획이다."
+   ],
+   "note": "조정 결과와 실제 파업 여부는 수업 전에 확인하세요.",
+   "article": 33,
+   "also": [
+    32
+   ],
+   "articleReason": "근로자가 근로조건 향상을 위해 단결권·단체교섭권·단체행동권을 가진다고 정한 조문으로, 노동쟁의 조정과 파업의 헌법적 근거다.",
+   "perspectives": [
+    {
+     "who": "노조",
+     "position": "노사정이 약속한 서울 수준 임금 합의를 이행하라는 것이며, 특혜가 아니라 최소한의 권리라고 주장한다."
+    },
+    {
+     "who": "사측",
+     "position": "경기도의 비상 재정 상황을 이유로 민영제 노선 임금은 동결해야 한다는 입장이다."
+    }
+   ],
+   "status": "approved",
+   "conflict": "근로자의 단체행동권 ↔ 시민의 이동 편의와 사업자의 재정 부담",
+   "areas": [
+    4,
+    5
+   ]
+  },
+  {
+   "title": "교원단체 “학교 안 중립, 학교 밖 정치기본권 보장”",
+   "outlet": "한국교육신문",
+   "date": "2026-10-01",
+   "url": "https://hangyo.com/news/article.html?no=109483",
+   "more": [
+    {
+     "outlet": "세계일보(반대 측 입장 보도, 2025. 10.)",
+     "url": "https://www.segye.com/newsView/20251004505711"
+    }
+   ],
+   "summary": [
+    "한국교총 등 8개 교원단체가 10월 1일 국회에서 기자회견을 열고 교사의 정당 가입을 포함한 정치기본권을 보장하는 입법을 촉구했다.",
+    "단체들은 교실 안에서는 정치적 중립을 지키되, 학교 밖에서는 교사도 한 사람의 시민으로서 정치에 참여할 권리가 있다고 주장했다.",
+    "반대 측은 교사의 정치 성향이 학생에게 영향을 줄 수 있다고 우려하고 있어, 관련 법안을 둘러싼 논쟁은 아직 결론이 나지 않았다."
+   ],
+   "article": 31,
+   "articleReason": "제4항이 교육의 정치적 중립성을 법률로 보장하도록 정하고 있어, 교사의 정치 활동을 어디까지 허용할지의 근거로 쓰인다. 공무원의 정치적 중립을 정한 제7조 제2항도 함께 볼 만하다.",
+   "perspectives": [
+    {
+     "who": "교원단체(교사정치기본권찾기연대)",
+     "position": "교사의 직무상 중립 의무를 없애자는 것이 아니라, 직무와 시민으로서의 삶을 구분해 학교 밖 정치 참여를 허용하자고 한다."
+    },
+    {
+     "who": "국민의힘(2025년 10월 보도)",
+     "position": "교사가 중립성을 잃으면 교육이 무너질 수 있고, 학생들에게 정치적 편향이 심어질 수 있다고 우려한다."
+    }
+   ],
+   "also": [
+    7
+   ],
+   "status": "approved",
+   "conflict": "교사의 정치적 표현의 자유 ↔ 교육의 정치적 중립성",
+   "areas": [
+    6
+   ]
+  },
+  {
+   "title": "여당, ‘내년 상반기 국민투표’ 목표로 개헌 추진",
+   "outlet": "더팩트",
+   "date": "2026-09-20",
+   "url": "https://news.tf.co.kr/read/ptoday/2368105.htm",
+   "more": [
+    {
+     "outlet": "경북매일",
+     "url": "https://www.kbmaeil.com/article/20260920500344"
+    }
+   ],
+   "summary": [
+    "더불어민주당이 9월 20일 개헌추진단을 출범시키고 2027년 상반기 국민투표를 목표로 헌법 개정을 추진하겠다고 밝혔다.",
+    "헌법 전문에 5·18과 부마항쟁 정신을 넣는 것, 대통령 4년 연임제 같은 권력구조 개편, 사회권 강화가 핵심 방향이지만 국민의힘은 이번 정부에서 개헌은 없다는 입장이다.",
+    "개헌안이 국회를 통과하려면 재적의원 3분의 2 이상이 찬성해야 해서 국민의힘의 참여 여부가 가장 큰 변수로 꼽힌다."
+   ],
+   "article": 130,
+   "articleReason": "개헌안은 국회 재적의원 3분의 2 이상 찬성과 국민투표를 모두 거쳐야 한다고 정한 조문이다. 대통령 임기 연장·중임 변경 개헌은 제안 당시 대통령에게 효력이 없다는 제128조 제2항도 함께 읽어 볼 만하다.",
+   "perspectives": [
+    {
+     "who": "더불어민주당",
+     "position": "총선과 시기를 떼어 늦어도 내년 상반기 안에 여야 합의안을 국민투표에 부쳐야 실현 가능성이 높다고 본다."
+    },
+    {
+     "who": "국민의힘",
+     "position": "대통령의 연임 관련 발언의 진정성을 문제 삼으며 이번 정부에서 개헌은 없다는 입장을 밝혀 왔다."
+    }
+   ],
+   "also": [
+    128
+   ],
+   "status": "approved",
+   "conflict": "헌법을 바꾸자는 정치적 요구 ↔ 넓은 합의를 요구하는 엄격한 개헌 절차",
+   "areas": [
+    1,
+    6
+   ]
+  },
+  {
+   "title": "탄소중립기본법 개정안, 2040·2045년 감축목표 법률에 명시",
+   "outlet": "노컷뉴스",
+   "date": "2026-07-29",
+   "url": "https://nocutnews.co.kr/news/6554761",
+   "more": [
+    {
+     "outlet": "다음(국회 기후특위 의결 보도)",
+     "url": "https://v.daum.net/v/20260722145914305"
+    }
+   ],
+   "summary": [
+    "국회 기후위기특별위원회 소위원회가 2040년과 2045년 온실가스 감축목표를 2018년 대비 각각 69~80%, 84~90%로 법률에 적은 탄소중립기본법 개정안을 의결했다.",
+    "이는 2024년 8월 헌법재판소가 2031~2049년 감축목표가 법에 없어 미래세대의 환경권을 침해한다며 헌법불합치 결정을 내린 데 따른 후속 입법이다.",
+    "여야는 정부가 목표를 낮출 수 있게 한 단서조항을 빼는 대신 산업계 지원을 법에 넣기로 했고, 환경단체는 헌재 결정의 취지에 못 미친다고 비판했다."
+   ],
+   "note": "기사 시점에는 8월 국회 본회의 처리가 예정되어 있었습니다. 이후 처리 결과는 수업 전에 확인하세요.",
+   "article": 35,
+   "articleReason": "모든 국민이 건강하고 쾌적한 환경에서 생활할 권리와 국가의 환경보전 노력 의무를 정한 조문으로, 헌재가 침해되었다고 본 환경권의 근거다.",
+   "perspectives": [
+    {
+     "who": "더불어민주당·조국혁신당",
+     "position": "정부가 재량으로 목표를 낮출 수 있다면 국회가 목표를 법률로 정하는 의미가 없어진다고 주장했다."
+    },
+    {
+     "who": "국민의힘",
+     "position": "AI·반도체 산업의 전력 수요 증가 같은 예측하기 어려운 변수가 있어 정부에 유연성을 남겨 둬야 한다고 맞섰다."
+    },
+    {
+     "who": "환경단체",
+     "position": "특정 연도의 목표만으로는 중간 연도의 감축 속도를 보장하지 못해 미래세대에 부담을 넘길 수 있다고 비판했다."
+    }
+   ],
+   "status": "approved",
+   "conflict": "미래세대의 환경권 ↔ 산업계의 부담과 정부의 정책 유연성",
+   "areas": [
+    5,
+    9,
+    10
+   ]
+  },
+  {
+   "title": "‘허위조작정보 근절법’ 시행 앞두고 표현의 자유 위축 우려",
+   "outlet": "데일리안",
+   "date": "2026-07-03",
+   "url": "https://www.dailian.co.kr/news/view/1663131/",
+   "more": [
+    {
+     "outlet": "뉴데일리(시행 당일 반대 측 보도)",
+     "url": "https://www.newdaily.co.kr/site/data/html/2026/07/07/2026070700217.html"
+    }
+   ],
+   "summary": [
+    "허위조작정보를 퍼뜨려 광고 수익을 올린 사람에게 최대 10억원의 과징금을 물릴 수 있게 한 개정 정보통신망법이 7월 7일부터 시행됐다.",
+    "법원에서 허위조작정보로 확정된 내용을 반복해 유통한 구독자 10만명 이상 채널 등이 대상이며, 정부는 피해 구제를 위한 제도라고 설명한다.",
+    "비판 측은 허위와 조작의 기준이 모호해 비판적 의견까지 위축될 수 있다며 시행 유예와 재개정을 요구했다."
+   ],
+   "article": 21,
+   "articleReason": "언론·출판의 자유와 검열 금지(제2항)를 보장하면서, 동시에 타인의 명예와 권리를 침해해서는 안 된다(제4항)고 정해 두 가치가 한 조문 안에 함께 있다.",
+   "perspectives": [
+    {
+     "who": "방송미디어통신위원회",
+     "position": "허위조작정보로 인한 피해를 구제하기 위한 제도라고 설명한다."
+    },
+    {
+     "who": "국민의힘 일부 의원·청년단체",
+     "position": "기준이 모호해 악용될 수 있다며 법 시행 유예와 전면 재개정을 촉구했다."
+    }
+   ],
+   "status": "approved",
+   "conflict": "표현의 자유 ↔ 허위정보로 인한 피해의 구제",
+   "areas": [
+    4,
+    10
+   ]
+  },
+  {
+   "title": "정부 첫 통일교재 “사실상의 두 국가로 존재하는 현실”",
+   "outlet": "더팩트",
+   "date": "2026-03-30",
+   "url": "https://news.tf.co.kr/read/ptoday/2307707.htm",
+   "more": [],
+   "summary": [
+    "통일부 산하 국립평화통일민주교육원이 3월 30일 이재명 정부의 첫 통일교육 기본교재인 ‘2026 통일문제 이해’를 펴냈다.",
+    "교재는 남북이 사실상 두 국가로 존재하는 현실을 고려해, 통일을 지향하면서 평화롭게 공존하는 관계를 만들어야 한다고 설명한다.",
+    "이 교재는 학교와 시도 교육청, 통일교육 단체 등에 배포된다."
+   ],
+   "article": 4,
+   "also": [
+    3
+   ],
+   "articleReason": "대한민국이 통일을 지향하고 평화적 통일정책을 추진한다고 정한 조문이다. 영토를 한반도와 부속도서로 정한 제3조와 함께 ‘두 국가’ 표현을 비교해 읽어 볼 수 있다.",
+   "perspectives": [
+    {
+     "who": "정부(교재)",
+     "position": "평화공존 제도화, 공동성장 기반 구축, 전쟁과 핵 없는 한반도를 목표로 제시한다."
+    }
+   ],
+   "onlyOneSide": true,
+   "status": "approved",
+   "conflict": "통일 지향(제4조)과 영토 조항(제3조) ↔ 평화공존을 위한 현실 인정",
+   "areas": [
+    2
+   ]
+  },
+  {
+   "title": "차별금지법안 발의(정춘생 의원 등 13인)",
+   "outlet": "국민참여입법센터(법안 정보)",
+   "date": "2026-02-05",
+   "url": "https://opinion.lawmaking.go.kr/gcom/nsmLmSts/out/2216610/detailRP",
+   "more": [
+    {
+     "outlet": "한국교육신문(반대 측 보도, 2021)",
+     "url": "https://hangyo.com/news/article.html?no=94100"
+    },
+    {
+     "outlet": "프레시안(찬성 측 보도, 2021)",
+     "url": "https://pressian.com/pages/articles/2021081117233010784"
+    }
+   ],
+   "summary": [
+    "정춘생 의원 등 13명이 2월 5일 정치·경제·사회·문화의 모든 영역에서 차별을 금지하는 차별금지법안을 발의했고, 다음 날 국회 법제사법위원회에 회부됐다.",
+    "법안은 헌법 제11조의 평등 원칙을 근거로 성별·장애·나이·인종 등을 이유로 한 불리한 대우와 괴롭힘을 차별로 정하고, 국가인권위원회가 시정명령을 내릴 수 있게 했다.",
+    "차별금지법은 17대 국회부터 여러 차례 발의됐지만 표현과 종교의 자유를 침해한다는 반대에 부딪혀 아직 제정되지 못했다."
+   ],
+   "article": 11,
+   "articleReason": "모든 국민은 법 앞에 평등하며 성별·종교·사회적 신분에 따라 차별받지 않는다고 정한 조문으로, 법안이 제안 이유로 직접 인용했다.",
+   "perspectives": [
+    {
+     "who": "발의 의원",
+     "position": "현행법은 특정 분야만 차별을 금지해 한계가 있으므로, 모든 영역에서 실질적 평등을 위한 기본법이 필요하다고 본다."
+    },
+    {
+     "who": "반대 측(2021년 평등법 반대 청원)",
+     "position": "모든 영역의 차별 금지가 사생활·종교·온라인에서의 자유로운 의견 표현을 억압할 수 있다고 우려한다."
+    }
+   ],
+   "status": "approved",
+   "conflict": "차별받지 않을 권리 ↔ 표현과 종교의 자유",
+   "areas": [
+    3
+   ]
+  },
+  {
+   "areas": [
+    7
+   ],
+   "title": "검찰청 폐지…공소청·중대범죄수사청 출범",
+   "outlet": "YTN",
+   "date": "2026-10-02",
+   "url": "https://www.ytn.co.kr/_ln/0103_202610022138487567",
+   "more": [
+    {
+     "outlet": "파이낸셜뉴스(준비 부족 지적)",
+     "url": "https://www.fnnews.com/news/202610011828255599"
+    },
+    {
+     "outlet": "참여연대(조직 설계 과제)",
+     "url": "https://peoplepower21.org/judiciary/2028250"
+    }
+   ],
+   "conflict": "권력의 분산과 견제 ↔ 수사의 효율과 피해자 보호",
+   "summary": [
+    "10월 2일 검찰청이 폐지되고, 기소를 맡는 공소청(법무부 소속)과 중대범죄 수사를 맡는 중대범죄수사청(행정안전부 소속)이 출범했다.",
+    "수사와 기소를 서로 다른 기관에 나눠 한 기관에 권한이 몰리지 않게 하려는 개편이지만, 수사 공백과 준비 부족을 걱정하는 목소리도 나온다.",
+    "두 기관 모두 기관장 없이 출범했고, 세부 조직과 인력 배치는 계속 정비되고 있다."
+   ],
+   "article": 12,
+   "also": [
+    89
+   ],
+   "articleReason": "제12조 제3항은 영장을 ‘검사의 신청’에 따라 발부하도록 정해 검사의 역할을 헌법에 직접 두고 있다. 제89조 제16호에도 검찰총장이 나온다. 검찰청이 사라진 뒤 이 조문들을 어떻게 읽어야 할지도 생각해 볼 거리다.",
+   "perspectives": [
+    {
+     "who": "개편 추진 측",
+     "position": "수사권과 기소권을 조직적으로 분리해 한 기관에 권한이 집중되는 것을 막아야 한다고 본다."
+    },
+    {
+     "who": "우려하는 측",
+     "position": "기관장 공백과 준비 부족으로 수사가 늦어지거나 피해자 보호에 공백이 생길 수 있다고 지적한다."
+    }
+   ],
+   "status": "approved"
+  },
+  {
+   "areas": [
+    8
+   ],
+   "title": "광주·전남 행정통합 공식화…‘전남광주통합특별시’ 7월 출범",
+   "outlet": "경향신문",
+   "date": "2026-03-02",
+   "url": "https://www.khan.co.kr/article/202603021108001",
+   "more": [
+    {
+     "outlet": "광주일보(출범 준비, 2026. 6.)",
+     "url": "https://v.daum.net/v/20260621183222834?f=p"
+    }
+   ],
+   "conflict": "행정 효율과 지역 경쟁력 ↔ 지역 간 균형과 주민 가까이에서의 자치",
+   "summary": [
+    "광주시와 전라남도를 하나로 합치는 특별법에 따라 ‘전남광주통합특별시’를 만들고 7월 1일 공식 출범하기로 했다.",
+    "1986년 광주가 직할시로 분리된 지 40년 만의 통합으로, 6월 3일 지방선거에서 초대 통합 특별시장과 통합 교육감을 한 명씩 뽑는다.",
+    "행정 효율과 지역 갈등 완화를 위해 본청사는 광주, 무안, 순천 세 곳에 나눠 운영한다."
+   ],
+   "article": 117,
+   "also": [
+    118
+   ],
+   "articleReason": "지방자치단체의 종류는 법률로 정한다(제117조 제2항)는 조문이 특별법으로 새 지방자치단체를 만드는 근거가 된다. 지방의회와 단체장 선임 방법을 정한 제118조도 함께 볼 만하다.",
+   "perspectives": [
+    {
+     "who": "통합 추진 측",
+     "position": "생활권은 하나인데 행정구역이 나뉘어 비효율적이므로, 통합으로 지역 경쟁력을 키우고 인구 감소에 대응해야 한다고 본다."
+    },
+    {
+     "who": "우려하는 측",
+     "position": "지역 간 예산 배분 갈등이나 통합 초기의 행정 서비스 공백이 생길 수 있다고 걱정한다."
+    }
+   ],
+   "status": "approved"
+  }
+ ],
+ "qrefs": {
+  "1": [
+   [
+    "c:2004헌마554 등"
+   ],
+   [
+    "n:https://news.tf.co.kr/read/ptoday/2368105.htm"
+   ],
+   [
+    "n:https://news.tf.co.kr/read/ptoday/2368105.htm"
+   ]
+  ],
+  "2": [
+   [
+    "c:2004헌마644 등"
+   ],
+   [
+    "n:https://news.tf.co.kr/read/ptoday/2307707.htm"
+   ],
+   []
+  ],
+  "3": [
+   [
+    "c:98헌마363"
+   ],
+   [
+    "n:https://opinion.lawmaking.go.kr/gcom/nsmLmSts/out/2216610/detailRP"
+   ],
+   []
+  ],
+  "4": [
+   [
+    "c:2011헌바379 등"
+   ],
+   [
+    "n:https://www.dailian.co.kr/news/view/1663131/"
+   ],
+   [
+    "n:https://biz.sbs.co.kr/amp/article/20000339956"
+   ]
+  ],
+  "5": [
+   [
+    "c:2020헌마389 등",
+    "n:https://nocutnews.co.kr/news/6554761"
+   ],
+   [],
+   [
+    "c:2020헌마389 등",
+    "n:https://nocutnews.co.kr/news/6554761"
+   ]
+  ],
+  "6": [
+   [
+    "c:2013헌다1"
+   ],
+   [
+    "n:https://hangyo.com/news/article.html?no=109483"
+   ],
+   []
+  ],
+  "7": [
+   [
+    "c:2024헌나8"
+   ],
+   [
+    "n:https://www.ytn.co.kr/_ln/0103_202610022138487567"
+   ],
+   [
+    "c:2024헌나8",
+    "n:https://www.ytn.co.kr/_ln/0103_202610022138487567"
+   ]
+  ],
+  "8": [
+   [
+    "c:2006헌라6"
+   ],
+   [
+    "n:https://www.khan.co.kr/article/202603021108001"
+   ],
+   [
+    "c:2006헌라6",
+    "n:https://www.khan.co.kr/article/202603021108001"
+   ]
+  ],
+  "9": [
+   [
+    "c:2017헌바127"
+   ],
+   [
+    "c:2017헌바127",
+    "c:2020헌마389 등",
+    "n:https://nocutnews.co.kr/news/6554761"
+   ],
+   [
+    "c:2017헌바127",
+    "c:2020헌마389 등"
+   ]
+  ],
+  "10": [
+   [
+    "c:2010헌마47 등"
+   ],
+   [
+    "n:https://www.dailian.co.kr/news/view/1663131/"
+   ],
+   [
+    "n:https://nocutnews.co.kr/news/6554761"
+   ]
+  ]
+ }
+};
+
+// ---------- 기획표: 10개 영역 ----------
+// t: 헌법적 가치, w: 원문에서 찾을 낱말(쓰여 있는지 판정), r: 담겨 있는 가치의 참고 근거 조문
+const AREAS = [
+ {n:1, name:"헌법의 이해", idea:"헌법은 우리 사회의 기본 질서를 세우고 인권과 민주주의의 가치를 담고 있는 국가의 최고 규범이다.", arts:["0","1","10"],
+  vals:[{t:"인권",w:["인권"]},{t:"민주주의",w:["민주주의","민주"]},{t:"자유",w:["자유"]},{t:"정의",w:["정의"],r:["0"]}]},
+ {n:2, name:"헌법과 국가", idea:"헌법은 국민주권과 민주적 기본질서를 바탕으로 국민과 국가의 관계를 규정한다.", arts:["1","2","3","119","120","121","122","123","124","125","126","127"],
+  vals:[{t:"국민",w:["국민"]},{t:"국가",w:["국가"]},{t:"애국심",w:[],r:["39","69"]},{t:"책임",w:["책임"],r:["0","7①"]},{t:"다양성",w:[],r:["8①","11①","20①"]},{t:"민주주의",w:["민주주의","민주"],r:["1①"]},{t:"시장경제",w:[],r:["119①"]}]},
+ {n:3, name:"헌법과 행복", idea:"헌법은 모든 인간이 존엄하고 평등한 존재로서 행복을 추구할 수 있도록 보장한다.", arts:["10","11"],
+  vals:[{t:"인간존엄",w:["존엄"]},{t:"행복",w:["행복"]},{t:"평등",w:["평등"]},{t:"공정",w:["공정"],r:["11①","119②"]}]},
+ {n:4, name:"헌법과 인권", idea:"헌법은 국민의 다양한 기본권을 보장하며, 자신과 타인의 권리를 존중하고 보호하는 기준이 된다.", arts:Array.from({length:25},(_, i) => String(12 + i)),
+  vals:[{t:"기본권 보장",w:["기본권"],r:["10","37①"]}]},
+ {n:5, name:"헌법과 공동체", idea:"헌법은 개인의 권리와 공동체의 이익을 조화롭게 하여 공공복리를 증진하는 데 기여한다.", arts:["37","38","39","23","35"],
+  vals:[{t:"공공복리",w:["공공복리"]},{t:"협동",w:[],r:["0","123⑤"]},{t:"관용",w:[],r:["19","20①","21①"]},{t:"책임과 의무",w:["의무","책임"]}]},
+ {n:6, name:"국민주권과 민주주의", idea:"헌법은 국가의 주권이 국민에게 있음을 밝히고, 학생 자치 활동과 민주적 의사결정 참여의 기반이 된다.", arts:["1","7","8","21","24","41","67","72","118"],
+  vals:[{t:"국민주권",w:["주권"]},{t:"선거",w:["선거"]},{t:"정당",w:["정당"]},{t:"대화와 토론",w:[],r:["21①","50①","8②"]},{t:"민주주의",w:["민주주의","민주"]},{t:"권력의 제한",w:[],r:["65①","77⑤"]}]},
+ {n:7, name:"권력분립과 공익", idea:"헌법은 국가기관의 권한과 책임을 정하고, 국가기관이 서로 견제하도록 하여 권한의 남용을 방지하고 국민의 자유와 권리를 보장한다.", arts:["7","40","66","101","111","114","117"],
+  vals:[{t:"민주주의",w:["민주주의","민주"],r:["1①"]},{t:"법치주의",w:[],r:["37②","12①","103"]},{t:"권력통제",w:[],r:["40","66④","101①","53②","65①"]},{t:"적법절차",w:["적법"],r:["12①","12③"]}]},
+ {n:8, name:"지방자치와 사회참여", idea:"헌법의 가치와 원리는 시민이 지역사회의 문제를 이해하고 그 해결 과정에 주체적으로 참여하는 데 바탕이 된다.", arts:["117","118"],
+  vals:[{t:"참여",w:["참여"],r:["24","118②"]},{t:"타협",w:[],r:["49","119②"]},{t:"협동",w:[],r:["117①","123⑤"]}]},
+ {n:9, name:"사회문제와 헌법재판", idea:"헌법은 복잡한 사회문제를 판단하는 기준을 제시하며, 헌법재판은 사회적 갈등의 조정과 입법적 해결에 기여한다.", arts:["107","111","112","113"],
+  vals:[{t:"정의",w:["정의"],r:["0"]},{t:"관용",w:[],r:["19","20①"]},{t:"사회통합",w:[],r:["0","111①"]}]},
+ {n:10, name:"미래사회와 헌법", idea:"헌법은 AI 등 디지털 기술의 발전으로 나타나는 새로운 쟁점을 판단하는 기준이 되며, 지속 가능한 사회를 만들어 가기 위한 방향을 제시한다.", arts:["10","17","18","21","22","35","127"],
+  vals:[{t:"정의",w:["정의"],r:["0"]},{t:"관용",w:[],r:["19","20①","21①"]},{t:"다양성",w:[],r:["8①","11①","20①"]},{t:"참여",w:["참여"],r:["24","21①"]},{t:"지속가능",w:[],r:["35①","120②","122"]}]}
+];
+
+const NOTES = {"1:인권": "제10조는 국가가 개인의 ‘불가침의 기본적 인권’을 확인하고 보장할 의무를 진다고 밝혀, 인권을 국가가 만들어 주는 것이 아니라 국가보다 앞서 있는 것으로 봅니다.", "1:민주주의": "전문의 ‘4·19민주이념’, ‘자유민주적 기본질서’와 제1조의 ‘민주공화국’은 이 나라를 움직이는 원리가 민주주의임을 밝힙니다.", "1:자유": "전문은 ‘자유와 행복을 영원히 확보’하겠다고 다짐하고, 제10조의 행복추구권은 스스로 삶의 방향을 정할 자유를 전제합니다.", "1:정의": "전문의 ‘정의·인도와 동포애로써’, ‘모든 사회적 폐습과 불의를 타파’는 정의를 국가 공동체의 출발점으로 삼는다는 뜻입니다.", "2:국민": "제1조 제2항은 주권이 국민에게 있다고 하고, 제2조는 국민이 되는 요건과 재외국민 보호를 정해 국민이 국가의 바탕임을 보여 줍니다.", "2:국가": "제1조~제3조는 국가의 형태(민주공화국), 구성원(국민), 영역(한반도와 부속도서)을 차례로 정합니다.", "2:애국심": "낱말은 없지만, 제39조 국방의 의무와 제69조 대통령 취임 선서의 ‘국가를 보위하며’는 공동체를 지키려는 마음을 의무와 책임으로 담고 있습니다.", "2:책임": "전문은 ‘자유와 권리에 따르는 책임과 의무를 완수’하자고 하고, 제7조 제1항은 공무원이 국민에 대하여 책임을 진다고 정합니다.", "2:다양성": "제8조 제1항의 복수정당제, 제11조의 차별 금지, 제20조의 종교의 자유는 서로 다른 생각과 삶의 방식이 함께 있는 사회를 전제합니다.", "2:민주주의": "제1조의 ‘민주공화국’에 더해, 제119조 제2항은 ‘경제의 민주화’를 위해 국가가 경제를 조정할 수 있다고 정해 민주주의를 경제 영역까지 넓힙니다.", "2:시장경제": "제119조 제1항은 ‘개인과 기업의 경제상의 자유와 창의를 존중함을 기본’으로 한다고 밝히고, 제2항은 균형을 위해 국가가 규제·조정할 수 있다고 정합니다.", "3:인간존엄": "제10조 첫 문장 ‘모든 국민은 인간으로서의 존엄과 가치를 가지며’는 모든 기본권의 출발점이 됩니다.", "3:행복": "제10조의 행복추구권은 무엇이 행복인지를 각자가 정하고 추구할 수 있도록 보장합니다.", "3:평등": "제11조 제1항 ‘법 앞에 평등’과 차별 금지, 제2항의 사회적 특수계급 부정이 평등을 직접 밝힙니다.", "3:공정": "낱말은 없지만, 제11조 제1항이 성별·종교·사회적 신분에 따른 차별을 금지하고 제119조 제2항이 ‘적정한 소득의 분배’를 말하는 데서 공정한 기회와 분배를 읽을 수 있습니다.", "4:기본권 보장": "제12조~제36조는 신체의 자유부터 보건까지 개별 권리를 하나하나 보장합니다. 제10조는 ‘기본적 인권’ 보장 의무를, 제37조 제1항은 헌법에 열거되지 않은 자유와 권리도 경시되지 않는다고 밝힙니다.", "5:공공복리": "제23조 제2항 ‘재산권의 행사는 공공복리에 적합하도록’과 제37조 제2항은 개인의 권리가 공동체의 이익과 조화를 이루어야 함을 보여 줍니다.", "5:협동": "전문의 ‘동포애로써 민족의 단결을 공고히’와 제123조 제5항의 자조조직 육성은 서로 힘을 모으는 공동체를 그립니다.", "5:관용": "제19조 양심의 자유, 제20조 종교의 자유, 제21조 표현의 자유는 나와 다른 생각을 가진 사람의 자유도 인정해야 한다는 관용을 전제합니다.", "5:책임과 의무": "제38조 납세의 의무, 제39조 국방의 의무, 제35조 제1항의 ‘국가와 국민은 환경보전을 위하여 노력하여야 한다’가 공동체 구성원의 책임을 정합니다.", "6:국민주권": "제1조 제2항 ‘대한민국의 주권은 국민에게 있고, 모든 권력은 국민으로부터 나온다’가 국민주권을 직접 밝힙니다.", "6:선거": "제24조 선거권과 제41조·제67조의 보통·평등·직접·비밀선거는 국민이 주권을 행사하는 대표적인 방법입니다.", "6:정당": "제8조는 정당 설립의 자유와 복수정당제를 보장하면서, 정당의 목적·조직·활동이 민주적이어야 한다고 정합니다.", "6:대화와 토론": "제21조 표현·집회의 자유, 제50조 국회 회의 공개, 제8조 제2항의 ‘국민의 정치적 의사형성에 참여’는 공개된 대화와 토론으로 결정하는 민주주의를 담고 있습니다.", "6:민주주의": "제8조 제2항의 ‘민주적’, 제4항의 ‘민주적 기본질서’는 정당과 정치 과정이 민주주의 원리를 따라야 함을 밝힙니다.", "6:권력의 제한": "제65조 탄핵소추와 제77조 제5항의 국회의 계엄 해제 요구는 대통령 같은 최고 권력도 헌법의 통제를 받는다는 것을 제도로 보여 줍니다.", "7:민주주의": "제1조 제1항 ‘대한민국은 민주공화국이다’를 지키기 위한 장치가 권력분립입니다. 권력을 나누어야 국민의 뜻이 한 사람에게 독점되지 않습니다.", "7:법치주의": "제37조 제2항의 ‘법률로써’, 제12조 제1항의 ‘법률과 적법한 절차’, 제103조의 ‘헌법과 법률에 의하여’는 국가 권력이 법에 따라서만 행사되어야 한다는 법치주의를 담고 있습니다.", "7:권력통제": "입법권은 국회(제40조), 행정권은 정부(제66조 제4항), 사법권은 법원(제101조 제1항)에 나눈 짜임과, 대통령의 재의 요구(제53조), 국회의 탄핵소추(제65조)가 서로를 견제하게 합니다.", "7:적법절차": "제12조 제1항은 ‘법률과 적법한 절차’ 없이 처벌받지 않는다고 하고, 제3항은 체포·구속에 법관이 발부한 영장을 요구합니다.", "8:참여": "제24조 선거권과 제118조 제2항의 지방의회 의원선거는 주민이 대표를 뽑아 지역의 일에 참여하는 길을 엽니다.", "8:타협": "제49조의 다수결 규칙과 가부동수일 때 부결로 보는 원칙은 서로 다른 의견을 모으는 절차이고, 제119조 제2항은 ‘경제주체간의 조화’를 말합니다.", "8:협동": "제117조 제1항은 지방자치단체가 ‘주민의 복리에 관한 사무’를 스스로 처리하도록 하고, 제123조 제5항은 자조조직 육성을 정해 함께 해결하는 공동체를 담습니다.", "9:정의": "전문의 ‘정의·인도’와 ‘불의를 타파’라는 다짐을 실제로 지키는 장치가 헌법재판입니다. 헌법에 어긋난 법률을 바로잡습니다(제111조).", "9:관용": "제19조 양심의 자유, 제20조 종교의 자유는 서로 다른 신념을 가진 사람이 함께 살아가기 위한 관용을 전제합니다. 헌법재판은 이런 자유가 부딪칠 때 기준을 제시합니다.", "9:사회통합": "전문의 ‘민족의 단결’과 제111조 제1항의 권한쟁의 심판은 국가기관 사이의 다툼까지 헌법에 따라 평화롭게 해결해 사회를 하나로 묶습니다.", "10:정의": "전문의 ‘정의·인도’와 ‘각인의 기회를 균등히’는 기술 발전의 이익과 부담이 공정하게 나뉘어야 한다는 기준이 됩니다.", "10:관용": "제19조~제21조의 양심·종교·표현의 자유는 온라인 공간에서도 다른 의견을 존중해야 한다는 관용의 근거가 됩니다.", "10:다양성": "제8조 제1항 복수정당제, 제11조 차별 금지, 제20조 종교의 자유는 알고리즘과 AI가 한쪽 생각만 키우지 않도록 해야 한다는 기준으로 읽을 수 있습니다.", "10:참여": "제24조 선거권과 제21조 표현·집회의 자유는 디지털 기술에 관한 결정에도 시민이 참여할 수 있어야 한다는 근거가 됩니다.", "10:지속가능": "제35조 제1항 환경권, 제120조 제2항 ‘국토와 자원’의 균형 있는 개발, 제122조 국토의 ‘이용·개발과 보전’은 미래세대까지 생각하는 지속가능성을 담고 있습니다."};
+AREAS.forEach(a => a.vals.forEach(v => v.x = NOTES[a.n + ":" + v.t] || ""));
+
+// ---------- 도우미 ----------
+const U = DATA.units;
+U.forEach(u => u.t = u.t.replace(/\u318d/g, "·"));
+const sets = U.map(u => new Set(u.n));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const jong = s => { const c = s.charCodeAt(s.length - 1); return c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28 !== 0; };
+const P = (s, a, b) => s + (jong(s) ? a : b);
+const code = u => u.a === 0 ? "0" : `${u.a}${u.p}`;
+const label = u => u.a === 0 ? "전문" : `제${u.a}조${u.p ? " " + u.p : ""}`;
+const cut = (t, n = 110) => t.length > n ? t.slice(0, n) + "…" : t;
+const fmtDate = s => { const [y, m, d] = s.split("-"); return `${y}. ${+m}. ${+d}.`; };
+function unitsOf(c) { const m = String(c).match(/^(\d+)([①-⑩]?)$/); return U.filter(u => u.a === +m[1] && (!m[2] || u.p === m[2])); }
+function areaUnits(a) { return a.arts.flatMap(unitsOf); }
+function highlight(text, words) {
+  if (!words.length) return esc(text);
+  const re = new RegExp(words.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "g");
+  return esc(text).replace(re, m => `<mark>${m}</mark>`);
+}
+// 그 가치가 이 영역 조문에 '쓰여 있는지' (형태소 분석 결과 기준)
+function writtenIn(a, v) {
+  const us = areaUnits(a);
+  const hits = us.filter(u => v.w.some(w => sets[U.indexOf(u)].has(w)));
+  return {written: hits.length > 0, units: hits};
+}
+
+// ---------- 용어 사전 ----------
+const GLOSSARY = [
+  ["위헌", "법률이 헌법에 어긋난다고 보는 결정이에요. 위헌 결정이 난 법률은 효력을 잃어요."],
+  ["합헌", "법률이 헌법에 어긋나지 않는다고 보는 결정이에요."],
+  ["헌법불합치", "법률이 헌법에 어긋나지만, 곧바로 효력을 없애면 법의 공백이나 혼란이 생길 수 있어서 국회가 고칠 때까지 일정 기간 효력을 남겨 두는 결정이에요. 정해진 기한까지 고치지 않으면 그 법률은 효력을 잃어요."],
+  ["한정위헌", "법률을 특정한 뜻으로 해석하거나 적용하는 한 헌법에 어긋난다는 결정이에요."],
+  ["인용", "청구한 사람의 주장을 받아들이는 결정이에요. 탄핵심판에서 인용되면 공직에서 파면되고, 정당해산심판에서 인용되면 정당이 해산돼요."],
+  ["기각", "청구한 내용을 살펴보았지만 이유가 없다고 보고 받아들이지 않는 결정이에요."],
+  ["각하", "청구가 갖춰야 할 조건을 갖추지 못해, 내용은 판단하지 않고 돌려보내는 결정이에요."],
+  ["파면", "공직에서 물러나게 하는 것이에요. 탄핵 결정은 공직에서 파면하는 데 그치고, 민사·형사 책임은 따로 남아요(제65조 제4항)."],
+  ["헌법재판소", "법률이 헌법에 맞는지 등 헌법 문제를 판단하는 기관이에요. 재판관 9명으로 구성돼요(제111조)."],
+  ["위헌법률심판", "재판 중에 그 재판에 적용될 법률이 헌법에 맞는지 문제가 되면, 법원이 헌법재판소에 판단을 요청하는 심판이에요(제107조 제1항, 제111조)."],
+  ["헌법소원", "국가의 공권력 때문에 기본권을 침해당한 국민이 헌법재판소에 구제를 청구하는 제도예요."],
+  ["탄핵", "대통령·국무위원·법관 등 고위공직자가 직무를 하면서 헌법이나 법률을 어겼을 때, 국회가 소추하고 헌법재판소가 파면 여부를 결정하는 제도예요(제65조)."],
+  ["권한쟁의", "국가기관이나 지방자치단체 사이에 누가 어떤 권한을 갖는지 다툼이 생겼을 때 헌법재판소가 판단하는 심판이에요."],
+  ["정당해산", "정당의 목적이나 활동이 민주적 기본질서에 어긋날 때, 정부의 청구로 헌법재판소가 그 정당을 해산하는 심판이에요(제8조 제4항)."],
+  ["사건번호", "‘연도 + 사건 부호 + 번호’예요. 헌가는 위헌법률심판, 헌나는 탄핵심판, 헌다는 정당해산심판, 헌라는 권한쟁의심판, 헌마와 헌바는 헌법소원 사건이에요. 예: 2020헌마389는 2020년에 접수된 헌법소원 사건이에요."],
+  ["재판관 6인 이상", "법률의 위헌 결정, 탄핵 결정, 정당해산 결정, 헌법소원 인용 결정은 재판관 9명 중 6명 이상이 찬성해야 해요(제113조 제1항)."],
+  ["관습헌법", "헌법 조문에 쓰여 있지는 않지만, 오랫동안 이어진 관행이 국민의 합의를 얻어 헌법과 같은 효력을 갖는다고 인정되는 규범이에요."],
+  ["기본권", "헌법이 보장하는 국민의 기본적인 권리예요. 인간의 존엄과 가치를 바탕으로 자유권, 평등권, 참정권, 사회권, 청구권 등이 있어요."],
+  ["과잉금지원칙", "기본권을 제한할 때 지켜야 하는 네 가지 기준이에요. 목적이 정당한지, 수단이 적합한지, 침해를 최소로 하는지, 얻는 공익과 잃는 사익이 균형을 이루는지를 따져요. 헌법 제37조 제2항에서 나온 원칙이에요."],
+  ["본질적인 내용", "기본권을 제한하더라도 그 권리의 핵심까지 없앨 수는 없다는 뜻이에요(제37조 제2항)."],
+  ["법률유보", "국민의 기본권을 제한하려면 국회가 만든 법률에 근거해야 한다는 원칙이에요(제37조 제2항의 ‘법률로써’)."],
+  ["기본권 보호의무", "국가가 국민의 기본권을 다른 사람이나 재난 같은 위험으로부터 적극적으로 지켜야 할 의무예요(제10조 후문). 국가가 최소한의 보호도 하지 않으면 헌법 위반이 될 수 있어요."],
+  ["공공복리", "공동체 구성원 모두의 이익이에요. 기본권을 제한할 수 있는 사유 가운데 하나예요(제37조 제2항)."],
+  ["적법절차", "국가가 국민의 자유를 제한할 때는 정당한 법률과 공정한 절차를 따라야 한다는 원칙이에요(제12조)."],
+  ["권력분립", "국가 권력을 입법(국회)·행정(정부)·사법(법원)으로 나누어 서로 견제하게 함으로써 권력의 남용을 막는 원리예요."],
+  ["법치주의", "국가 권력이 사람의 뜻대로가 아니라 헌법과 법률에 따라 행사되어야 한다는 원리예요."],
+  ["지방자치권", "지방자치단체가 주민의 복리에 관한 일을 스스로 결정하고 처리할 수 있는 권한이에요(제117조)."],
+  ["평등권", "법 앞에 평등하며 합리적 이유 없이 차별받지 않을 권리예요(제11조)."],
+  ["공무담임권", "공무원이 되거나 공직을 맡을 수 있는 권리예요(제25조)."],
+  ["양심의 자유", "옳고 그름에 대한 자신의 신념을 갖고, 그 신념에 반하는 행동을 강요받지 않을 자유예요(제19조)."],
+  ["자기결정권", "자신의 삶에 관한 중요한 일을 스스로 결정할 권리예요. 제10조의 행복추구권 등에서 나온다고 봐요."],
+  ["개인정보자기결정권", "자신에 관한 정보를 언제, 누구에게, 어디까지 알릴지 스스로 결정할 권리예요."],
+  ["국민투표", "국민이 직접 투표로 결정하는 것이에요. 헌법 개정(제130조)과 대통령이 붙인 중요 정책(제72조)이 대상이에요."]
+];
+const G = new Map(GLOSSARY);
+const GKEYS = [...G.keys()].sort((a, b) => b.length - a.length);
+// 글 속의 용어를 눌러 볼 수 있는 단추로 바꾼다 (같은 용어는 한 글에서 한 번만)
+function termify(text) {
+  let html = esc(text); const used = new Set();
+  for (const k of GKEYS) {
+    if (used.has(k) || [...used].some(u => u.includes(k))) continue;
+    const i = html.indexOf(esc(k)); if (i < 0) continue;
+    if (html.lastIndexOf("<", i) > html.lastIndexOf(">", i)) continue;
+    html = html.slice(0, i) + `<button class="term" data-term="${esc(k)}">${esc(k)}</button>` + html.slice(i + esc(k).length);
+    used.add(k);
+  }
+  return html;
+}
+function showTerm(k) { openDlg(`용어: ${k}`, `<p class="quote" style="font-family:var(--sans)">${esc(G.get(k) || "")}</p><div class="row"><button class="btn ghost" id="gAll">용어 사전 전체 보기</button></div>`); document.getElementById("gAll").onclick = () => openGlossary(); }
+function openGlossary(q = "") {
+  openDlg("용어 사전", `<input type="text" id="gq" placeholder="찾을 용어 (예: 헌법불합치)" value="${esc(q)}"><div id="gl" style="margin-top:8px"></div>`);
+  const drawG = () => { const v = document.getElementById("gq").value.trim();
+    const hits = GLOSSARY.filter(([k, d]) => !v || k.includes(v) || d.includes(v));
+    document.getElementById("gl").innerHTML = hits.length ? hits.map(([k, d]) => `<div class="unit"><div style="font-weight:600">${esc(k)}</div><div class="small" style="margin-top:2px">${esc(d)}</div></div>`).join("") : `<p class="hint">‘${esc(v)}’에 해당하는 용어가 없어요.</p>`; };
+  document.getElementById("gq").oninput = drawG; drawG(); setTimeout(() => document.getElementById("gq").focus(), 50);
+}
+document.addEventListener("click", e => { const b = e.target.closest(".term"); if (b) { e.preventDefault(); showTerm(b.dataset.term); } });
+const caseLink = no => `https://www.google.com/search?q=${encodeURIComponent(`"${no.replace(/\s*등$/, "")}" 헌법재판소 결정 site:law.go.kr OR site:ccourt.go.kr`)}`;
+
+// ---------- 심화 탐구: 구체적인 기준으로 실제 사례 판단하기 ----------
+const PROP = [["목적의 정당성", "그 제도나 법이 이루려는 목적이 헌법상 정당한가?"], ["수단의 적합성", "그 방법이 목적을 이루는 데 실제로 도움이 되는가?"], ["침해의 최소성", "기본권을 덜 제한하는 다른 방법은 없는가?"], ["법익의 균형성", "그 방법으로 얻는 공익이 잃는 개인의 권리보다 큰가?"]];
+const DEEPQ = {
+  1: {ref: "c:2004헌마554 등", title: "관습헌법의 요건", q: "‘수도는 서울’이라는 관습헌법을 인정한 헌법재판소의 판단은 타당했을까? 헌재가 제시한 관습헌법의 요건으로 따져 보자.",
+      crit: [["관행의 존재", "그런 관행이 실제로 있었는가?"], ["반복·계속성", "오랜 기간 되풀이되었는가?"], ["항상성", "그동안 바뀌거나 반대되는 관행이 없었는가?"], ["명료성", "누구나 알 수 있을 만큼 분명한가?"], ["국민적 합의", "국민이 그 관행을 헌법처럼 받아들였는가?"]]},
+  2: {ref: "c:2004헌마644 등", title: "과잉금지원칙", q: "국내에 주민등록이 없는 재외국민의 선거권을 모두 막은 제도는 정당했을까? 기본권 제한의 네 가지 기준으로 따져 보자.", crit: PROP},
+  3: {ref: "c:98헌마363", title: "평등 심사", q: "군 가산점 제도는 평등권을 침해했을까? 차별이 정당한지 따지는 기준으로 판단해 보자.",
+      crit: [["비교 대상", "누구와 누구를 다르게 대우하는가?"], ["차별 목적의 정당성", "다르게 대우하는 목적이 헌법상 정당한가?"], ["차별 수단의 적합성", "그 방법이 목적을 이루는 데 알맞은가?"], ["차별 정도의 비례성", "불이익을 받는 사람의 손해가 지나치게 크지 않은가?"]]},
+  4: {ref: "c:2011헌바379 등", title: "과잉금지원칙", q: "대체복무를 두지 않은 병역 제도는 양심의 자유를 지나치게 제한했을까? 기본권 제한의 네 가지 기준으로 따져 보자.", crit: PROP},
+  5: {ref: "c:2020헌마389 등", title: "과소보호금지원칙", q: "2031년 이후 감축목표를 정하지 않은 것은 국가가 국민을 충분히 보호하지 않은 것일까? 국가의 기본권 보호의무 기준으로 따져 보자.",
+      crit: [["지켜야 할 기본권", "어떤 기본권이 어떤 위험에 놓여 있는가?"], ["국가의 보호 조치", "국가는 어떤 보호 조치를 했는가?"], ["최소한의 보호", "그 조치가 위험에 비해 최소한의 보호 수준에 이르는가?"], ["미래세대에 대한 부담", "부담을 미래세대에 넘기고 있지는 않은가?"]]},
+  6: {ref: "c:2013헌다1", title: "정당해산의 요건", q: "통합진보당 해산 결정은 민주주의를 지킨 것일까? 정당해산이 정당화되는 기준으로 따져 보자.",
+      crit: [["민주적 기본질서 위배", "정당의 목적이나 활동이 민주적 기본질서에 어긋나는가?"], ["구체적 위험성", "실제로 해악을 끼칠 구체적인 위험이 있는가?"], ["다른 수단의 가능성", "해산이 아닌 다른 방법으로는 막을 수 없는가?"], ["잃는 것과 얻는 것", "해산으로 잃는 정당 활동의 자유와 지키는 질서가 균형을 이루는가?"]]},
+  7: {ref: "c:2024헌나8", title: "탄핵의 요건", q: "대통령 파면 결정은 헌법에 비추어 정당했을까? 탄핵이 인용되기 위한 기준으로 따져 보자.",
+      crit: [["직무 관련성", "문제가 된 행위가 직무를 하면서 한 것인가?"], ["헌법·법률 위반", "그 행위가 헌법이나 법률을 어겼는가?"], ["위반의 중대성", "파면을 정당화할 만큼 중대한 위반인가?"], ["헌법 수호", "파면하지 않으면 헌법 질서를 지킬 수 없는가?"]]},
+  8: {ref: "c:2006헌라6", title: "지방자치권 침해 판단", q: "정부가 서울시의 자치사무 전반을 감사한 것은 지방자치권 침해였을까? 감독의 한계를 따지는 기준으로 판단해 보자.",
+      crit: [["사무의 종류", "감사한 일이 지방자치단체 스스로의 일(자치사무)인가, 국가가 맡긴 일인가?"], ["감사의 근거", "감사할 수 있는 법적 근거가 있었는가?"], ["감사 범위의 한정", "법령 위반이 확인된 범위로 좁혀 감사했는가?"], ["자치의 본질", "지방자치의 핵심을 해칠 정도의 간섭인가?"]]},
+  9: {ref: "c:2017헌바127", title: "기본권 충돌의 조정", q: "낙태를 전면 처벌하던 형법 조항은 두 기본권을 조화롭게 조정했을까? 기준을 세워 따져 보자.",
+      crit: [["부딪치는 기본권", "어떤 기본권과 어떤 기본권이 부딪치는가?"], ["처벌의 목적과 수단", "처벌이 목적을 이루는 데 알맞은 수단인가?"], ["덜 제한적인 방법", "기간이나 사유를 나누는 등 덜 제한하는 방법이 있는가?"], ["국회의 입법 책임", "헌재 결정 이후 국회는 어떤 역할을 해야 하는가?"]]},
+  10: {ref: "c:2010헌마47 등", title: "과잉금지원칙", q: "인터넷 게시판 본인확인제는 표현의 자유를 지나치게 제한했을까? 기본권 제한의 네 가지 기준으로 따져 보자.", crit: PROP}
+};
+
+// ---------- 상태 (이 기기에만 저장) ----------
+const KEY = "cv-student-v5";
+const blank = () => ({step: 0, area: null, found: [], cls: {}, deep: [], copy: null, copyText: "", copyWhy: "", copyPct: 0, qmode: "basic", dq: null, opScore: 0, q: null, stance: null, opinion: "", evid: "", reflect: "", name: "", sid: ""});
+let S = blank();
+try { const r = localStorage.getItem(KEY); if (r) S = Object.assign(blank(), JSON.parse(r)); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { const alert = document.getElementById("storageAlert"); alert.textContent = "브라우저에 기록을 저장하지 못했습니다. 이 화면을 닫기 전에 제출 코드나 파일로 기록을 보관하세요."; alert.hidden = false; } };
+const A = () => AREAS.find(a => a.n === S.area);
+
+const STEPS = ["start", "area", "goal", "cloud", "sort", "deep", "copy", "issues", "question", "self", "submit"];
+const main = document.getElementById("main");
+function go(i) { S.step = Math.max(0, Math.min(STEPS.length - 1, i)); save(); render(); window.scrollTo({top: 0}); }
+document.getElementById("back").addEventListener("click", () => {
+  if (STEPS[S.step] === "copy" && S.copy) { S.copy = null; save(); return render(); }
+  go(S.step - 1);
+});
+function chrome() {
+  const k = S.step;
+  document.getElementById("back").hidden = k === 0;
+  document.getElementById("prog").style.width = (k / (STEPS.length - 1) * 100) + "%";
+  document.getElementById("stepno").textContent = k ? `${k} / ${STEPS.length - 1}` : "";
+}
+function render() { chrome(); main.innerHTML = ""; const s = document.createElement("section"); s.className = "screen"; main.appendChild(s); VIEWS[STEPS[S.step]](s); }
+
+// ---------- 화면들 ----------
+const VIEWS = {};
+
+VIEWS.start = el => {
+  el.innerHTML = `<p class="kicker">헌법 가치 탐구</p><h1>헌법 속에서<br>나의 가치를 찾아요</h1>
+    <p class="lead">영역을 고르고 → 단어 구름에서 가치를 찾고 → 조문을 깊이 읽어 해석하고 → 그 조문을 필사한 뒤 → 실제 사건으로 토론합니다.</p>
+    <div class="idcard">
+      <label class="l" for="kc" style="margin-top:0">학급 코드 <span class="hint">선생님이 알려 준 숫자 6자리</span></label>
+      <input type="text" id="kc" inputmode="numeric" maxlength="6" autocomplete="off" placeholder="예: 482915" value="${esc(S.klass || "")}" class="code6">
+      <div class="two">
+        <div><label class="l" for="sd">학번</label><input type="text" id="sd" inputmode="numeric" placeholder="예: 20315" value="${esc(S.sid || "")}"></div>
+        <div><label class="l" for="nm">이름</label><input type="text" id="nm" autocomplete="name" value="${esc(S.name || "")}"></div>
+      </div>
+    </div>
+    <div class="row"><button class="btn" id="go" disabled>시작하기</button></div>
+    ${S.area ? `<div class="row"><button class="btn ghost" id="reset">처음부터 새로 하기</button></div>` : ""}`;
+  const ok = () => /^\d{6}$/.test(S.klass || "") && (S.sid || "").trim() && (S.name || "").trim();
+  const sync = () => { el.querySelector("#go").disabled = !ok(); };
+  el.querySelector("#kc").oninput = e => { e.target.value = e.target.value.replace(/\D/g, "").slice(0, 6); S.klass = e.target.value; save(); sync(); };
+  el.querySelector("#sd").oninput = e => { S.sid = e.target.value.trim(); save(); sync(); };
+  el.querySelector("#nm").oninput = e => { S.name = e.target.value; save(); sync(); };
+  sync();
+  el.querySelector("#go").onclick = () => go(S.area ? Math.max(1, S.step || 1) : 1);
+  const r = el.querySelector("#reset");
+  if (r) { let armed = false; r.onclick = () => { if (!armed) { armed = true; r.textContent = "한 번 더 누르면 이 기기의 기록이 지워져요"; return; } const k = S.klass; S = blank(); S.klass = k; save(); render(); }; }
+};
+
+VIEWS.area = el => {
+  el.innerHTML = `<h2>어떤 영역을 탐구할까요?</h2><p class="lead">가장 궁금한 영역 하나를 고르세요.</p>
+    <div class="tiles">${AREAS.map(a => `<button class="tile" data-n="${a.n}"><span class="n">${a.n}</span><span class="t">${esc(a.name)}</span></button>`).join("")}</div>`;
+  el.querySelectorAll(".tile").forEach(b => b.onclick = () => {
+    const n = +b.dataset.n;
+    if (S.area !== n) Object.assign(S, {area: n, found: [], cls: {}, deep: [], _dv: undefined, op: null, useCases: [], moreArts: [], self: {}, myConst: "", myConstWhy: "", copy: null, copyText: "", copyWhy: "", copyPct: 0, qmode: "basic", dq: null, opScore: 0, q: null, stance: null, opinion: "", evid: "", reflect: ""});
+    go(2);
+  });
+};
+
+VIEWS.goal = el => {
+  const a = A();
+  el.innerHTML = `<p class="kicker">${a.n}. ${esc(a.name)}</p><h2>이번 탐구의 목표</h2>
+    <div class="idea">${esc(a.idea)}</div>
+    <p class="small" style="margin:0 0 8px">이 영역에서 찾아볼 헌법적 가치</p>
+    <div class="chips">${a.vals.map(v => `<span class="chip">${esc(v.t)}</span>`).join("")}</div>
+    <div class="row"><button class="btn" id="n">탐구 시작</button></div>`;
+  el.querySelector("#n").onclick = () => go(3);
+};
+
+// 단어 구름: 이 영역의 관련 조문만으로 만든다
+const mctx = document.createElement("canvas").getContext("2d");
+VIEWS.cloud = el => {
+  const a = A(), us = areaUnits(a);
+  const tf = new Map(); us.forEach(u => u.n.forEach(w => tf.set(w, (tf.get(w) || 0) + 1)));
+  const targets = a.vals.filter(v => writtenIn(a, v).written);
+  const targetWords = new Set(targets.flatMap(v => v.w.filter(w => tf.has(w))));
+  const foundVals = () => targets.filter(v => v.w.some(w => S.found.includes(w)));
+  el.innerHTML = `<h2>조문 속 단어 구름</h2>
+    <p class="lead" id="cl">${targets.length
+      ? `이 영역 조문에 실제로 <b>쓰여 있는</b> 가치어가 ${targets.length}개 숨어 있어요. 찾아서 눌러 보세요.`
+      : `이 영역 조문에는 목표 가치가 <b>낱말로는 하나도 쓰여 있지 않아요.</b> 어떤 단어들로 이루어져 있는지 눌러 보고, 다음 단계에서 가치가 어디에 <b>담겨 있는지</b> 찾아봐요.`}</p>
+    <svg id="cloud" role="img" aria-label="이 영역 조문의 단어 구름"></svg>
+    <div class="dots" id="dots"></div>
+    <div class="row"><button class="btn" id="n">다음</button></div>`;
+  const svg = el.querySelector("#cloud");
+  const draw = () => {
+    const W = svg.clientWidth || 600, H = Math.round(Math.min(420, Math.max(260, W * 0.6)));
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    const words = [...tf].sort((x, y) => y[1] - x[1]).slice(0, 55);
+    targetWords.forEach(w => { if (!words.some(x => x[0] === w)) words.push([w, tf.get(w)]); });
+    words.sort((x, y) => y[1] - x[1]);
+    const mx = words[0][1], mn = words[words.length - 1][1];
+    const big = W < 480 ? 38 : 56, small = 14, placed = [], out = [];
+    const hit = r => placed.some(p => r.x < p.x + p.w && r.x + r.w > p.x && r.y < p.y + p.h && r.y + r.h > p.y);
+    const fam = getComputedStyle(document.body).fontFamily;
+    for (const [w, c] of words) {
+      const t = Math.sqrt((c - mn) / (mx - mn || 1)), size = Math.round(small + t * (big - small)), wt = t > .45 ? 600 : 500;
+      mctx.font = `${wt} ${size}px ${fam}`;
+      const tw = mctx.measureText(w).width, th = size * 1.05, pad = 4;
+      for (let s = 0; s < 3000; s++) {
+        const ang = s * .31, r = 1.5 * ang, cx = W / 2 + r * Math.cos(ang) * (W / H) * .85, cy = H / 2 + r * Math.sin(ang);
+        const rect = {x: cx - tw / 2 - pad, y: cy - th / 2 - pad, w: tw + pad * 2, h: th + pad * 2};
+        if (rect.x < 0 || rect.y < 0 || rect.x + rect.w > W || rect.y + rect.h > H || hit(rect)) continue;
+        placed.push(rect); out.push({w, size, wt, x: cx, y: cy + size * .34}); break;
+      }
+    }
+    fitCloud(svg, placed);
+    svg.innerHTML = out.map(o => `<text x="${o.x.toFixed(1)}" y="${o.y.toFixed(1)}" text-anchor="middle" font-size="${o.size}" font-weight="${o.wt}" fill="var(${S.found.includes(o.w) ? "--value" : "--faint"})" tabindex="0" role="button" data-w="${esc(o.w)}">${esc(o.w)}</text>`).join("");
+    el.querySelector("#dots").innerHTML = targets.map(v => `<i class="${foundVals().includes(v) ? "on" : ""}" title="${foundVals().includes(v) ? esc(v.t) : ""}"></i>`).join("");
+  };
+  const tap = w => {
+    const isTarget = targetWords.has(w);
+    if (isTarget && !S.found.includes(w)) { S.found.push(w); save(); }
+    draw();
+    const hits = us.filter(u => sets[U.indexOf(u)].has(w));
+    const v = targets.find(v => v.w.includes(w));
+    openDlg(isTarget ? `찾았어요! ‘${v.t}’` : `‘${w}’`, hits.map(u => `<div class="unit"><div class="r">${label(u)}</div><div class="quote">${highlight(u.t, [w])}</div></div>`).join(""));
+    if (foundVals().length === targets.length) el.querySelector("#cl").innerHTML = `<b>${targets.length}개를 모두 찾았어요.</b> 나머지 가치는 단어로는 없지만 조문에 담겨 있을지도 몰라요.`;
+  };
+  svg.addEventListener("click", e => { const t = e.target.closest("text"); if (t) tap(t.dataset.w); });
+  svg.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.dataset && e.target.dataset.w) { e.preventDefault(); tap(e.target.dataset.w); } });
+  requestAnimationFrame(draw);
+  window.onresize = () => { if (STEPS[S.step] === "cloud") draw(); };
+  el.querySelector("#n").onclick = () => go(4);
+};
+
+function fitCloud(svg, placed) {
+  if (!placed.length) return;
+  const pad = 6, x0 = Math.min(...placed.map(p => p.x)) - pad, y0 = Math.min(...placed.map(p => p.y)) - pad;
+  const w = Math.max(...placed.map(p => p.x + p.w)) + pad - x0, h = Math.max(...placed.map(p => p.y + p.h)) + pad - y0;
+  const cw = svg.clientWidth || w, scale = Math.min(1.5, cw / w);
+  svg.setAttribute("viewBox", `${x0.toFixed(1)} ${y0.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`);
+  svg.style.height = Math.round(h * scale) + "px";
+}
+// ---------- 공용: 단어 구름 그리기 ----------
+// tf: Map(단어→횟수), opts.color(w): CSS 변수 이름, opts.max: 단어 수, opts.extra: 꼭 넣을 단어
+function drawCloudInto(svg, tf, opts) {
+  const W = svg.clientWidth || 600, H = opts.h || Math.round(Math.min(300, Math.max(200, W * 0.45)));
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const words = [...tf].sort((x, y) => y[1] - x[1]).slice(0, opts.max || 45);
+  (opts.extra || []).forEach(w => { if (tf.has(w) && !words.some(x => x[0] === w)) words.push([w, tf.get(w)]); });
+  words.sort((x, y) => y[1] - x[1]);
+  if (!words.length) { svg.innerHTML = ""; return; }
+  const mx = words[0][1], mn = words[words.length - 1][1];
+  const big = Math.min(W < 480 ? 34 : 48, H / 5), small = 13, placed = [], out = [];
+  const hit = r => placed.some(p => r.x < p.x + p.w && r.x + r.w > p.x && r.y < p.y + p.h && r.y + r.h > p.y);
+  const fam = getComputedStyle(document.body).fontFamily;
+  for (const [w, c] of words) {
+    const t = Math.sqrt((c - mn) / (mx - mn || 1)), size = Math.round(small + t * (big - small)), wt = t > .45 ? 600 : 500;
+    mctx.font = `${wt} ${size}px ${fam}`;
+    const tw = mctx.measureText(w).width, th = size * 1.05, pad = 4;
+    for (let s = 0; s < 3000; s++) {
+      const ang = s * .31, r = 1.4 * ang, cx = W / 2 + r * Math.cos(ang) * (W / H) * .85, cy = H / 2 + r * Math.sin(ang);
+      const rect = {x: cx - tw / 2 - pad, y: cy - th / 2 - pad, w: tw + pad * 2, h: th + pad * 2};
+      if (rect.x < 0 || rect.y < 0 || rect.x + rect.w > W || rect.y + rect.h > H || hit(rect)) continue;
+      placed.push(rect); out.push({w, size, wt, x: cx, y: cy + size * .34}); break;
+    }
+  }
+  fitCloud(svg, placed);
+  svg.innerHTML = out.map(o => `<text x="${o.x.toFixed(1)}" y="${o.y.toFixed(1)}" text-anchor="middle" font-size="${o.size}" font-weight="${o.wt}" fill="var(${opts.color(o.w)})" tabindex="0" role="button" data-w="${esc(o.w)}">${esc(o.w)}</text>`).join("");
+}
+const tfOf = us => { const m = new Map(); us.forEach(u => u.n.forEach(w => m.set(w, (m.get(w) || 0) + 1))); return m; };
+const fullUnitHTML = u => `<div class="unit"><div class="r">${label(u)}</div><div class="quote">${esc(u.t)}</div></div>`;
+function showAllArticles() { const a = A(); openDlg(`${a.n}. ${a.name} 관련 조문 전체`, areaUnits(a).map(fullUnitHTML).join("")); }
+
+// ---------- 4단계: 단어 구름으로 확인하기 ----------
+VIEWS.sort = el => {
+  const a = A(), us = areaUnits(a), tf = tfOf(us);
+  const done = v => !!(S.cls[v.t] || {}).answer;
+  let curV = a.vals.find(v => !done(v)) || a.vals[0];
+  el.innerHTML = `<h2>구름 속에 있을까?</h2>
+    <p class="lead">이 영역의 가치 <b>${a.vals.length}개</b>를 모두 하나씩 확인해요. 가치를 고르고, 구름에서 그 낱말을 찾아본 뒤, <b>쓰여 있다</b> 또는 <b>담겨 있다</b>를 고르세요.</p>
+    <div class="guide"><span class="gstep">1</span> 아래 가치 중 하나를 누르세요 <span class="left" id="left"></span></div>
+    <div class="chips vchips" id="vchips" role="tablist" aria-label="확인할 가치"></div>
+    <div class="guide"><span class="gstep">2</span> 구름에서 <b id="vw2"></b> 낱말을 찾아보세요 <span class="hint">(낱말을 누르면 그 조문이 보여요)</span></div>
+    <svg id="cloud" role="img" aria-label="이 영역 조문의 단어 구름"></svg>
+    <div class="vcard" style="padding:16px"><div class="guide" style="justify-content:center;margin:0 0 6px"><span class="gstep">3</span> ‘<b id="vw"></b>’는 이 영역 조문에</div>
+      <div class="pick" style="margin-top:6px"><button data-a="written"><b>쓰여 있다</b><span>낱말이 그대로 있다</span></button><button data-a="contained"><b>담겨 있다</b><span>낱말은 없고 뜻이 녹아 있다</span></button></div>
+      <div id="fb"></div></div>
+    <div class="row"><button class="btn ghost" id="all">관련 조문 전체 보기</button><button class="btn" id="n">깊이 읽기로</button></div>`;
+  const svg = el.querySelector("#cloud");
+  const draw = () => {
+    const st = S.cls[curV.t] || {};
+    const hl = new Set(st.answer ? curV.w.filter(w => tf.has(w)) : []);
+    drawCloudInto(svg, tf, {max: 50, extra: a.vals.flatMap(v => v.w), color: w => hl.has(w) ? "--value" : "--faint"});
+    el.querySelector("#vchips").innerHTML = a.vals.map(v => { const s = S.cls[v.t] || {};
+      return `<button role="tab" class="vchip ${v === curV ? "on" : ""} ${s.answer ? "done" : "todo"}" data-t="${esc(v.t)}" aria-selected="${v === curV}">${s.answer ? (s.correct ? "✓ " : "✗ ") : ""}${esc(v.t)}</button>`; }).join("");
+    const left = a.vals.filter(v => !done(v)).length;
+    el.querySelector("#left").innerHTML = left ? `남은 가치 <b>${left}</b>개` : `<b>모두 확인했어요</b>`;
+    el.querySelector("#vw").textContent = curV.t; el.querySelector("#vw2").textContent = `‘${curV.t}’`;
+    el.querySelectorAll(".pick button").forEach(b => b.setAttribute("aria-pressed", st.answer === b.dataset.a));
+    const fb = el.querySelector("#fb"), truth = writtenIn(a, curV);
+    const next = a.vals.find(v => !done(v));
+    const nextBtn = next ? `<div class="row" style="margin-top:10px"><button class="btn" id="nextV">다음 가치 ‘${esc(next.t)}’ 확인하기 →</button></div>` : "";
+    if (!st.answer) { fb.innerHTML = ""; }
+    else if (truth.written) {
+      const u = truth.units[0], w = curV.w.filter(x => sets[U.indexOf(u)].has(x));
+      fb.innerHTML = `<div class="feedback ${st.correct ? "ok" : "no"}"><b>${st.correct ? "맞아요." : "다시 보세요."} 구름에 파랗게 표시된 ‘${esc(w[0])}’가 조문에 쓰여 있어요.</b>
+        ${truth.units.map(label).join(", ")}<div class="quote">${highlight(u.t, w)}</div></div>` + nextBtn;
+    } else {
+      fb.innerHTML = `<div class="feedback ${st.correct ? "ok" : "no"}"><b>${st.correct ? "맞아요." : "다시 보세요."} 이 영역 조문에는 ‘${esc(curV.t)}’라는 낱말이 없어요.</b>그렇다면 어디에, 어떤 방식으로 담겨 있을까요? 다음 단계에서 깊이 읽어 봐요.</div>` + nextBtn;
+    }
+    const nb = fb.querySelector("#nextV"); if (nb) nb.onclick = () => { curV = next; draw(); el.querySelector("#vchips").scrollIntoView({behavior: "smooth", block: "center"}); };
+  };
+  el.querySelector("#vchips").addEventListener("click", e => { const b = e.target.closest("[data-t]"); if (!b) return; curV = a.vals.find(v => v.t === b.dataset.t); draw(); });
+  el.querySelectorAll(".pick button").forEach(b => b.onclick = () => {
+    const truth = writtenIn(a, curV);
+    S.cls[curV.t] = {answer: b.dataset.a, correct: (b.dataset.a === "written") === truth.written}; save(); draw();
+  });
+  svg.addEventListener("click", e => {
+    const t = e.target.closest("text"); if (!t) return; const w = t.dataset.w;
+    openDlg(`‘${w}’`, us.filter(u => sets[U.indexOf(u)].has(w)).map(u => `<div class="unit"><div class="r">${label(u)}</div><div class="quote">${highlight(u.t, [w])}</div></div>`).join(""));
+  });
+  el.querySelector("#all").onclick = showAllArticles;
+  // 확인하지 않은 가치가 남아 있으면 알려 준다
+  el.querySelector("#n").onclick = () => {
+    const rest = a.vals.filter(v => !done(v));
+    if (!rest.length) return go(5);
+    openDlg("아직 확인하지 않은 가치가 있어요", `<p class="quote" style="font-family:var(--sans)">${rest.map(v => `<b>${esc(v.t)}</b>`).join(", ")} — ${rest.length}개가 남았어요. 하나씩 눌러 구름에서 확인해 보면 다음 단계가 훨씬 쉬워져요.</p>
+      <div class="row"><button class="btn" id="goBack">남은 가치 확인하기</button><button class="btn ghost" id="goOn">그래도 넘어가기</button></div>`);
+    document.getElementById("goBack").onclick = () => { dlg.close(); curV = rest[0]; draw(); el.querySelector("#vchips").scrollIntoView({behavior: "smooth", block: "center"}); };
+    document.getElementById("goOn").onclick = () => { dlg.close(); go(5); };
+  };
+  requestAnimationFrame(draw);
+  window.onresize = () => { if (STEPS[S.step] === "sort") draw(); };
+};
+
+// ---------- 5단계: 깊이 읽기 (근거 구절 → 담긴 방식 → 설명 → 해석 예시와 비교) ----------
+const METHODS = ["낱말로 직접 밝힌다", "권리를 보장한다", "국가의 의무나 금지로 정한다", "제도와 절차로 만든다"];
+const TIPS = [
+  ["가치가 지켜진 모습을 떠올려요", "‘관용’이 지켜지려면 나와 다른 생각도 말할 수 있어야 해요. 그래서 양심·종교·표현의 자유(제19~21조)에 관용이 담겨 있다고 읽을 수 있어요."],
+  ["금지와 의무 표현을 뒤집어 봐요", "‘차별을 받지 아니한다’(제11조)처럼 금지하는 문장은 지키려는 가치(평등, 공정)를 거꾸로 보여 줘요."],
+  ["제도의 짜임을 봐요", "입법권은 국회(제40조), 행정권은 정부(제66조), 사법권은 법원(제101조)에 나눈 짜임 자체가 ‘권력통제’를 담고 있어요."],
+  ["앞뒤 문장과 함께 읽어요", "같은 낱말도 맥락에 따라 뜻이 달라요. ‘통제’(제126조)는 기업 이야기, ‘참여’(제8조)는 정당 이야기예요."]
+];
+VIEWS.deep = el => {
+  const a = A();
+  S.deep = S.deep || [];
+  const contained = a.vals.filter(v => !writtenIn(a, v).written);
+  if (S._dv === undefined || !a.vals[S._dv]) S._dv = a.vals.indexOf(contained[0] || a.vals[0]);
+  const v = a.vals[S._dv];
+  let d = S.deep.find(x => x.value === v.t);
+  if (!d) { d = {value: v.t, art: null, phrase: [], method: null, expl: "", compared: false}; S.deep.push(d); }
+  const written = writtenIn(a, v).written;
+  const refCodes = written ? writtenIn(a, v).units.map(code) : (v.r || []).flatMap(c => unitsOf(c).map(code));
+  const candCodes = [...new Set([...refCodes, ...areaUnits(a).map(code)])];
+  const cands = candCodes.map(c => unitsOf(c)[0]).filter(Boolean);
+  // 참고 조문이 맨 앞에 몰리지 않게 조 번호 순으로
+  cands.sort((x, y) => x.a - y.a || x.p.localeCompare(y.p));
+  el.innerHTML = `<h2>깊이 읽기</h2>
+    <p class="lead">가치 하나를 골라, 조문 속 <b>근거 구절</b>을 찾고 그 가치가 <b>어떤 방식으로</b> 담겨 있는지 설명해 보세요.</p>
+    <div class="chips" id="dv">${a.vals.map((x, k) => `<button class="chip ${k === S._dv ? "on" : ""}" data-k="${k}" style="border:0;cursor:pointer">${esc(x.t)}${writtenIn(a, x).written ? "" : " · 담김"}${S.deep.some(y => y.value === x.t && y.compared) ? " ✓" : ""}</button>`).join("")}</div>
+    <details class="tips" ${S._tipSeen ? "" : "open"}><summary>해석 팁 4가지</summary><ol>${TIPS.map(([t, x]) => `<li><b>${t}</b><br>${x}</li>`).join("")}</ol></details>
+    <div class="stepbox"><div class="sn">1</div><div><b>구름에서 실마리 찾기</b><p class="hint" style="margin:2px 0 6px">‘${esc(v.t)}’와 이어질 만한 낱말을 누르면, 그 낱말이 들어 있는 조문이 아래에서 표시돼요.</p>
+      <svg id="dcloud" style="width:100%;height:200px;display:block" role="img" aria-label="후보 조문의 단어 구름"></svg></div></div>
+    <div class="stepbox"><div class="sn">2</div><div style="min-width:0;flex:1"><b>근거 구절 고르기</b><p class="hint" style="margin:2px 0 8px">조문의 어절을 눌러 근거가 되는 구절을 표시하세요. 한 조문 안에서 여러 어절을 고를 수 있어요.</p>
+      <div id="arts" class="artlist"></div></div></div>
+    <div class="stepbox"><div class="sn">3</div><div style="flex:1"><b>어떤 방식으로 담겨 있나요?</b>
+      <div class="methods">${METHODS.map(m => `<button data-m="${m}" aria-pressed="${d.method === m}">${m}</button>`).join("")}</div></div></div>
+    <div class="stepbox"><div class="sn">4</div><div style="flex:1"><b>나의 해석 쓰기</b>
+      <textarea id="ex" rows="4" placeholder="예: ‘누구든지 성별·종교 또는 사회적 신분에 의하여 … 차별을 받지 아니한다’는 차별을 금지하는 문장이므로, 모두에게 같은 기회를 주는 ‘공정’을 담고 있다.">${esc(d.expl)}</textarea>
+      <div class="row" style="margin-top:8px"><button class="btn ghost" id="frame" style="padding:10px">문장 틀 넣기</button></div>
+      <ul class="checks" id="checks"></ul></div></div>
+    <div class="stepbox"><div class="sn">5</div><div style="flex:1"><b>해석 예시와 비교하기</b>
+      <div class="row" style="margin-top:6px"><button class="btn ghost" id="cmp" style="padding:10px">해석 예시 보기</button></div><div id="cmpOut"></div></div></div>
+    <div class="row"><button class="btn ghost" id="all">관련 조문 전체 보기</button><button class="btn" id="n">필사하러 가기</button></div>`;
+  el.querySelector("details.tips").addEventListener("toggle", () => { S._tipSeen = true; save(); });
+  const artsBox = el.querySelector("#arts");
+  let clue = null;
+  const drawArts = () => {
+    artsBox.innerHTML = cands.map(u => {
+      const c = code(u), sel = d.art === c, toks = u.t.split(/(\s+)/);
+      let k = -1;
+      const body = toks.map(t => { if (/^\s+$/.test(t)) return t.includes("\n") ? "\n" : " "; k++; return `<span class="tk ${sel && d.phrase.includes(k) ? "on" : ""}" data-k="${k}">${esc(t)}</span>`; }).join("");
+      const clueHit = clue && sets[U.indexOf(u)].has(clue);
+      return `<div class="art ${sel ? "sel" : ""} ${clueHit ? "clue" : ""}" data-c="${c}"><div class="r">${label(u)}${clueHit ? ` <span class="cl">‘${esc(clue)}’ 있음</span>` : ""}</div><div class="quote">${body}</div></div>`;
+    }).join("");
+  };
+  artsBox.addEventListener("click", e => {
+    const t = e.target.closest(".tk"); if (!t) return;
+    const c = t.closest(".art").dataset.c, k = +t.dataset.k;
+    if (d.art !== c) { d.art = c; d.phrase = []; }
+    d.phrase = d.phrase.includes(k) ? d.phrase.filter(x => x !== k) : [...d.phrase, k].sort((x, y) => x - y);
+    if (!d.phrase.length) d.art = null;
+    save(); drawArts(); checks();
+  });
+  const dsvg = el.querySelector("#dcloud"), dtf = tfOf(cands);
+  const drawD = () => drawCloudInto(dsvg, dtf, {max: 40, color: w => w === clue ? "--value" : "--faint"});
+  dsvg.addEventListener("click", e => {
+    const t = e.target.closest("text"); if (!t) return; clue = clue === t.dataset.w ? null : t.dataset.w; drawD(); drawArts();
+    const first = artsBox.querySelector(".art.clue"); if (first) first.scrollIntoView({behavior: "smooth", block: "nearest"});
+  });
+  el.querySelectorAll(".methods button").forEach(b => b.onclick = () => { d.method = b.dataset.m; save(); el.querySelectorAll(".methods button").forEach(x => x.setAttribute("aria-pressed", x === b)); checks(); });
+  const phraseText = () => { if (!d.art) return ""; const u = unitsOf(d.art)[0]; const w = u.t.split(/\s+/); return d.phrase.map(k => w[k]).join(" "); };
+  el.querySelector("#frame").onclick = () => {
+    const ta = el.querySelector("#ex");
+    ta.value = `‘${phraseText() || "근거 구절"}’는 ${d.art ? label(unitsOf(d.art)[0]) + "의 내용으로, " : ""}(무엇을 하도록 / 하지 못하도록) 하므로 ‘${v.t}’를 담고 있다.`;
+    d.expl = ta.value; save(); checks(); ta.focus();
+  };
+  el.querySelector("#ex").oninput = e => { d.expl = e.target.value; save(); checks(); };
+  // 자동 점검: AI가 아니라 규칙으로 바로 확인한다
+  function checks() {
+    const ex = (d.expl || "").replace(/\s/g, ""), ph = phraseText().split(" ").filter(w => w.length >= 2);
+    const items = [
+      [!!d.art && d.phrase.length > 0, "근거 구절을 골랐어요"],
+      [!!d.method, "담긴 방식을 골랐어요"],
+      [ex.includes(v.t.replace(/\s/g, "")) || v.t.split(" ").some(w => ex.includes(w)), `설명에 ‘${v.t}’가 들어 있어요`],
+      [ph.some(w => ex.includes(w.replace(/[,.·]/g, "").slice(0, 3))), "설명에 근거 구절이 들어 있어요"],
+      [/(므로|때문|따라서|그래서|라는점|이유)/.test(ex), "‘~므로’, ‘~때문에’처럼 이유로 이어 주었어요"],
+      [ex.length >= 40, "40자 이상 썼어요"]
+    ];
+    el.querySelector("#checks").innerHTML = items.map(([ok, t]) => `<li class="${ok ? "ok" : ""}">${ok ? "●" : "○"} ${t}</li>`).join("");
+    el.querySelector("#cmp").disabled = ex.length < 15;
+    d.score = items.filter(x => x[0]).length;
+  }
+  const showCmp = () => {
+    const refs = written ? writtenIn(a, v).units : (v.r || []).map(c => unitsOf(c)[0]);
+    const mine = d.art && refs.some(u => code(u) === d.art || u.a === unitsOf(d.art)[0].a);
+    el.querySelector("#cmpOut").innerHTML = `<div class="feedback ok" style="margin-top:10px"><b>해석 예시</b>${esc(v.x || "")}
+      <p class="small" style="margin:8px 0 0">참고 조문: ${[...new Set(refs.map(u => u.a === 0 ? "전문" : "제" + u.a + "조"))].join(", ")}</p>
+      <p class="small" style="margin:6px 0 0">${mine ? "내가 고른 조문도 참고 조문에 들어 있어요. 설명이 예시와 어떻게 다른지 비교해 보세요." : "나는 다른 조문을 골랐어요. 정답이 하나인 것은 아니에요. 내 조문에서도 이 가치를 읽을 수 있는 이유가 설명에 잘 드러나 있는지 살펴보세요."}</p></div>`;
+  };
+  el.querySelector("#cmp").onclick = () => { d.compared = true; save(); showCmp(); };
+  el.querySelector("#dv").addEventListener("click", e => { const b = e.target.closest("[data-k]"); if (!b) return; S._dv = +b.dataset.k; save(); render(); });
+  el.querySelector("#all").onclick = showAllArticles;
+  el.querySelector("#n").onclick = () => go(6);
+  drawArts(); checks(); if (d.compared) showCmp();
+  requestAnimationFrame(drawD);
+};
+
+// 필사: 원문이 연하게 깔리고, 쓰는 대로 색이 바뀐다
+let composing = false;
+// 자동으로 채워지는 글자: 띄어쓰기, 줄바꿈, 가운뎃점, 따옴표. 학생은 이 글자들을 치지 않아도 된다.
+const AUTO = /[\s·ㆍ“”‘’"']/;
+VIEWS.copy = el => {
+  const a = A();
+  if (!S.copy) {
+    const mine = (S.deep || []).filter(d => d.art).map(d => d.art);
+    const us = [...mine.map(c => unitsOf(c)[0]), ...areaUnits(a).filter(u => !mine.includes(code(u)))].filter((u, i, arr) => u && arr.indexOf(u) === i);
+    el.innerHTML = `<h2>마음에 드는 조문을 고르세요</h2><p class="lead">깊이 읽기에서 근거로 고른 조문을 필사하면, 그 조문을 한 번 더 천천히 읽게 돼요.</p>
+      <div class="list">${us.map(u => `<button class="li" data-c="${code(u)}"><div class="r">${label(u)}${mine.includes(code(u)) ? `<span class="badge">내가 해석한 조문</span>` : ""}</div><div class="p">${esc(u.t)}</div></button>`).join("")}</div>`;
+    el.querySelectorAll(".li").forEach(b => b.onclick = () => { S.copy = b.dataset.c; S.copyText = ""; save(); render(); });
+    return;
+  }
+  const u = unitsOf(S.copy)[0], orig = u.t;
+  el.innerHTML = `<div class="sheet"><div class="ref">${label(u)}</div>
+      <div class="trace"><div class="layer" id="layer" aria-hidden="true"></div><textarea id="ta" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="${label(u)} 필사"></textarea></div></div>
+    <div class="meter"><div class="bar"><i id="mb"></i></div><span id="mt">0%</span></div>
+    <p class="hint">흐린 글자 위에 그대로 써 보세요. 틀린 글자는 빨갛게 표시돼요. <b>띄어쓰기, 줄바꿈, 가운뎃점(·), 따옴표(“ ”)는 자동으로 채워지니</b> 글자와 마침표·쉼표만 치면 돼요.</p>
+    <label class="l" for="why">이 조문을 고른 이유</label>
+    <textarea id="why" rows="2" placeholder="예: 누구도 차별받지 않는다는 문장이 우리 반에도 필요하다고 생각해서">${esc(S.copyWhy)}</textarea>
+    <div class="row"><button class="btn ghost" id="other">다른 조문</button><button class="btn" id="n">다음</button></div>`;
+  const ta = el.querySelector("#ta"), layer = el.querySelector("#layer");
+  ta.value = S.copyText;
+  // 원문에서 자동 글자를 뺀 '뼈대'와, 학생이 친 글에서 자동 글자를 뺀 것을 한 글자씩 비교한다.
+  // 화면에는 원문 순서대로 그리고, 자동 글자는 학생이 그 자리까지 오면 저절로 나타난다.
+  const skelLen = [...orig].filter(ch => !AUTO.test(ch)).length;
+  const paint = () => {
+    const t = [...ta.value].filter(ch => !AUTO.test(ch));
+    let html = "", j = 0, ok = 0, caretDone = false;
+    const caret = () => { if (!caretDone && document.activeElement === ta) { caretDone = true; return `<span class="caret"></span>`; } caretDone = true; return ""; };
+    for (const o of orig) {
+      if (AUTO.test(o)) { html += j < t.length || (j === t.length && j > 0 && !caretDone) ? `<span class="a">${esc(o)}</span>` : `<span class="g">${esc(o)}</span>`; continue; }
+      if (j < t.length) {
+        const c = t[j];
+        if (composing && j === t.length - 1) html += `<span class="c">${esc(c)}</span>`;
+        else if (c === o) { ok++; html += `<span class="k">${esc(o)}</span>`; }
+        else html += `<span class="x">${esc(c)}</span>`;
+        j++;
+      } else { html += caret() + `<span class="g">${esc(o)}</span>`; }
+    }
+    while (j < t.length) html += `<span class="x">${esc(t[j++])}</span>`;
+    html += caret();
+    layer.innerHTML = html + "\u200b";
+    const pct = Math.round(ok / skelLen * 100);
+    el.querySelector("#mb").style.width = pct + "%";
+    el.querySelector("#mt").innerHTML = ok === skelLen && t.length === skelLen ? `<span class="done">완성!</span>` : pct + "%";
+    S.copyText = ta.value; S.copyPct = pct; save();
+  };
+  ta.addEventListener("focus", paint); ta.addEventListener("blur", paint);
+  ta.addEventListener("compositionstart", () => { composing = true; });
+  ta.addEventListener("compositionend", () => { composing = false; paint(); });
+  ta.addEventListener("input", paint);
+  el.querySelector("#why").oninput = e => { S.copyWhy = e.target.value; save(); };
+  el.querySelector("#other").onclick = () => { S.copy = null; save(); render(); };
+  el.querySelector("#n").onclick = () => go(7);
+  paint(); setTimeout(() => ta.focus({preventScroll: true}), 150);
+};
+
+// 현실 속 갈등: 헌재 결정과 뉴스
+let issueTab = "case";
+const live = n => !n.status || n.status === "approved";
+VIEWS.issues = el => {
+  const a = A();
+  const cases = CONTENT.cases.filter(c => c.areas.includes(a.n));
+  const news = CONTENT.items.filter(n => live(n) && n.areas.includes(a.n)).sort((x, y) => y.date.localeCompare(x.date));
+  const caseHTML = c => `<article class="card"><div class="meta"><span>헌재 ${fmtDate(c.date)}</span><span class="res">${termify(c.result)}</span></div>
+      <h3>${esc(c.name)}</h3>
+      <dl class="kv"><dt><button class="term" data-term="사건번호">사건번호</button></dt><dd>${esc(c.no)} <a class="orig" href="${esc(caseLink(c.no))}" target="_blank" rel="noopener noreferrer">판례 원문 찾기 ↗</a></dd><dt>기본권</dt><dd>${c.rights.map(r => G.has(r) ? `<button class="term" data-term="${esc(r)}">${esc(r)}</button>` : esc(r)).join(", ")}</dd>
+      <dt>쟁점</dt><dd>${termify(c.issue)}</dd><dt>결정</dt><dd>${termify(c.decision)}</dd></dl>
+      <p class="hint" style="margin:8px 0 0">밑줄 친 말을 누르면 뜻을 볼 수 있어요. 원문 찾기는 국가법령정보센터·헌법재판소 자료 검색 결과가 열려요.</p>
+      ${c.articles?.length ? `<p class="small" style="margin:10px 0 0">관련 조문: ${c.articles.map(n => `<button class="back" style="padding:0;color:var(--value);text-decoration:underline" data-art="${n}">제${n}조</button>`).join(" ")}</p>` : ""}</article>`;
+  const newsHTML = n => `<article class="card"><div class="meta"><span>${esc(n.outlet)}</span><span>${fmtDate(n.date)}</span></div>
+      <h3><a href="${esc(n.url)}" target="_blank" rel="noopener noreferrer">${esc(n.title)}</a></h3>
+      <p class="conflict"><b>부딪치는 가치</b>${esc(n.conflict)}</p>
+      <p style="margin:0">${termify(n.summary[0])}</p>
+      <details><summary>자세히 보기</summary>
+        <p class="small">${n.summary.slice(1).map(esc).join(" ")}</p>
+        <p class="small">${n.perspectives.map(p => `<b>${esc(p.who)}</b>: ${esc(p.position)}`).join("<br>")}</p>
+        ${n.onlyOneSide ? `<p class="hint">이 기사에는 다른 입장이 자세히 나오지 않아요.</p>` : ""}
+        <p class="small">${[n.article, ...(n.also || [])].map(x => `<button class="back" style="padding:0;color:var(--value);text-decoration:underline" data-art="${x}">제${x}조</button>`).join(" ")} ${esc(n.articleReason)}</p></details></article>`;
+  const draw = () => {
+    el.querySelector("#box").innerHTML = issueTab === "case"
+      ? (cases.length ? cases.map(caseHTML).join("") : `<p class="lead">아직 연결된 헌재 결정이 없어요.</p>`)
+      : (news.length ? news.map(newsHTML).join("") : `<p class="lead">아직 연결된 기사가 없어요. 다음 월요일 업데이트를 기다려 주세요.</p>`);
+    el.querySelectorAll(".seg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.t === issueTab));
+  };
+  el.innerHTML = `<h2>현실 속 헌법</h2><p class="lead">이 영역의 가치가 실제로 부딪친 사건이에요.</p>
+    <div class="seg"><button data-t="case">헌재 결정 ${cases.length}</button><button data-t="news">뉴스 ${news.length}</button></div>
+    <div id="box"></div><div class="row"><button class="btn" id="n">토론 질문 보기</button></div>`;
+  el.querySelectorAll(".seg button").forEach(b => b.onclick = () => { issueTab = b.dataset.t; draw(); });
+  el.querySelector("#box").addEventListener("click", e => {
+    const b = e.target.closest("[data-art]"); if (!b) return;
+    const us = U.filter(u => u.a === +b.dataset.art);
+    openDlg(`제${b.dataset.art}조`, us.map(u => `<div class="unit"><div class="r">${label(u)}</div><div class="quote">${esc(u.t)}</div></div>`).join(""));
+  });
+  draw(); el.querySelector("#n").onclick = () => go(8);
+};
+
+// ---------- 8단계 (심화): 기준으로 실제 사례 따져 보기 ----------
+const modeToggle = () => `<div class="mode" role="group" aria-label="질문 수준"><button data-mode="basic" aria-pressed="${S.qmode !== "deep"}">기본 질문</button><button data-mode="deep" aria-pressed="${S.qmode === "deep"}">심화 탐구</button></div>`;
+function bindMode(el) { el.querySelectorAll(".mode button").forEach(b => b.onclick = () => { S.qmode = b.dataset.mode; save(); render(); }); }
+const JUDGE = ["충족한다", "충족하지 못한다", "판단하기 어렵다"];
+function deepQView(el) {
+  const a = A(), dq = DEEPQ[a.n];
+  S.dq = Object.assign({crit: {}, concl: "", counter: "", compared: false}, S.dq || {});
+  const issue = areaIssues(a).find(i => i.id === dq.ref);
+  el.innerHTML = `<h2>토론 질문</h2>${modeToggle()}
+    <p class="lead" style="font-family:var(--serif);font-size:1.12rem;color:var(--ink)">${termify(dq.q)}</p>
+    <div class="stepbox"><div class="sn">1</div><div style="flex:1;min-width:0"><b>사례 다시 보기</b>
+      ${issue ? `<div class="art" style="margin-top:8px"><div class="r">${issue.kind} · ${esc(issue.sub)}</div><div style="font-weight:600;margin:2px 0 4px">${esc(issue.title)}</div>
+        <div class="small"><b>쟁점</b> ${termify(issue.facts[0][1])}</div></div>` : `<p class="hint">사례를 찾지 못했어요.</p>`}</div></div>
+    <div class="stepbox"><div class="sn">2</div><div style="flex:1;min-width:0"><b>기준으로 따져 보기: ${esc(dq.title)}</b>
+      <p class="hint" style="margin:2px 0 4px">기준마다 이 사례가 그 기준을 충족하는지 판단하고, 근거를 한 줄로 쓰세요.</p>
+      ${dq.crit.map(([n, ask], k) => { const c = S.dq.crit[k] || {}; return `<div class="crit" data-k="${k}"><div class="cn">${k + 1}. ${termify(n)}</div><div class="ca">${esc(ask)}</div>
+        <div class="judge">${JUDGE.map(j => `<button data-j="${j}" aria-pressed="${c.j === j}">${j}</button>`).join("")}</div>
+        <textarea rows="2" placeholder="근거: 사례의 사실이나 헌법 조문을 들어 쓰세요.">${esc(c.w || "")}</textarea></div>`; }).join("")}</div></div>
+    <div class="stepbox"><div class="sn">3</div><div style="flex:1;min-width:0"><b>나의 결론</b>
+      <textarea id="dc" rows="4" placeholder="기준별 판단을 모아, 질문에 대한 나의 결론을 쓰세요. 어떤 기준이 가장 결정적이었는지도 밝혀 주세요.">${esc(S.dq.concl)}</textarea>
+      <label class="l" for="dr">예상되는 반론과 나의 재반박</label>
+      <textarea id="dr" rows="3" placeholder="나와 다르게 판단할 사람은 어떤 기준을 근거로 들까요? 그 반론에 어떻게 답할 수 있나요?">${esc(S.dq.counter)}</textarea></div></div>
+    <div class="stepbox"><div class="sn">4</div><div style="flex:1;min-width:0"><b>헌법재판소의 판단과 비교하기</b>
+      <p class="hint" style="margin:2px 0 6px">결론을 쓴 뒤에 열어 보세요. 헌재와 달라도 괜찮아요. 어느 기준에서 갈렸는지 살펴보는 것이 목표예요.</p>
+      <button class="btn ghost" id="cmpCourt" style="padding:10px">헌재의 판단 보기</button><div id="courtOut"></div></div></div>
+    <div class="row"><button class="btn" id="n" disabled>스스로 점검하기</button></div>`;
+  bindMode(el);
+  const check = () => {
+    const judged = dq.crit.every((_, k) => (S.dq.crit[k] || {}).j);
+    el.querySelector("#n").disabled = !(judged && S.dq.concl.trim().length >= 30);
+    el.querySelector("#cmpCourt").disabled = S.dq.concl.trim().length < 15;
+  };
+  el.querySelectorAll(".crit").forEach(box => {
+    const k = +box.dataset.k;
+    box.querySelectorAll(".judge button").forEach(b => b.onclick = () => { S.dq.crit[k] = Object.assign(S.dq.crit[k] || {}, {j: b.dataset.j}); save(); box.querySelectorAll(".judge button").forEach(x => x.setAttribute("aria-pressed", x === b)); check(); });
+    box.querySelector("textarea").oninput = e => { S.dq.crit[k] = Object.assign(S.dq.crit[k] || {}, {w: e.target.value}); save(); };
+  });
+  el.querySelector("#dc").oninput = e => { S.dq.concl = e.target.value; save(); check(); };
+  el.querySelector("#dr").oninput = e => { S.dq.counter = e.target.value; save(); };
+  const showCourt = () => { el.querySelector("#courtOut").innerHTML = issue ? `<div class="feedback ok" style="margin-top:8px"><b>헌재의 판단 (${esc(issue.sub)})</b>${termify(issue.facts[1][1])}</div>` : ""; };
+  el.querySelector("#cmpCourt").onclick = () => { S.dq.compared = true; save(); showCourt(); };
+  if (S.dq.compared) showCourt();
+  check();
+  el.querySelector("#n").onclick = () => go(9);
+}
+
+// ---------- 8단계: 토론 질문 ----------
+// 질문 고르기 → 그 질문의 관련 사례만 다시 보기 → 의견 세우기(주장 · 헌법 근거 · 사례 근거 · 반론과 재반박) → 관련 조문 더 찾기
+function areaIssues(a) {
+  const cases = CONTENT.cases.filter(c => c.areas.includes(a.n)).map(c => ({id: "c:" + c.no, kind: "헌재 결정", title: c.name, sub: `${c.no} · ${c.result}`, facts: [["쟁점", c.issue], ["결정", c.decision]], arts: c.articles || []}));
+  const news = CONTENT.items.filter(n => live(n) && n.areas.includes(a.n)).map(n => ({id: "n:" + n.url, kind: "뉴스", title: n.title, sub: `${n.outlet} · ${fmtDate(n.date)}`, facts: [["부딪치는 가치", n.conflict], ["무슨 일", n.summary[0]], ["입장", n.perspectives.map(p => p.who + ": " + p.position).join(" / ")]], arts: [n.article, ...(n.also || [])]}));
+  return [...cases, ...news];
+}
+function questionIssues(a, k) {
+  const all = areaIssues(a), refs = ((CONTENT.qrefs || {})[String(a.n)] || [])[k] || [];
+  const picked = all.filter(i => refs.includes(i.id));
+  return picked.length ? picked : all;
+}
+const artLabel = n => +n === 0 ? "전문" : `제${n}조`;
+const COUNTER_EX = [
+  {type: "가치가 부딪치는 반론", how: "상대가 중요하게 여기는 다른 가치를 인정한 뒤, 둘을 조화시키는 방법을 제시해요.",
+   c: "학교의 휴대전화 일괄 수거는 학생의 학습권과 안전을 지키기 위한 것이다.",
+   r: "학습권도 중요하지만, 사생활의 자유(제17조)를 제한하려면 제37조 제2항처럼 꼭 필요한 범위에 그쳐야 한다. 하루 종일 걷는 대신 수업 시간에만 보관하는 방식이면 두 가치를 함께 지킬 수 있다."},
+  {type: "부작용을 걱정하는 반론", how: "걱정되는 결과가 실제로 생길 수 있음을 인정하고, 그것을 줄일 구체적인 장치를 제시해요.",
+   c: "휴대전화 사용을 학생 자율에 맡기면 수업 중 사용이 늘어날 것이다.",
+   r: "그럴 수 있으므로 규칙을 학생회와 함께 정하고, 어겼을 때만 일정 시간 보관하는 단계적 방법을 두면 부작용을 줄일 수 있다."},
+  {type: "헌법을 다르게 읽는 반론", how: "상대가 드는 조문을 인정하되, 그 조문에도 한계가 있음을 다른 조문으로 보여 줘요.",
+   c: "학교는 교육을 위해 학생의 생활을 규율할 권한이 있다(제31조).",
+   r: "교육을 위한 규율도 필요하지만, 제37조 제2항은 어떤 제한도 자유와 권리의 본질적인 내용을 침해할 수 없다고 정한다. 그래서 규율은 교육 목적에 꼭 필요한 정도에 그쳐야 한다."}
+];
+VIEWS.question = el => {
+  if (S.qmode === "deep" && DEEPQ[A().n]) return deepQView(el);
+  const a = A(), qs = CONTENT.questions[String(a.n)] || [];
+  S.op = Object.assign({claim: "", law: "", case: "", counter: "", rebut: ""}, S.op || {});
+  S.useCases = S.useCases || []; S.moreArts = S.moreArts || [];
+  const issues = S.q === null ? [] : questionIssues(a, S.q);
+  const deeps = (S.deep || []).filter(d => d.expl);
+  const recommended = [...new Set([...issues.flatMap(i => i.arts), ...(S.deep || []).filter(d => d.art).map(d => unitsOf(d.art)[0].a)])].filter(n => U.some(u => u.a === +n));
+  el.innerHTML = `<h2>토론 질문</h2>${modeToggle()}<p class="lead">하나를 고르면 그 질문과 관련된 사례가 나와요. <b>심화 탐구</b>에서는 구체적인 판단 기준으로 실제 헌재 사건을 따져 볼 수 있어요.</p>
+    <div>${qs.map((q, k) => `<button class="q" data-k="${k}" aria-pressed="${S.q === k}">${esc(q)}</button>`).join("")}</div>
+    <div id="form" ${S.q === null ? "hidden" : ""}>
+      <div class="stepbox"><div class="sn">1</div><div style="flex:1;min-width:0"><b>관련 사례 다시 보기</b>
+        <p class="hint" style="margin:2px 0 8px">의견의 근거로 쓸 사례에 표시하세요.</p>
+        <div class="artlist" style="max-height:none">${issues.map(i => `<div class="art ${S.useCases.includes(i.id) ? "sel" : ""}" data-id="${esc(i.id)}">
+          <div class="r">${i.kind} · ${esc(i.sub)}</div><div style="font-weight:600;margin:2px 0 4px">${esc(i.title)}</div>
+          ${i.facts.map(([k, v]) => `<div class="small"><b>${k}</b> ${esc(v)}</div>`).join("")}
+          <button class="btn ghost usecase" style="padding:8px;margin-top:8px;font-size:.9rem">${S.useCases.includes(i.id) ? "근거로 표시됨 ✓" : "근거로 쓰기"}</button></div>`).join("") || `<p class="hint">연결된 사례가 아직 없어요.</p>`}</div></div></div>
+      <div class="stepbox"><div class="sn">2</div><div style="flex:1;min-width:0"><b>의견 세우기</b>
+        <label class="l" for="o1">① 나의 주장 <span class="hint">질문에 대한 나의 답을 한 문장으로</span></label>
+        <textarea id="o1" rows="2" placeholder="예: 가산점은 다른 사람의 기회를 지나치게 빼앗는다면 공정하지 않다.">${esc(S.op.claim)}</textarea>
+        <label class="l" for="o2">② 헌법 근거</label>
+        <div class="chips" style="margin-bottom:6px">${deeps.map((d, k) => `<button class="chip pull" data-k="${k}" style="border:0;cursor:pointer">깊이 읽기 해석 가져오기: ${esc(d.value)}</button>`).join("")}
+          <button class="chip" id="toFind" style="border:0;cursor:pointer">아래에서 조문 더 찾기 ↓</button></div>
+        <textarea id="o2" rows="4" placeholder="깊이 읽기에서 쓴 해석을 가져오거나, 아래 ‘관련 조문 더 찾기’에서 조문을 넣어 주장과 이어 쓰세요.">${esc(S.op.law)}</textarea>
+        <label class="l" for="o3">③ 사례 근거 <span class="hint">위에서 표시한 사례의 사실</span></label>
+        <textarea id="o3" rows="3" placeholder="예: 헌법재판소는 98헌마363 사건에서 군 가산점 제도가 평등권과 공무담임권을 침해한다고 보았다.">${esc(S.op.case)}</textarea>
+        <label class="l">④ 예상되는 반론과 나의 재반박</label>
+        <details class="tips" style="margin:0 0 8px"><summary>반론을 쓰는 세 가지 방법과 예시 (학교 휴대전화 수거 규칙)</summary>
+          ${COUNTER_EX.map(x => `<div class="ex"><b>${x.type}</b><p class="hint" style="margin:2px 0 6px">${x.how}</p>
+            <div class="small"><span class="tag">반론</span> ${esc(x.c)}</div><div class="small" style="margin-top:4px"><span class="tag">재반박</span> ${esc(x.r)}</div></div>`).join("")}</details>
+        <textarea id="o4" rows="2" placeholder="예상되는 반론: 나와 다른 입장의 사람은 무엇을 근거로 반대할까요?">${esc(S.op.counter)}</textarea>
+        <textarea id="o5" rows="3" style="margin-top:8px" placeholder="나의 재반박: 그 반론을 인정할 부분은 인정하고, 조화시키는 방법이나 다른 조문으로 답하세요.">${esc(S.op.rebut)}</textarea>
+        <ul class="checks" id="opchk"></ul></div></div>
+      <div class="stepbox" id="findBox"><div class="sn">3</div><div style="flex:1;min-width:0"><b>관련 조문 더 찾기</b>
+        <p class="hint" style="margin:2px 0 8px">낱말로 헌법 전체를 검색하세요. ‘헌법 근거에 넣기’를 누르면 ②에 조문 문장이 들어가요.</p>
+        <div style="display:flex;gap:8px"><input type="text" id="sq" placeholder="예: 평등, 공무원, 기회"><button class="btn ghost" id="sb" style="width:auto;flex:none;white-space:nowrap;padding:10px 16px">찾기</button></div>
+        <p class="small" style="margin:10px 0 4px">이 질문의 추천 조문</p><div class="chips" id="rec">${recommended.map(n => `<button class="chip" data-a="${n}" style="border:0;cursor:pointer">${artLabel(n)}</button>`).join("")}</div>
+        <div id="sres" class="artlist" style="margin-top:10px"></div>
+        <p class="small" style="margin:10px 0 4px">근거로 쓴 조문</p><div class="chips" id="mine"></div></div></div>
+    </div>
+    <div class="row"><button class="btn" id="n" disabled>스스로 점검하기</button></div>`;
+  bindMode(el);
+  const opText = () => [S.op.claim, S.op.law, S.op.case, S.op.counter, S.op.rebut].map(x => (x || "").trim()).filter(Boolean).join(" ");
+  const drawMine = () => { el.querySelector("#mine").innerHTML = S.moreArts.length ? S.moreArts.map(n => `<button class="chip on" data-a="${n}" style="border:0;cursor:pointer">${artLabel(n)} ✕</button>`).join("") : `<span class="hint">아직 없어요</span>`; };
+  const check = () => {
+    const o = S.op, len = k => (o[k] || "").trim().length;
+    const items = [
+      [len("claim") >= 10, "주장을 한 문장으로 썼어요"],
+      [/제\s?\d+\s?조|헌법|전문/.test(o.law || "") && len("law") >= 20, "헌법 조문을 근거로 들었어요"],
+      [len("case") >= 15 && S.useCases.length > 0, "표시한 사례의 사실로 뒷받침했어요"],
+      [len("counter") >= 15, "예상되는 반론을 구체적으로 썼어요"],
+      [len("rebut") >= 25 && /(지만|그러나|하지만|따라서|그래서|방법|조화|제\s?\d+\s?조)/.test(o.rebut || ""), "반론에 답하는 이유나 대안을 제시했어요"]
+    ];
+    el.querySelector("#opchk").innerHTML = items.map(([ok, t]) => `<li class="${ok ? "ok" : ""}">${ok ? "●" : "○"} ${t}</li>`).join("");
+    S.opScore = items.filter(i => i[0]).length; S.opinion = opText(); save();
+    el.querySelector("#n").disabled = !(S.q !== null && len("claim") && opText().length >= 60);
+  };
+  el.querySelectorAll(".q").forEach(b => b.onclick = () => { S.q = +b.dataset.k; S.useCases = []; save(); render(); });
+  [["o1", "claim"], ["o2", "law"], ["o3", "case"], ["o4", "counter"], ["o5", "rebut"]].forEach(([id, k]) => { const x = el.querySelector("#" + id); if (x) x.oninput = e => { S.op[k] = e.target.value; check(); }; });
+  const addTo = (id, key, text) => { const ta = el.querySelector("#" + id); ta.value = (ta.value.trim() ? ta.value.trim() + " " : "") + text; S.op[key] = ta.value; check(); ta.focus(); };
+  el.querySelectorAll(".pull").forEach(b => b.onclick = () => { const d = deeps[+b.dataset.k]; addTo("o2", "law", `${d.art ? "헌법 " + label(unitsOf(d.art)[0]) + "에 대해, " : ""}${d.expl}`); if (d.art) { const n = unitsOf(d.art)[0].a; if (!S.moreArts.includes(n)) { S.moreArts.push(n); save(); drawMine(); } } });
+  const tf = el.querySelector("#toFind"); if (tf) tf.onclick = () => el.querySelector("#findBox").scrollIntoView({behavior: "smooth", block: "start"});
+  el.querySelectorAll(".usecase").forEach(b => b.onclick = () => {
+    const card = b.closest(".art"), id = card.dataset.id;
+    S.useCases = S.useCases.includes(id) ? S.useCases.filter(x => x !== id) : [...S.useCases, id];
+    card.classList.toggle("sel"); b.textContent = S.useCases.includes(id) ? "근거로 표시됨 ✓" : "근거로 쓰기"; save(); check();
+  });
+  // 조문을 ②에 넣기: 조문 문장을 그대로 인용해 근거 문장의 첫머리를 만들어 준다
+  const insertArt = u => { const n = u.a; addTo("o2", "law", `헌법 ${label(u)}는 ‘${cut(u.t, 80)}’라고 정하고 있다.`); if (!S.moreArts.includes(n)) { S.moreArts.push(n); save(); drawMine(); check(); } };
+  const showArt = n => { openDlg(artLabel(n), U.filter(u => u.a === +n).map(u => `<div class="unit"><div class="r">${label(u)}</div><div class="quote">${esc(u.t)}</div>
+      <button class="btn ghost ins" data-c="${code(u)}" style="padding:8px;margin-top:6px;font-size:.9rem">헌법 근거에 넣기</button></div>`).join("")); };
+  document.getElementById("dB").onclick = e => { const b = e.target.closest(".ins"); if (b) { insertArt(unitsOf(b.dataset.c)[0]); dlg.close(); } };
+  el.querySelector("#rec").onclick = e => { const b = e.target.closest("[data-a]"); if (b) showArt(b.dataset.a); };
+  el.querySelector("#mine").onclick = e => { const b = e.target.closest("[data-a]"); if (!b) return; S.moreArts = S.moreArts.filter(x => x !== +b.dataset.a); save(); drawMine(); check(); };
+  const search = () => {
+    const q = el.querySelector("#sq").value.trim(), box = el.querySelector("#sres");
+    if (!q) { box.innerHTML = ""; return; }
+    const hits = U.filter(u => u.t.includes(q) || u.n.includes(q)).slice(0, 12);
+    box.innerHTML = hits.length ? hits.map(u => `<div class="art"><div class="r">${label(u)}</div><div class="quote">${highlight(cut(u.t, 140), [q])}</div>
+      <button class="btn ghost ins2" data-c="${code(u)}" style="padding:8px;margin-top:6px;font-size:.9rem">헌법 근거에 넣기</button></div>`).join("")
+      : `<p class="hint">‘${esc(q)}’가 들어간 조문이 없어요. 비슷한 낱말로 찾아보세요.</p>`;
+  };
+  if (S.q !== null) {
+    el.querySelector("#sb").onclick = search;
+    el.querySelector("#sq").onkeydown = e => { if (e.key === "Enter") search(); };
+    el.querySelector("#sres").onclick = e => { const b = e.target.closest(".ins2"); if (b) { insertArt(unitsOf(b.dataset.c)[0]); b.textContent = "넣었어요 ✓"; } };
+    drawMine(); check();
+  }
+  el.querySelector("#n").onclick = () => go(9);
+};
+
+// ---------- 9단계: 스스로 점검하기 (5점 척도) ----------
+const SELF = [
+  "이 영역의 헌법 조문에서 가치가 낱말로 쓰여 있는 곳을 찾을 수 있다.",
+  "낱말이 없는 가치가 조문에 어떤 방식으로 담겨 있는지 근거 구절을 들어 설명할 수 있다.",
+  "관련 사례에서 어떤 헌법 가치들이 서로 부딪치는지 말할 수 있다.",
+  "헌법 조문과 사례를 근거로 나의 주장을 세우고, 예상되는 반론에 답할 수 있다.",
+  "이번 탐구의 목표 문장이 왜 맞는지 오늘 읽은 조문과 사례로 설명할 수 있다."
+];
+const SCALE = ["전혀 아니다", "아니다", "보통이다", "그렇다", "매우 그렇다"];
+VIEWS.self = el => {
+  const a = A();
+  S.self = S.self || {};
+  el.innerHTML = `<h2>스스로 점검하기</h2><p class="lead">처음에 본 목표를 다시 보고, 각 문장이 나에게 얼마나 해당하는지 1~5점으로 골라 보세요.</p>
+    <div class="idea" style="font-size:1.2rem">${esc(a.idea)}</div>
+    <div class="selflist">${SELF.map((t, k) => `<div class="selfrow"><p><b>${k + 1}.</b> ${esc(t)}</p>
+      <div class="lk" role="radiogroup" aria-label="${esc(t)}">${SCALE.map((l, v) => `<button data-k="${k}" data-v="${v + 1}" role="radio" aria-checked="${+S.self[k] === v + 1}" title="${l}"><b>${v + 1}</b><span>${l}</span></button>`).join("")}</div></div>`).join("")}</div>
+    <p class="small" id="avg" style="text-align:right;margin:8px 0 0"></p>
+    <label class="l" for="mc" style="font-family:var(--serif);font-size:1.25rem;margin-top:24px">나에게 헌법이란?</label>
+    <div class="mycon"><span>나에게 헌법이란</span><input type="text" id="mc" value="${esc(S.myConst || "")}" placeholder="우리 반의 약속"><span>이다.</span></div>
+    <label class="l" for="mw">왜냐하면</label><textarea id="mw" rows="2" placeholder="오늘 탐구한 조문이나 사례와 연결해 써 보세요.">${esc(S.myConstWhy || "")}</textarea>
+    <div class="row"><button class="btn" id="n" disabled>제출하러 가기</button></div>`;
+  const check = () => {
+    const vals = SELF.map((_, k) => +S.self[k] || 0);
+    el.querySelector("#avg").textContent = vals.every(Boolean) ? `평균 ${(vals.reduce((x, y) => x + y, 0) / vals.length).toFixed(1)}점` : "";
+    el.querySelector("#n").disabled = !(vals.every(Boolean) && (S.myConst || "").trim());
+  };
+  el.querySelectorAll(".lk button").forEach(b => b.onclick = () => { S.self[b.dataset.k] = +b.dataset.v; save(); b.parentElement.querySelectorAll("button").forEach(x => x.setAttribute("aria-checked", x === b)); check(); });
+  el.querySelector("#mc").oninput = e => { S.myConst = e.target.value; save(); check(); };
+  el.querySelector("#mw").oninput = e => { S.myConstWhy = e.target.value; save(); };
+  check(); el.querySelector("#n").onclick = () => go(10);
+};
+
+// 제출: 제출 코드를 만들어 선생님이 안내한 곳(클래스룸 등)에 붙여 넣는다
+function payloadOf() {
+  const a = A(), qs = CONTENT.questions[String(a.n)] || [];
+  const u = S.copy ? unitsOf(S.copy)[0] : null;
+  return {v: 8, step: S.step, klass: S.klass || "", name: (S.name || "").trim(), sid: (S.sid || "").trim(), at: new Date().toISOString(), area: a.n, areaName: a.name,
+    found: S.found,
+    deep: (S.deep || []).filter(d => d.art || d.expl).map(d => { const u = d.art ? unitsOf(d.art)[0] : null; const w = u ? u.t.split(/\s+/) : [];
+      return {value: d.value, art: d.art, label: u ? label(u) : "", phrase: d.phrase.map(k => w[k]).join(" "), method: d.method, expl: d.expl, score: d.score || 0, compared: !!d.compared}; }),
+    cls: a.vals.map(v => ({value: v.t, written: writtenIn(a, v).written, answer: (S.cls[v.t] || {}).answer, correct: (S.cls[v.t] || {}).correct})),
+    copy: u ? {code: S.copy, label: label(u), text: S.copyText, pct: S.copyPct || 0, why: S.copyWhy} : null,
+    q: S.qmode === "deep" && DEEPQ[a.n] ? (() => { const dq = DEEPQ[a.n], is = areaIssues(a).find(i => i.id === dq.ref);
+        return {mode: "deep", text: dq.q, title: dq.title, crit: dq.crit.map((c, k) => ({name: c[0], judge: ((S.dq || {}).crit || {})[k]?.j || "", why: ((S.dq || {}).crit || {})[k]?.w || ""})),
+          concl: (S.dq || {}).concl || "", counter: (S.dq || {}).counter || "", compared: !!(S.dq || {}).compared, cases: is ? [is.kind + ": " + is.title] : [], arts: S.moreArts || []}; })()
+      : S.q === null ? null : {k: S.q, text: qs[S.q], opinion: S.opinion, op: S.op, score: S.opScore || 0,
+      cases: (S.useCases || []).map(id => { const i = areaIssues(a).find(x => x.id === id); return i ? i.kind + ": " + i.title : id; }), arts: S.moreArts || []},
+    self: SELF.map((t, k) => ({t, score: +((S.self || {})[k]) || 0})), myConst: S.myConst || "", myConstWhy: S.myConstWhy || ""};
+}
+const b64url = bytes => { let bin = ""; bytes.forEach(b => bin += String.fromCharCode(b)); return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); };
+// 설문 주소 길이를 줄이려고 압축한다(HG5). 압축을 못 하는 브라우저는 압축 없이 만든다(HG4).
+async function makeCode() {
+  const bytes = new TextEncoder().encode(JSON.stringify(payloadOf()));
+  if (typeof CompressionStream === "function") {
+    try {
+      const out = await new Response(new Blob([bytes]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer();
+      return "HG5." + b64url(new Uint8Array(out)) + ".END";
+    } catch (e) {}
+  }
+  let bin = ""; bytes.forEach(b => bin += String.fromCharCode(b));
+  return "HG4." + btoa(bin) + ".END";
+}
+VIEWS.submit = el => {
+  el.innerHTML = `<h2>제출하기</h2><p class="lead">정보를 확인하고 제출 코드를 만든 뒤, 선생님이 안내한 곳(구글 클래스룸 과제 등)에 붙여 넣으세요.</p>
+    <div class="idcard"><dl class="kv"><dt>학급 코드</dt><dd><b>${esc(S.klass || "")}</b></dd><dt>학번</dt><dd>${esc(S.sid || "")}</dd><dt>이름</dt><dd>${esc(S.name || "")}</dd></dl>
+      <p class="hint" style="margin:6px 0 0">틀렸다면 맨 앞 화면(← 이전을 여러 번)에서 고칠 수 있어요.</p></div>
+    <div class="row"><button class="btn" id="mk">제출 코드 만들기</button></div>
+    <div id="out" hidden>
+      <label class="l" for="cd">제출 코드</label>
+      <textarea id="cd" class="code" readonly></textarea>
+      <div class="row"><button class="btn" id="cp">코드 복사하기</button></div>
+      <p class="hint" id="cpm">복사한 코드를 선생님이 안내한 곳에 붙여 넣으면 제출이 끝나요. 복사가 안 되면 코드 칸을 길게 눌러 전체 선택 후 복사하세요.</p>
+    </div>`;
+  el.querySelector("#mk").onclick = async () => {
+    if (!/^\d{6}$/.test(S.klass || "") || !(S.name || "").trim() || !(S.sid || "").trim()) { el.querySelector("#mk").textContent = "첫 화면에서 학급 코드·학번·이름을 먼저 써 주세요"; return; }
+    el.querySelector("#cd").value = await makeCode();
+    el.querySelector("#out").hidden = false;
+    el.querySelector("#mk").textContent = "다시 만들기 (고친 내용으로)"; el.querySelector("#mk").className = "btn ghost";
+  };
+  el.querySelector("#cp").onclick = async () => {
+    const ta = el.querySelector("#cd"), m = el.querySelector("#cpm"); ta.select();
+    try { await navigator.clipboard.writeText(ta.value); m.textContent = "복사했어요. 이제 선생님이 안내한 곳에 붙여 넣으세요."; }
+    catch (e) { try { if (!document.execCommand("copy")) throw new Error("copy"); m.textContent = "복사했어요. 이제 선생님이 안내한 곳에 붙여 넣으세요."; } catch (e2) { m.textContent = "자동 복사가 막혀 있어요. 코드 칸이 선택되어 있으니 직접 복사하세요."; } }
+  };
+};
+
+// ---------- 대화상자 ----------
+const dlg = document.getElementById("dlg");
+function openDlg(t, html) { document.getElementById("dT").textContent = t; document.getElementById("dB").innerHTML = html; if (dlg.showModal) { if (!dlg.open) dlg.showModal(); } else dlg.setAttribute("open", ""); }
+document.getElementById("dX").onclick = () => dlg.close();
+document.getElementById("glossBtn").onclick = () => openGlossary();
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(render);
+</script>
+</body>
+</html>

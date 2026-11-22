@@ -9,12 +9,22 @@ async function rpc(name, args = {}) {
   if (error) throw error;
   return data;
 }
+function accessMessage(error) {
+  const message = String(error.message || "");
+  if (error.code === "invalid_credentials" || /invalid login credentials/i.test(message))
+    return "이메일과 비밀번호를 확인하세요. 기존 계정의 비밀번호가 기억나지 않으면 재설정 메일을 받으세요. 처음 이용한다면 Google 계정으로 시작하세요.";
+  if (error.code === "email_not_confirmed") return "가입 이메일의 인증 링크를 먼저 열고 다시 로그인하세요.";
+  if (error.status === 429) return "요청이 많습니다. 잠시 후 다시 시도하세요.";
+  if (/fetch|network|load failed/i.test(message)) return "서버에 연결하지 못했습니다. 인터넷 연결을 확인한 뒤 다시 시도하세요.";
+  if (/중복|이미 등록된|unique constraint/i.test(message)) return "이미 등록된 학번 또는 계정입니다. 처음 가입한 계정으로 로그인하거나 선생님에게 학번을 확인하세요.";
+  if (/[가-힣]/.test(message)) return message;
+  return "요청을 완료하지 못했습니다. 다시 시도해 주세요." + (error.code ? " (오류 " + error.code + ")" : "");
+}
 function studentLogin(ready) {
   const entry = document.querySelector("#studentEntry");
   const registration = document.querySelector("#studentRegistration");
   const legacy = document.querySelector("#legacyLogin");
   const recovery = document.querySelector("#recovery");
-  const google = document.querySelector("#studentGoogle");
   const status = document.querySelector("#entryStatus");
   const redirectTo = location.origin + location.pathname;
   function checked(result) { if (result.error) throw result.error; return result.data; }
@@ -35,25 +45,21 @@ function studentLogin(ready) {
     await ready();
     show(document.querySelector("#app"));
   }
-  google.onclick = async () => {
-    google.disabled = true;
-    try { checked(await client.auth.signInWithOAuth({provider:"google",options:{redirectTo,queryParams:{prompt:"select_account"}}})); }
-    catch(error) { status.textContent = error.message; google.disabled = false; }
-  };
   function onSubmit(form, handle) {
     form.onsubmit = async event => {
       event.preventDefault();
       const button = event.submitter || form.querySelector("button");
       button.disabled = true;
       const output = form.querySelector("output");
-      output.textContent = "";
-      try { await handle(button,output); } catch(error) { output.textContent = error.message; }
+      output.textContent = "확인 중입니다…";
+      try { await handle(button,output); } catch(error) { output.textContent = accessMessage(error); }
       finally { button.disabled = false; }
     };
   }
   onSubmit(registration,async () => {
     const name = registration.displayName.value.trim();
     if (!name) throw Error("이름을 입력하세요.");
+    if (!await rpc("open_room",{room:registration.room.value})) throw Error("등록된 학급 코드를 찾을 수 없습니다. 선생님이 만든 6자리 코드를 다시 확인하세요.");
     await rpc("join_student",{room:registration.room.value,number:registration.sid.value,display_name:name});
     await enter();
   });
@@ -90,7 +96,7 @@ function studentLogin(ready) {
     if (sessionStorage.getItem("class-recovery")) {show(recovery);return;}
     await enter();
   }
-  return restore().catch(error => { status.textContent = error.message; });
+  return restore().catch(error => { status.textContent = accessMessage(error); });
 }
 
 function teacherLogin(ready) {
@@ -104,22 +110,10 @@ function teacherLogin(ready) {
     loginForm.hidden = true;
     document.querySelector("#app").hidden = false;
   }
-  loginForm.onsubmit = async event => {
-    event.preventDefault();
-    const button = loginForm.querySelector("button");
-    button.disabled = true;
-    try {
-      const {error} = await client.auth.signInWithOAuth({provider:"google", options:{redirectTo, queryParams:{prompt:"select_account"}}});
-      if (error) throw error;
-    } catch (error) {
-      loginForm.querySelector("output").textContent = error.message;
-      button.disabled = false;
-    }
-  };
   async function signOut() {
     const {error} = await client.auth.signOut({scope:"local"});
     if (error) {
-      (registration.hidden ? loginForm : registration).querySelector("output").textContent = error.message;
+      (registration.hidden ? loginForm : registration).querySelector("output").textContent = accessMessage(error);
       return;
     }
     location.replace(redirectTo);
@@ -135,7 +129,7 @@ function teacherLogin(ready) {
       profile = await rpc("profile");
       if (profile?.role !== "teacher" && profile?.role !== "admin") throw Error("교사 권한을 확인하지 못했습니다. 다시 로그인해 주세요.");
       await openDashboard();
-    } catch (error) { registration.querySelector("output").textContent = error.message; }
+    } catch (error) { registration.querySelector("output").textContent = accessMessage(error); }
     finally { button.disabled = false; }
   };
   async function restore() {
@@ -157,5 +151,5 @@ function teacherLogin(ready) {
     registration.hidden = false;
     registration.invite.focus();
   }
-  return restore().catch(error => { loginForm.querySelector("output").textContent = error.message; });
+  return restore().catch(error => { loginForm.querySelector("output").textContent = accessMessage(error); });
 }

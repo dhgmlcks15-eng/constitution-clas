@@ -1,0 +1,26 @@
+body:has(.auth-panel:not([hidden])) {
+  min-height:100vh;
+  background:radial-gradient(ellipse at 50% 10%,#e3eee7 0,transparent 56%),#f7f6f0;
+}
+.auth-panel:not([hidden]) {
+  color-scheme:light; color:#203c37; background:#fffefa;
+  box-sizing:border-box; display:grid; gap:1.1rem;
+  width:min(31rem,calc(100% - 2rem)); margin:clamp(2rem,7vh,6rem) auto;
+  padding:clamp(1.4rem,4vw,2.6rem); border:1px solid #d6e2d9;
+  border-top:4px solid #377c69; border-radius:1.35rem;
+  box-shadow:0 16px 60px #244a3a12; text-align:left;
+}
+.auth-panel h1 {margin:0;color:#193f34;font-size:clamp(1.65rem,4vw,2.15rem);line-height:1.3}
+.auth-panel p {margin:0;color:#496059;line-height:1.65}
+.auth-panel label,.auth-panel form {display:grid;gap:.6rem}
+.auth-panel label {font-weight:600}
+.auth-panel input {box-sizing:border-box;width:100%;font:inherit;color:#193b31;background:white;border:1px solid #8fa89e;border-radius:.65rem;padding:.75rem}
+.auth-panel .btn {display:block;box-sizing:border-box;width:100%;padding:.85rem 1rem;background:#245944;color:white;border:1px solid #245944;border-radius:.75rem;text-align:center;text-decoration:none;font-size:1rem}
+.auth-panel .btn:hover {background:#194431;color:white}
+.auth-panel .ghost {background:white;color:#254d40;border-color:#bbcfc4}
+.auth-panel details {border-top:1px solid #d8e3dc;padding-top:.75rem}
+.auth-panel summary {cursor:pointer;padding:.4rem 0;color:#385c4d}
+.auth-panel details[open] summary {margin-bottom:.8rem}
+.auth-panel output:not(:empty) {display:block;border-left:3px solid #ac7428;background:#fff4db;color:#553900;border-radius:.35rem;padding:.7rem .9rem;line-height:1.55}
+.auth-panel output:empty {display:none}
+.auth-panel :focus-visible {outline:3px solid #347a69;outline-offset:3px}

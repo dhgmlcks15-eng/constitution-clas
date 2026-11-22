@@ -11,3 +11,7 @@
 Supabase Authentication의 Google 제공자 설정에 웹 애플리케이션 OAuth 클라이언트 ID와 비밀 키를 등록합니다. Google Cloud의 승인된 리디렉션 URI에는 Supabase가 안내하는 /auth/v1/callback 주소를 등록합니다. Supabase Authentication URL Configuration의 허용 목록에는 배포된 teacher.html과 student.html의 전체 HTTPS 주소를 추가합니다. 학생의 이메일 인증과 비밀번호 재설정에는 Supabase Auth의 학교용 SMTP 설정을 사용합니다.
 
 기본 테이블은 schema.sql, 가입과 진행 조회는 membership.sql에 정의되어 있습니다. 가입 코드의 서버 설정은 공개 저장소 외부에서 관리합니다.
+
+## 수업 운영 안내
+
+이 앱은 헌법 가치 탐구 수업 자료입니다. 가입 방법이나 실패 후 다음 행동이 불분명하면 수업 중 같은 질문이 교사에게 집중됩니다. 학생에게는 반 공지에서 학생용 링크, 해당 반의 학급 코드, 학번 입력 예시를 함께 안내하세요.

@@ -24,3 +24,8 @@ body:has(.auth-panel:not([hidden])) {
 .auth-panel output:not(:empty) {display:block;border-left:3px solid #ac7428;background:#fff4db;color:#553900;border-radius:.35rem;padding:.7rem .9rem;line-height:1.55}
 .auth-panel output:empty {display:none}
 .auth-panel :focus-visible {outline:3px solid #347a69;outline-offset:3px}
+
+.auth-panel .subject {color:#39715e;font-size:.9rem;font-weight:650;letter-spacing:.02em}
+.auth-panel .steps {margin:0;padding-left:1.6rem;color:#435a51;line-height:1.6}
+.auth-panel .steps li {padding-left:.3rem;margin:.38rem 0}
+.auth-panel .steps li::marker {color:#35705b;font-weight:bold}

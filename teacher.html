@@ -101,10 +101,10 @@ table.resp td:nth-child(5){min-width:220px}
 @media(max-width:650px){.portal-nav{padding:.65rem 1rem}}
 </style><link rel="stylesheet" href="access.css"></head>
 <body><nav class="portal-nav" aria-label="웹앱 메뉴"><a href="index.html">헌법 가치 탐구</a><div><a href="student.html">학생용</a><a href="teacher.html">교사용</a></div></nav><section id="login" class="auth-panel">
-<h1>교사 로그인</h1><p>처음 이용하는 선생님은 로그인 후 가입 코드를 입력해 주세요.</p>
+<p class="subject">헌법 가치 탐구 · 교사용 수업 자료</p><h1>우리 반 수업 준비하기</h1><ol class="steps"><li>Google 계정을 선택하세요. 처음 가입하는 교사는 관리자가 안내한 <strong>교사 가입 코드</strong>를 입력합니다.</li><li>대시보드에서 반 이름과 학급 코드를 등록하세요.</li><li>학생에게는 학생용 링크와 <strong>해당 반의 학급 코드</strong>를 공유하세요.</li></ol>
 <a class="btn" href="https://itmdjlnzspehhrdevonh.supabase.co/auth/v1/authorize?provider=google&amp;redirect_to=https%3A%2F%2Fdhgmlcks15-eng.github.io%2Fconstitution-clas%2Fteacher.html&amp;prompt=select_account">Google로 로그인하기</a><output role="status"></output></section>
 <form onsubmit="event.preventDefault();this.querySelector('output').textContent='연결을 준비하고 있습니다. 잠시 뒤에도 계속되면 새로고침해 주세요.'" id="registration" class="auth-panel" hidden>
-<h1>교사 회원가입</h1><p id="teacherAccount"></p>
+<h1>교사 회원가입</h1><p>아래 계정에 교사 권한을 등록합니다. 관리자가 전달한 6자리 코드를 입력하고 ‘가입하고 시작하기’를 누르세요.</p><p id="teacherAccount"></p>
 <label>교사 가입 코드<input name="invite" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required placeholder="숫자 6자리"></label>
 <button class="btn">가입하고 시작하기</button><button type="button" class="btn ghost" id="switchGoogle">다른 Google 계정 사용</button><output role="status"></output></form><div id="app" hidden><button id="logout" class="btn ghost">로그아웃</button><div class="storage-alert" role="alert" id="storageAlert" hidden></div>
 <div class="wrap">
@@ -114,20 +114,20 @@ table.resp td:nth-child(5){min-width:220px}
   </header>
 
   <section class="box">
-    <h2>0. 학급 코드 만들기</h2>
-    <p class="note" style="margin:0 0 8px">반마다 숫자 6자리 코드를 정해 학생용 앱 링크와 함께 알려 주세요. 학생은 등록된 학급 코드·학번과 개인 계정으로 로그인합니다. 제출물은 코드별로 나뉘어 보입니다.</p>
+    <h2>수업 전 · 학급 만들기</h2>
+    <p class="note" style="margin:0 0 8px">코드를 직접 정하거나 ‘무작위로 만들기’를 누른 뒤 반 이름을 쓰고 ‘학급 등록’을 누르세요. 등록한 코드와 <a href="student.html">학생용 페이지</a> 주소를 반 공지에 함께 올려 주세요.</p>
     <div class="row" style="margin-top:0">
       <input id="kcIn" inputmode="numeric" maxlength="6" placeholder="숫자 6자리" style="width:150px;font-size:1.2rem;letter-spacing:.25em;text-align:center">
       <button class="btn ghost sm" id="kcRand">무작위로 만들기</button>
       <input id="kcLabel" placeholder="반 이름 (예: 2학년 3반)" style="flex:1;min-width:160px">
-      <button class="btn sm" id="kcAdd">추가</button><span class="note" id="kcMsg"></span></div>
-    <hr><label>명단을 추가할 학급<select id="room"></select></label><label>학생 명단 (한 줄에 학번 이름 이메일)<textarea id="entries" rows="4" placeholder="20301 김하나 student@school.kr"></textarea></label>
-<button class="btn" id="enroll">명단 등록</button> <button class="btn ghost" id="refresh">제출 현황 새로고침</button><output id="sync" role="status"></output></section>
+      <button class="btn sm" id="kcAdd">학급 등록</button><span class="note" id="kcMsg"></span></div>
+    <hr><details><summary>학생 명단을 직접 추가할 때</summary><p>직접 가입한 학생은 명단에 자동으로 표시됩니다. 이미 인증된 학생 계정을 미리 등록할 때만 아래 칸을 사용하세요.</p><label>명단을 추가할 학급<select id="room"></select></label><label>학생 명단 (한 줄에 학번 이름 이메일)<textarea id="entries" rows="4" placeholder="20301 김하나 student@school.kr"></textarea></label>
+<button class="btn" id="enroll">명단 등록</button></details> <button class="btn ghost" id="refresh">제출 현황 새로고침</button><output id="sync" role="status"></output></section>
   <section class="box" id="byClass" hidden>
     <div class="row" style="justify-content:space-between;margin:0 0 6px"><h2 style="margin:0">학급별 응답 보기</h2><span class="note" id="kSum"></span></div>
     <div class="ktabs" id="kTabs" role="tablist" aria-label="학급 선택"></div>
     <div class="tbl" style="margin-top:10px"><table class="resp"><thead><tr><th>학번</th><th>이름</th><th>영역</th><th>진행 단계</th><th>선택한 사회 문제</th><th>제출 여부</th></tr></thead><tbody id="kResp"></tbody></table></div>
-    <p class="note">줄을 누르면 아래에 그 학생의 종합 보고서가 열립니다.</p>
+    <p class="note">진행 단계는 약 30초마다 갱신됩니다. 제출한 학생의 줄을 누르면 종합 보고서가 열립니다.</p>
   </section>
 
   <section class="box" id="overview" hidden>

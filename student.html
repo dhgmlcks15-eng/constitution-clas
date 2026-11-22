@@ -245,8 +245,8 @@ dialog::backdrop{background:rgba(10,12,20,.45)}
 .auth-panel summary {cursor:pointer;padding:.75rem 0}
 .auth-panel output:empty {display:none}
 </style><link rel="stylesheet" href="access.css"></head>
-<body><nav class="portal-nav" aria-label="웹앱 메뉴"><a href="index.html">헌법 가치 탐구</a><div><a href="student.html">학생용</a><a href="teacher.html">교사용</a></div></nav><section id="studentEntry" class="auth-panel"><h1>학생 회원가입</h1>
-<p>Google 계정을 선택한 뒤, 선생님이 알려 준 학급 코드로 가입하세요. 이미 가입한 학생은 활동을 이어갑니다.</p>
+<body><nav class="portal-nav" aria-label="웹앱 메뉴"><a href="index.html">헌법 가치 탐구</a><div><a href="student.html">학생용</a><a href="teacher.html">교사용</a></div></nav><section id="studentEntry" class="auth-panel"><p class="subject">헌법 가치 탐구 · 학생용 수업 자료</p><h1>우리 반 활동 시작하기</h1>
+<ol class="steps"><li>아래 버튼을 눌러 수업에 쓸 Google 계정을 선택하세요.</li><li>처음이라면 선생님이 알려 준 <strong>학급 코드 6자리</strong>, 내 학번 5자리, 이름을 입력하세요. 코드를 아직 못 받았다면 반 공지를 확인하세요.</li><li>‘가입하고 활동 시작’을 누르세요. 이미 가입했다면 곧바로 활동 화면이 열립니다.</li></ol>
 <a class="btn" href="https://itmdjlnzspehhrdevonh.supabase.co/auth/v1/authorize?provider=google&amp;redirect_to=https%3A%2F%2Fdhgmlcks15-eng.github.io%2Fconstitution-clas%2Fstudent.html&amp;prompt=select_account">Google 계정으로 시작하기</a><output id="entryStatus" role="status"></output>
 <details><summary>기존 이메일 계정으로 로그인</summary><form onsubmit="event.preventDefault();this.querySelector('output').textContent='연결을 준비하고 있습니다. 잠시 뒤에도 계속되면 새로고침해 주세요.'" id="legacyLogin"><p>이메일로 가입한 학생은 아래 정보를 입력하고 로그인을 누르세요. 처음 이용하면 위의 Google 버튼으로 가입하세요.</p>
 <label>가입 이메일<input name="email" type="email" autocomplete="username" required></label>

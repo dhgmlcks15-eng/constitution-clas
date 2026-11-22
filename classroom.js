@@ -1,5 +1,4 @@
 const callbackParams = new URLSearchParams(location.hash.slice(1));
-const isAuthCallback = callbackParams.has("access_token");
 if (callbackParams.get("type") === "recovery") sessionStorage.setItem("class-recovery","1");
 const client = supabase.createClient(classroomConfig.url, classroomConfig.publishableKey, {
   auth: {storage: sessionStorage, storageKey: document.querySelector("#registration") ? "constitution-teacher-session" : "constitution-class-session",flowType:"implicit"}
@@ -10,67 +9,88 @@ async function rpc(name, args = {}) {
   if (error) throw error;
   return data;
 }
-function login(role, ready) {
-  const form = document.querySelector("#login"), message = form.querySelector("output");
+function studentLogin(ready) {
+  const entry = document.querySelector("#studentEntry");
+  const registration = document.querySelector("#studentRegistration");
+  const legacy = document.querySelector("#legacyLogin");
+  const recovery = document.querySelector("#recovery");
+  const google = document.querySelector("#studentGoogle");
+  const status = document.querySelector("#entryStatus");
   const redirectTo = location.origin + location.pathname;
-  const reportError = error => { message.textContent = error.message; };
+  function checked(result) { if (result.error) throw result.error; return result.data; }
+  function show(panel) {
+    for (const el of [entry,registration,recovery,document.querySelector("#app")]) el.hidden = el !== panel;
+  }
   async function enter() {
-    const {data:{user},error} = await client.auth.getUser();
-    if (error || !user) throw Error("로그인이 필요합니다.");
+    const {user} = checked(await client.auth.getUser());
     accountId = user.id;
     profile = await rpc("profile");
     if (!profile) {
-      const meta = user.user_metadata || {};
-      await rpc("join_student",{room:form.room.value || meta.room,number:form.sid.value || meta.sid,display_name:form.displayName.value.trim() || meta.display_name || ""});
-      profile = await rpc("profile");
+      document.querySelector("#studentAccount").textContent = user.email;
+      show(registration);
+      registration.room.focus();
+      return;
     }
-    if (profile?.role !== "student") throw Error("학생 계정으로 로그인하세요.");
-    if ((form.room.value && profile.klass !== form.room.value) || (form.sid.value && profile.sid !== form.sid.value)) throw Error("등록한 학급과 학번을 확인하세요.");
+    if (profile.role !== "student") throw Error("학생용 Google 계정을 선택해 주세요.");
     await ready();
-    form.reset(); form.hidden=true; document.querySelector("#app").hidden=false;
+    show(document.querySelector("#app"));
   }
-  const checked = result => { if(result.error) throw result.error; return result.data; };
-  form.onsubmit = async event => {
-    event.preventDefault();
-    const mode=event.submitter?.value, button=event.submitter;
-    if(button) button.disabled=true;
-    try {
-      const email=form.email.value.trim(), password=form.password.value;
-      if (mode==="reset") {
-        if(!email || !form.email.reportValidity()) throw Error("가입 이메일을 입력하세요.");
-        checked(await client.auth.resetPasswordForEmail(email,{redirectTo}));
-        message.textContent="가입 이메일의 재설정 링크를 여세요."; return;
-      }
-      if (mode==="signup") {
-        if(!await rpc("open_room",{room:form.room.value})) throw Error("교사가 발급한 학급 코드를 확인하세요.");
-        if(!form.displayName.value.trim()) throw Error("이름을 입력하세요.");
-        const data=checked(await client.auth.signUp({email,password,options:{emailRedirectTo:redirectTo,data:{room:form.room.value,sid:form.sid.value,display_name:form.displayName.value.trim()}}}));
-        if (!data.session) {message.textContent="이메일 인증 후 같은 학급 코드와 학번으로 로그인하세요.";return;}
-      } else checked(await client.auth.signInWithPassword({email,password}));
-      await enter();
-    } catch(error){reportError(error);} finally {if(button) button.disabled=false;}
+  google.onclick = async () => {
+    google.disabled = true;
+    try { checked(await client.auth.signInWithOAuth({provider:"google",options:{redirectTo,queryParams:{prompt:"select_account"}}})); }
+    catch(error) { status.textContent = error.message; google.disabled = false; }
   };
-  const recovery=document.querySelector("#recovery");
-  recovery.onsubmit=async event=>{
-    event.preventDefault();
-    try {checked(await client.auth.updateUser({password:recovery.newPassword.value})); await client.auth.signOut({scope:"local"}); location.replace(redirectTo);}
-    catch(error){recovery.querySelector("output").textContent=error.message;}
-  };
-  client.auth.onAuthStateChange((event,session)=>{
-    if(event==="PASSWORD_RECOVERY") sessionStorage.setItem("class-recovery","1");
-    if (!session || !["INITIAL_SESSION","PASSWORD_RECOVERY","SIGNED_IN"].includes(event)) return;
-    if(sessionStorage.getItem("class-recovery")) {form.hidden=true; recovery.hidden=false;}
+  function onSubmit(form, handle) {
+    form.onsubmit = async event => {
+      event.preventDefault();
+      const button = event.submitter || form.querySelector("button");
+      button.disabled = true;
+      const output = form.querySelector("output");
+      output.textContent = "";
+      try { await handle(button,output); } catch(error) { output.textContent = error.message; }
+      finally { button.disabled = false; }
+    };
+  }
+  onSubmit(registration,async () => {
+    const name = registration.displayName.value.trim();
+    if (!name) throw Error("이름을 입력하세요.");
+    await rpc("join_student",{room:registration.room.value,number:registration.sid.value,display_name:name});
+    await enter();
   });
-  recovery.addEventListener("submit",()=>sessionStorage.removeItem("class-recovery"));
-  if(isAuthCallback) {
-    client.auth.getSession().then(async result=>{
-      if(result.error) throw result.error;
-      await new Promise(resolve=>setTimeout(resolve,100));
-      if (!recovery.hidden) return;
-      if(result.data.session) await enter();
-    }).catch(reportError);
+  onSubmit(legacy,async (button,output) => {
+    if (!legacy.email.reportValidity()) return;
+    const email = legacy.email.value.trim();
+    if (button.value === "reset") {
+      checked(await client.auth.resetPasswordForEmail(email,{redirectTo}));
+      output.textContent = "이메일에서 재설정 링크를 확인하세요.";
+      return;
+    }
+    checked(await client.auth.signInWithPassword({email,password:legacy.password.value}));
+    legacy.reset();
+    await enter();
+  });
+  async function signOut() {
+    checked(await client.auth.signOut({scope:"local"}));
+    sessionStorage.removeItem("class-recovery");
+    location.replace(redirectTo);
   }
-  document.querySelector("#logout").onclick=async()=>{await client.auth.signOut({scope:"local"});location.replace(redirectTo);};
+  onSubmit(recovery,async () => {
+    checked(await client.auth.updateUser({password:recovery.newPassword.value}));
+    await signOut();
+  });
+  document.querySelector("#studentSwitch").onclick = signOut;
+  document.querySelector("#logout").onclick = signOut;
+  async function restore() {
+    const {session} = checked(await client.auth.getSession());
+    if (!session) {
+      sessionStorage.removeItem("class-recovery");
+      if (callbackParams.has("error")) throw Error("인증을 완료하지 못했습니다. 다시 시도해 주세요.");
+      return;
+    }
+    if (sessionStorage.getItem("class-recovery")) {show(recovery);return;}
+    await enter();
+  }
+  return restore().catch(error => { status.textContent = error.message; });
 }
 
 function teacherLogin(ready) {

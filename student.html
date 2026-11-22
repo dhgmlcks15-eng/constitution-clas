@@ -238,8 +238,26 @@ dialog::backdrop{background:rgba(10,12,20,.45)}
 [hidden]{display:none!important}
 .storage-alert{position:sticky;bottom:0;z-index:100;background:#ffe3a0;color:#332300;padding:.75rem;text-align:center}
 @media(max-width:650px){.portal-nav{padding:.65rem 1rem}}
+</style><style>
+.auth-panel {box-sizing:border-box;width:min(28rem,calc(100% - 2rem));margin:2rem auto;display:grid;gap:1rem}
+.auth-panel label,.auth-panel form {display:grid;gap:.5rem}
+.auth-panel input {box-sizing:border-box;width:100%;padding:.75rem;font:inherit}
+.auth-panel summary {cursor:pointer;padding:.75rem 0}
+.auth-panel output:empty {display:none}
 </style></head>
-<body><nav class="portal-nav" aria-label="웹앱 메뉴"><a href="index.html">헌법 가치 탐구</a><div><a href="student.html">학생용</a><a href="teacher.html">교사용</a></div></nav><form id="login" class="box" style="max-width:28rem;margin:2rem auto;padding:1rem"><h1>학생 로그인</h1><label>학급 코드<input name="room" required pattern="[0-9]{6}" maxlength="6" inputmode="numeric"></label><label>학번<input name="sid" required pattern="[0-9]{5}" maxlength="5" inputmode="numeric"></label><label>등록 이메일<input type="email" name="email" required autocomplete="username"></label><label>비밀번호<input type="password" name="password" required autocomplete="current-password"></label><label>이름 (최초 가입)<input name="displayName" maxlength="80"></label><button class="btn">로그인</button><button class="btn ghost" value="signup">학급 가입</button><button class="btn ghost" value="reset" formnovalidate>비밀번호 재설정 메일 받기</button><output role="status"></output></form><form id="recovery" class="box" hidden><label>새 비밀번호<input type="password" name="newPassword" autocomplete="new-password" minlength="8" required></label><button class="btn">비밀번호 변경</button><output role="status"></output></form><div id="app" hidden><button id="logout" class="btn ghost">로그아웃</button><div class="storage-alert" role="alert" id="storageAlert" hidden></div>
+<body><nav class="portal-nav" aria-label="웹앱 메뉴"><a href="index.html">헌법 가치 탐구</a><div><a href="student.html">학생용</a><a href="teacher.html">교사용</a></div></nav><section id="studentEntry" class="auth-panel"><h1>학생 회원가입</h1>
+<p>Google 계정을 선택한 뒤, 선생님이 알려 준 학급 코드로 가입하세요. 이미 가입한 학생은 활동을 이어갑니다.</p>
+<button class="btn" id="studentGoogle">Google로 가입 · 로그인</button><output id="entryStatus" role="status"></output>
+<details><summary>기존 이메일 계정으로 로그인</summary><form id="legacyLogin">
+<label>가입 이메일<input name="email" type="email" autocomplete="username" required></label>
+<label>비밀번호<input name="password" type="password" autocomplete="current-password" required></label>
+<button class="btn">로그인</button><button class="btn ghost" formnovalidate value="reset">비밀번호 재설정 메일 받기</button><output role="status"></output></form></details></section>
+<form id="studentRegistration" class="auth-panel" hidden><h1>학급 가입</h1><p id="studentAccount"></p>
+<label>학급 코드<input name="room" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="숫자 6자리" required></label>
+<label>학번<input name="sid" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="숫자 5자리" required></label>
+<label>이름<input name="displayName" maxlength="80" autocomplete="name" required></label>
+<button class="btn">가입하고 활동 시작</button><button type="button" class="btn ghost" id="studentSwitch">다른 계정 사용</button><output role="status"></output></form>
+<form id="recovery" class="auth-panel" hidden><h1>비밀번호 변경</h1><label>새 비밀번호<input type="password" name="newPassword" minlength="8" autocomplete="new-password" required></label><button class="btn">저장</button><output role="status"></output></form><div id="app" hidden><button id="logout" class="btn ghost">로그아웃</button><div class="storage-alert" role="alert" id="storageAlert" hidden></div>
 <div class="app">
   <div class="top"><button class="back" id="back" aria-label="이전 단계">← 이전</button><div class="bar"><i id="prog"></i></div><span class="stepno" id="stepno"></span><button class="gloss" id="glossBtn" aria-label="용어 사전">📖 용어</button></div>
   <main id="main" aria-live="polite"></main>
@@ -1737,7 +1755,7 @@ document.getElementById("dX").onclick = () => dlg.close();
 document.getElementById("glossBtn").onclick = () => openGlossary();
 dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
 
-login("student", () => { KEY = "cv-db-" + accountId; try { const r = localStorage.getItem(KEY); if (r) S = Object.assign(blank(), JSON.parse(r)); } catch (e) {}
+studentLogin( () => { KEY = "cv-db-" + accountId; try { const r = localStorage.getItem(KEY); if (r) S = Object.assign(blank(), JSON.parse(r)); } catch (e) {}
  Object.assign(S,{klass:profile.klass,sid:profile.sid,name:profile.name}); queueStage(); render(); });
 </script>
 </body>

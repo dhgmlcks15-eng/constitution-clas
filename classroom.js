@@ -2,7 +2,7 @@ const callbackParams = new URLSearchParams(location.hash.slice(1));
 const isAuthCallback = callbackParams.has("access_token");
 if (callbackParams.get("type") === "recovery") sessionStorage.setItem("class-recovery","1");
 const client = supabase.createClient(classroomConfig.url, classroomConfig.publishableKey, {
-  auth: {storage: sessionStorage, storageKey: "constitution-class-session",flowType:"implicit"}
+  auth: {storage: sessionStorage, storageKey: document.querySelector("#registration") ? "constitution-teacher-session" : "constitution-class-session",flowType:"implicit"}
 });
 let accountId, profile;
 async function rpc(name, args = {}) {
@@ -12,7 +12,6 @@ async function rpc(name, args = {}) {
 }
 function login(role, ready) {
   const form = document.querySelector("#login"), message = form.querySelector("output");
-  const student = role === "student";
   const redirectTo = location.origin + location.pathname;
   const reportError = error => { message.textContent = error.message; };
   async function enter() {
@@ -20,19 +19,13 @@ function login(role, ready) {
     if (error || !user) throw Error("로그인이 필요합니다.");
     accountId = user.id;
     profile = await rpc("profile");
-    if (student && !profile) {
+    if (!profile) {
       const meta = user.user_metadata || {};
       await rpc("join_student",{room:form.room.value || meta.room,number:form.sid.value || meta.sid,display_name:form.displayName.value.trim() || meta.display_name || ""});
       profile = await rpc("profile");
     }
-    if (!student && (!profile || profile.role === "student")) {
-      if (!await rpc("join_teacher",{invite:form.invite.value || sessionStorage.getItem("teacher-invite") || ""})) throw Error("Google 계정과 교사 가입 코드를 확인하세요.");
-      profile = await rpc("profile");
-    }
-    if (profile?.role === "admin" && !student) await rpc("join_teacher",{invite:""});
-    if (!(student ? profile?.role === "student" : ["admin","teacher"].includes(profile?.role))) throw Error("해당 화면의 이용 권한이 없습니다.");
-    if (student && ((form.room.value && profile.klass !== form.room.value) || (form.sid.value && profile.sid !== form.sid.value))) throw Error("등록한 학급과 학번을 확인하세요.");
-    sessionStorage.removeItem("teacher-invite");
+    if (profile?.role !== "student") throw Error("학생 계정으로 로그인하세요.");
+    if ((form.room.value && profile.klass !== form.room.value) || (form.sid.value && profile.sid !== form.sid.value)) throw Error("등록한 학급과 학번을 확인하세요.");
     await ready();
     form.reset(); form.hidden=true; document.querySelector("#app").hidden=false;
   }
@@ -42,10 +35,6 @@ function login(role, ready) {
     const mode=event.submitter?.value, button=event.submitter;
     if(button) button.disabled=true;
     try {
-      if (mode==="google") {
-        sessionStorage.setItem("teacher-invite",form.invite.value);
-        checked(await client.auth.signInWithOAuth({provider:"google",options:{redirectTo}})); return;
-      }
       const email=form.email.value.trim(), password=form.password.value;
       if (mode==="reset") {
         if(!email || !form.email.reportValidity()) throw Error("가입 이메일을 입력하세요.");
@@ -82,4 +71,71 @@ function login(role, ready) {
     }).catch(reportError);
   }
   document.querySelector("#logout").onclick=async()=>{await client.auth.signOut({scope:"local"});location.replace(redirectTo);};
+}
+
+function teacherLogin(ready) {
+  const loginForm = document.querySelector("#login");
+  const registration = document.querySelector("#registration");
+  const redirectTo = location.origin + location.pathname;
+  async function openDashboard() {
+    await ready();
+    registration.reset();
+    registration.hidden = true;
+    loginForm.hidden = true;
+    document.querySelector("#app").hidden = false;
+  }
+  loginForm.onsubmit = async event => {
+    event.preventDefault();
+    const button = loginForm.querySelector("button");
+    button.disabled = true;
+    try {
+      const {error} = await client.auth.signInWithOAuth({provider:"google", options:{redirectTo, queryParams:{prompt:"select_account"}}});
+      if (error) throw error;
+    } catch (error) {
+      loginForm.querySelector("output").textContent = error.message;
+      button.disabled = false;
+    }
+  };
+  async function signOut() {
+    const {error} = await client.auth.signOut({scope:"local"});
+    if (error) {
+      (registration.hidden ? loginForm : registration).querySelector("output").textContent = error.message;
+      return;
+    }
+    location.replace(redirectTo);
+  }
+  document.querySelector("#switchGoogle").onclick = signOut;
+  document.querySelector("#logout").onclick = signOut;
+  registration.onsubmit = async event => {
+    event.preventDefault();
+    const button = registration.querySelector("button");
+    button.disabled = true;
+    try {
+      if (!await rpc("join_teacher",{invite:registration.invite.value.trim()})) throw Error("가입 코드를 확인해 주세요. 여러 번 틀리면 잠시 후 다시 시도해야 합니다.");
+      profile = await rpc("profile");
+      if (profile?.role !== "teacher" && profile?.role !== "admin") throw Error("교사 권한을 확인하지 못했습니다. 다시 로그인해 주세요.");
+      await openDashboard();
+    } catch (error) { registration.querySelector("output").textContent = error.message; }
+    finally { button.disabled = false; }
+  };
+  async function restore() {
+    const {data,error} = await client.auth.getSession();
+    if (error) throw error;
+    if (!data.session) {
+      if (callbackParams.has("error")) throw Error("Google 로그인을 완료하지 못했습니다. 다시 시도해 주세요.");
+      return;
+    }
+    const result = await client.auth.getUser();
+    if (result.error) throw result.error;
+    const user = result.data.user;
+    accountId = user.id;
+    profile = await rpc("profile");
+    if (profile?.role === "admin") await rpc("join_teacher",{invite:""});
+    if (profile?.role === "admin" || profile?.role === "teacher") return openDashboard();
+    loginForm.hidden = true;
+    document.querySelector("#teacherAccount").textContent = user.email;
+    registration.hidden = false;
+    registration.invite.focus();
+  }
+  return restore().catch(error => { loginForm.querySelector("output").textContent = error.message; });
 }

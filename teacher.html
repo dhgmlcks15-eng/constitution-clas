@@ -100,7 +100,13 @@ table.resp td:nth-child(5){min-width:220px}
 .storage-alert{position:sticky;bottom:0;z-index:100;background:#ffe3a0;color:#332300;padding:.75rem;text-align:center}
 @media(max-width:650px){.portal-nav{padding:.65rem 1rem}}
 </style></head>
-<body><nav class="portal-nav" aria-label="웹앱 메뉴"><a href="index.html">헌법 가치 탐구</a><div><a href="student.html">학생용</a><a href="teacher.html">교사용</a></div></nav><form id="login" class="box" style="max-width:28rem;margin:2rem auto;padding:1rem"><h1>교사 로그인</h1><label>등록 이메일<input type="email" name="email" required autocomplete="username"></label><label>비밀번호<input type="password" name="password" required autocomplete="current-password"></label><label>교사 가입 코드 (최초 가입)<input name="invite" inputmode="numeric" maxlength="6"></label><button class="btn" value="google" formnovalidate>Google로 가입·로그인</button><button class="btn ghost">기존 계정 로그인</button><output role="status"></output></form><form id="recovery" class="box" hidden><label>새 비밀번호<input type="password" name="newPassword" autocomplete="new-password" minlength="8" required></label><button class="btn">비밀번호 변경</button><output role="status"></output></form><div id="app" hidden><button id="logout" class="btn ghost">로그아웃</button><div class="storage-alert" role="alert" id="storageAlert" hidden></div>
+<body><nav class="portal-nav" aria-label="웹앱 메뉴"><a href="index.html">헌법 가치 탐구</a><div><a href="student.html">학생용</a><a href="teacher.html">교사용</a></div></nav><form id="login" class="box" style="max-width:28rem;margin:2rem auto;padding:1rem">
+<h1>교사 로그인</h1><p>처음 이용하는 선생님은 로그인 후 가입 코드를 입력해 주세요.</p>
+<button class="btn">Google로 로그인하기</button><output role="status"></output></form>
+<form id="registration" class="box" style="max-width:28rem;margin:2rem auto;padding:1rem" hidden>
+<h1>교사 회원가입</h1><p id="teacherAccount"></p>
+<label>교사 가입 코드<input name="invite" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required placeholder="숫자 6자리"></label>
+<button class="btn">가입하고 시작하기</button><button type="button" class="btn ghost" id="switchGoogle">다른 Google 계정 사용</button><output role="status"></output></form><div id="app" hidden><button id="logout" class="btn ghost">로그아웃</button><div class="storage-alert" role="alert" id="storageAlert" hidden></div>
 <div class="wrap">
   <header>
     <div><h1>헌법 가치 탐구: 교사용</h1><p>담당 학급의 제출 현황과 학생별 종합 보고서를 확인하세요.</p></div>
@@ -485,7 +491,7 @@ action("enroll",async () => {
   field.value = "";
 });
 action("refresh",async () => {});
-login("teacher",async () => {
+teacherLogin(async () => {
   if (profile.role === "admin") document.querySelector("header h1").textContent = "헌법 가치 탐구: 최종 관리자";
   T.ai = JSON.parse(sessionStorage.getItem("teacher-drafts-" + accountId) || "{}");
   await refresh();
